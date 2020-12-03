@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_drawer_height"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/textview_header_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="45dp"
+        android:text="Go4Lunch"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageview_header_navigationview"
+            android:layout_width="@dimen/nav_header_image_user_size"
+            android:layout_height="@dimen/nav_header_image_user_size"
+            android:gravity="center"
+            android:src="@drawable/baseline_account_circle_24"
+            android:layout_margin="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/really_small_margin"
+            android:orientation="vertical"
+            tools:ignore="RtlCompat">
+
+            <TextView
+                android:id="@+id/nav_header_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="@dimen/nav_header_username_size"
+                android:textColor="@color/colorTextPrimary"
+                android:text="@{viewmodel.username}"/>
+
+            <TextView
+                android:id="@+id/nav_header_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.email}"
+                android:textSize="@dimen/nav_header_email_size"
+                android:textColor="@color/colorTextPrimary"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

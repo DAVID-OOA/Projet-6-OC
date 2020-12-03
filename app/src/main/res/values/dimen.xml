@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- margin size -->
+    <dimen name="big_margin">30dip</dimen>
+    <dimen name="small_margin">15dip</dimen>
+    <dimen name="really_small_margin">5dip</dimen>
+    <dimen name="margin_between_cardview">1dip</dimen>
+
+    <!-- text size -->
+    <dimen name="toolbar_text_size">20sp</dimen>
+    <dimen name="nav_drawer_height">230dip</dimen>
+    <dimen name="nav_header_email_size">12sp</dimen>
+    <dimen name="nav_header_username_size">15sp</dimen>
+    <dimen name="nav_header_image_user_size">60dp</dimen>
+    <dimen name="nave_header_title_size">30sp</dimen>
+    <dimen name="nav_view_logo_size">120dip</dimen>
+    <dimen name="settings_progressbar_size">80dip</dimen>
+    <dimen name="settings_photo_size">80dip</dimen>
+    <dimen name="settings_notification_text_size">15sp</dimen>
+    <dimen name="text_recycler_vew_user_size">15sp</dimen>
+    <dimen name="text_size_address">12sp</dimen>
+
+    <!-- image size -->
+    <dimen name="user_image_recyclerview_workmates_size">60dip</dimen>
+
+    <dimen name="heigh_card_view">100dip</dimen>
+    <dimen name="margin_text_restaurant_list">3dp</dimen>
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
+    <dimen name="size_image_button_restaurant">30dip</dimen>
+</resources>

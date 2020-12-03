@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">go4lunch</string>
+
+    <!-- TOOLBAR MENU -->
+    <string name="menu_main_activity_search">Search</string>
+
+    <!-- Used in NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Bottom navigation -->
+    <string name="bottom_navigation_menu_workmates">Workmates</string>
+    <string name="bottom_navigation_menu_list_view">List View</string>
+    <string name="bottom_navigation_menu_map_view">Map View</string>
 </resources>
