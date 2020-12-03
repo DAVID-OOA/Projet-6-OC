@@ -42,7 +42,7 @@
 
 
     <!-- 2 | NavigationView -->
-    <androidx.drawerlayout.widget.DrawerLayout
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/activity_main_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -58,6 +58,6 @@
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/really_small_margin"
             android:src="@drawable/ic_go4lunch_logo"/>
-    </androidx.drawerlayout.widget.DrawerLayout>
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
