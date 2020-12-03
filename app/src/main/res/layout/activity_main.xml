@@ -40,7 +40,6 @@
 
     </RelativeLayout>
 
-
     <!-- 2 | NavigationView -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/activity_main_nav_view"
