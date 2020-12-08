@@ -28,6 +28,9 @@ public class MenuTestDrawerView {
         //Select the toolbar
         onView(withId(R.id.toolbar)).perform(click());
 
+        //Select the first item
+        //onView(withId(R.id.activity_main_drawer_lunch)).perform(click());
+
 
 
     }
