@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureBottomView();
 
-        //this.showFirstFragment();
+        this.showFirstFragment();
         //this.onClickLoginButton();
     }
 
