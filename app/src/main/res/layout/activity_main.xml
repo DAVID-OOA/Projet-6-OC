@@ -21,6 +21,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+        <!-- BUTTON LOGIN -->
+        <Button
+            android:id="@+id/main_activity_button_login_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="login"
+            android:textColor="#fff"
+            style="?android:attr/borderlessButtonStyle"/>
+
         <!-- FrameLayout for our fragments -->
         <FrameLayout
             android:id="@+id/activity_main_frame_layout"
