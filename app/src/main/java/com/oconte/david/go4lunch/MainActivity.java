@@ -11,7 +11,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 
 
 import com.firebase.ui.auth.AuthUI;
@@ -224,10 +223,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 1 - Show first fragment when activity is created
     private void showFirstFragment(){
 
-        fragmentHome = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
+        fragmentHome = (FragmentMapView) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
 
         if (fragmentHome == null) {
-            fragmentHome = new HomeFragment();
+            fragmentHome = new FragmentMapView();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.activity_main_frame_layout, fragmentHome)
                     .commit();

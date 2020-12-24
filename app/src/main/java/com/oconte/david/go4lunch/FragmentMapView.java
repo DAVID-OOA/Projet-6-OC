@@ -7,14 +7,14 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class HomeFragment extends Fragment {
+public class FragmentMapView extends Fragment {
 
-    public static HomeFragment newInstance() {
-        return (new HomeFragment());
+    public static FragmentMapView newInstance() {
+        return (new FragmentMapView());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_map_view, container, false);
     }
 }
