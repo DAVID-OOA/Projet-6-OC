@@ -5,7 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.oconte.david.go4lunch"
@@ -34,7 +34,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
@@ -52,8 +52,8 @@ dependencies {
     //ESPRESSO
     implementation 'androidx.test.espresso:espresso-idling-resource:3.3.0'
     implementation 'androidx.test.espresso:espresso-intents:3.3.0'
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
