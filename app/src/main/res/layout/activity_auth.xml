@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:src="@drawable/ic_go4lunch_logo"/>
+
     <!-- BUTTON LOGIN-->
     <Button
         android:id="@+id/main_activity_button_login_google"
@@ -14,7 +19,7 @@
         android:textColor="@color/colorTextOnWhite"
         android:textSize="@dimen/default_text_size"
         android:background="@color/textPrimaryColor"
-        style="?android:attr/borderlessButtonStyle"
+        style="@style/FirebaseUI.Button.AccountChooser.GoogleButton"
         android:layout_margin="@dimen/default_large_margin"
         android:padding="@dimen/default_large_margin"/>
 
@@ -26,8 +31,7 @@
         android:text="Sign in with Facebook"
         android:textColor="#fff"
         android:textSize="@dimen/default_text_size"
-        android:background="@color/colorPrimary"
-        style="?android:attr/borderlessButtonStyle"
+        style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
         android:layout_margin="@dimen/default_large_margin"
         android:padding="@dimen/default_large_margin" />
 

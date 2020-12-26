@@ -20,7 +20,6 @@ public class AuthActivity extends AppCompatActivity {
     // 1 - Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
 
-
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -29,11 +28,6 @@ public class AuthActivity extends AppCompatActivity {
 
 
         }
-
-    ////////////////////////////////////////////////////////////////////////
-    // For auth
-    ////////////////////////////////////////////////////////////////////////
-
 
     @OnClick(R.id.main_activity_button_login_google)
     public void onClickLoginButton() {
@@ -47,7 +41,9 @@ public class AuthActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setTheme(R.style.LoginTheme)
                         .setAvailableProviders(
-                                Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                                Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build())
+                                        //new AuthUI.IdpConfig.FacebookBuilder().build())
+                        )
                         .setIsSmartLockEnabled(false, true)
                         .setLogo(R.drawable.ic_go4lunch_logo)
                         .build(), RC_SIGN_IN);
