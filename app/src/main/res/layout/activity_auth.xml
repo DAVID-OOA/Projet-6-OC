@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="520dp"
-        android:src="@drawable/ic_go4lunch_logo"/>
+        android:src="@drawable/go4lunch_icon"/>
 
     <!-- BUTTON LOGIN-->
     <Button
