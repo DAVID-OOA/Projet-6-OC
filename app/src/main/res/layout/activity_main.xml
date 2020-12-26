@@ -8,34 +8,34 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
-    </androidx.appcompat.widget.Toolbar>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            android:minHeight="?attr/actionBarSize">
+        </androidx.appcompat.widget.Toolbar>
 
         <!-- BUTTON LOGIN -->
         <Button
             android:id="@+id/main_activity_button_login_google"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="login"
-            android:textColor="#fff"
+            android:textColor="#000"
             style="?android:attr/borderlessButtonStyle"/>
-
-        <!-- FrameLayout for our fragments -->
+        <!-- FrameLayout for our fragments
         <FrameLayout
             android:id="@+id/activity_main_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>-->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"

@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.activity_main_drawerLayout) DrawerLayout drawerLayout;
     @BindView(R.id.activity_main_nav_view) NavigationView navigationView;
 
-    //@BindView(R.id.main_activity_button_login_google) Button button;
 
     //FOR FRAGMENTS
     // 1 - Declare fragment handled by Navigation Drawer
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //FOR DATAS
     // 2 - Identify each fragment with a number
     private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_COORDONNEES = 1;
+    private static final int FRAGMENT_MAP_VIEW = 1;
     private static final int FRAGMENT_EXPERIENCES = 2;
     private static final int FRAGMENT_LUNCH = 3;
     private static final int FRAGMENT_SETTINGS = 4;
@@ -68,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureBottomView();
 
-        this.showFirstFragment();
-        //this.onClickLoginButton();
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setAvailableProviders(
                                 Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                         .setIsSmartLockEnabled(false, true)
-                        //.setLogo(R.drawable.ic_logo_auth)
+                        //.setLogo(R.drawable.)
                         .build(),
                 RC_SIGN_IN);
     }
@@ -154,21 +151,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    /*private void startLunchActivity() {
-        Intent intent = new Intent(this, SearchViewActivity.class);
-        startActivity(intent);
-    }*/
 
     private void startSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-
     }
-
-    /*private void startLogoutActivity(){
-        Intent intent = new Intent(this, HelpActivity.class);
-        startActivity(intent);
-    }*/
 
 
     // ---------------------
@@ -181,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void configureToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("I'm Hungry");
-
     }
 
 
@@ -191,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      *  - Configure BottomView
      */
-
     public boolean onNavigationItemSelected(Integer integer) {
 
         switch (integer){
@@ -212,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureBottomView() {
-
         bottomNavigationView.setOnNavigationItemSelectedListener(item-> onNavigationItemSelected(item.getItemId()));
     }
 
@@ -220,64 +204,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // FRAGMENTS
     // ---------------------
 
-    // 1 - Show first fragment when activity is created
-    private void showFirstFragment(){
-
-        fragmentHome = (FragmentMapView) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
-
-        if (fragmentHome == null) {
-            fragmentHome = new FragmentMapView();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_main_frame_layout, fragmentHome)
-                    .commit();
-        }
-
-    }
-
     // 5 - Show fragment according an Identifier
 
     private void showFragment(int fragmentIdentifier){
         switch (fragmentIdentifier){
-            //case FRAGMENT_HOME :
-            //this.showHomeFragment();
-            // break;
-            case FRAGMENT_COORDONNEES:
-                //this.showCoordonneesFragment();
-                break;
-            case FRAGMENT_EXPERIENCES:
-                //this.showExperiencesFragment();
-                break;
             case FRAGMENT_LUNCH:
                 //this.showEtudesFragment();
-                break;
-            case FRAGMENT_SETTINGS:
-                //this.showLanguesFragment();
                 break;
             case FRAGMENT_LOGOUT:
                 //this.showInterestsFragment();
                 break;
             default:
                 break;
-        }
-    }
-
-    // 4 - Create each fragment page and show it
-
-    /*private void showHomeFragment() {
-        if (this.fragmentHome == null) this.fragmentHome = CoordonneesFragment.newInstance();
-        this.startTransactionFragment(this.fragmentHome);
-    }
-
-    private void showCoordonneesFragment(){
-        if (this.fragmentCoordonnees == null) this.fragmentCoordonnees = CoordonneesFragment.newInstance();
-        this.startTransactionFragment(this.fragmentCoordonnees);
-    }*/
-
-    // 3 - Generic method that will replace and show a fragment inside the MainActivity Frame Layout
-    private void startTransactionFragment(Fragment fragment) {
-        if (!fragment.isVisible()) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.activity_main_frame_layout, fragment).commit();
         }
     }
 

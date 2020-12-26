@@ -14,12 +14,13 @@
         android:minHeight="?attr/actionBarSize">
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- BUTTON LOGIN -->
     <Button
         android:id="@+id/main_activity_button_login_google"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="login"
-        android:textColor="#fff"
+        android:textColor="#000"
         style="?android:attr/borderlessButtonStyle"/>
 
 </LinearLayout>
