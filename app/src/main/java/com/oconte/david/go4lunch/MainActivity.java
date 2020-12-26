@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ////////////////////////////////////////////////////////////////////////
 
 
-    @OnClick(R.id.main_activity_button_login_google)
+    /*@OnClick(R.id.main_activity_button_login_google)
     public void onClickLoginButton() {
         // 3 - Launch Sign-In Activity when user clicked on Login Button
         this.startSignInActivity();
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         //.setLogo(R.drawable.)
                         .build(),
                 RC_SIGN_IN);
-    }
+    }*/
 
 
     //////////////////////////////////////////////////////////////////
