@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        this.startAuthActivity();
+
         this.configureToolbar();
 
         this.configureDrawerLayout();
@@ -65,6 +67,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.showFirstFragment();
 
+
+
+    }
+
+    private void startAuthActivity() {
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -87,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setAvailableProviders(
                                 Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                         .setIsSmartLockEnabled(false, true)
-                        //.setLogo(R.drawable.)
+                        .setLogo(R.drawable.ic_go4lunch_logo)
                         .build(),
                 RC_SIGN_IN);
     }*/
