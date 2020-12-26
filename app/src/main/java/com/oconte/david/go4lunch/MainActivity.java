@@ -13,15 +13,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Arrays;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,9 +30,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //FOR FRAGMENTS
     // 1 - Declare fragment handled by Navigation Drawer
     private Fragment fragmentHome;
-    private Fragment fragmentCoordonnees;
-    private Fragment fragmentExperiences;
-    private Fragment fragmentEtudes;
+    private Fragment fragmentMapView;
+    private Fragment fragmentListView;
+    private Fragment fragmentWorkMates;
     private Fragment fragmentLangues;
     private Fragment fragmentInterests;
 
@@ -44,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 2 - Identify each fragment with a number
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_MAP_VIEW = 1;
-    private static final int FRAGMENT_EXPERIENCES = 2;
+    private static final int FRAGMENT_LIST_VIEW = 2;
     private static final int FRAGMENT_LUNCH = 3;
     private static final int FRAGMENT_SETTINGS = 4;
     private static final int FRAGMENT_LOGOUT = 5;
@@ -66,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureNavigationView();
 
         this.configureBottomView();
+
+        this.showFirstFragment();
 
     }
 
@@ -134,13 +132,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id){
             case R.id.activity_main_drawer_lunch:
-                this.showFragment(FRAGMENT_LUNCH);
+                //this.showFragment(FRAGMENT_LUNCH);
                 break;
             case R.id.activity_main_drawer_settings:
                 this.startSettingsActivity();
                 return true;
             case R.id.activity_main_drawer_logout:
-                this.showFragment(FRAGMENT_LOGOUT);
+                //this.showFragment(FRAGMENT_LOGOUT);
                 break;
             default:
                 break;
@@ -181,14 +179,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (integer){
             case R.id.action_map:
-                this.showFragment(FRAGMENT_LUNCH);
+                this.showMapViewFragment();
                 break;
             case R.id.action_list:
-                this.startSettingsActivity();
+                this.showListViewFragment();
                 return true;
             case R.id.action_workmates:
-                this.showFragment(FRAGMENT_LOGOUT);
-                break;
+                this.showWorkMatesFragment();
             default:
                 break;
         }
@@ -204,20 +201,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // FRAGMENTS
     // ---------------------
 
+    // 1 - Show first fragment when activity is created
+    private void showFirstFragment(){
+
+        fragmentMapView = (FragmentMapView) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
+
+        if (fragmentMapView == null) {
+            fragmentMapView = new FragmentMapView();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.activity_main_frame_layout, fragmentMapView)
+                    .commit();
+        }
+
+    }
+
     // 5 - Show fragment according an Identifier
 
-    private void showFragment(int fragmentIdentifier){
+    /*private void showFragment(int fragmentIdentifier){
         switch (fragmentIdentifier){
-            case FRAGMENT_LUNCH:
-                //this.showEtudesFragment();
+            case FRAGMENT_MAP_VIEW:
+                this.showMapViewFragment();
                 break;
-            case FRAGMENT_LOGOUT:
-                //this.showInterestsFragment();
+            case FRAGMENT_LIST_VIEW:
+                this.showListViewFragment();
                 break;
             default:
                 break;
         }
+    }*/
+
+    private void startTransactionFragment(Fragment fragment) {
+        if (!fragment.isVisible()) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.activity_main_frame_layout, fragment).commit();
+        }
     }
+
+    //Fragment bottom view
+    private void showMapViewFragment(){
+        if (this.fragmentMapView == null) this.fragmentMapView = FragmentMapView.newInstance();
+        this.startTransactionFragment(this.fragmentMapView);
+    }
+
+    private void showListViewFragment(){
+        if (this.fragmentListView == null) this.fragmentListView = FragmentListView.newInstance();
+        this.startTransactionFragment(this.fragmentListView);
+    }
+
+    private void showWorkMatesFragment(){
+        if (this.fragmentWorkMates == null) this.fragmentWorkMates = FragmentWorkMates.newInstance();
+        this.startTransactionFragment(this.fragmentWorkMates);
+    }
+
+    //Fragment Navigation view
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
