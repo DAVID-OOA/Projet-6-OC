@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.auth;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -6,6 +6,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
+import com.oconte.david.go4lunch.R;
 
 import java.util.Arrays;
 
