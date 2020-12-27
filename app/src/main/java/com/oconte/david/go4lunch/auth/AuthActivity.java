@@ -1,12 +1,19 @@
 package com.oconte.david.go4lunch.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.android.material.snackbar.Snackbar;
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
+import com.oconte.david.go4lunch.SettingsActivity;
 
 import java.util.Arrays;
 
@@ -20,6 +27,9 @@ public class AuthActivity extends AppCompatActivity {
     // 1 - Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
 
+    //FOR DESIGN
+    @BindView(R.id.auth_activity_layout) CoordinatorLayout coordinatorLayout;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -28,6 +38,15 @@ public class AuthActivity extends AppCompatActivity {
 
 
         }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ButterKnife.bind(this);
+        setContentView(R.layout.activity_auth);
+        // 4 - Handle SignIn Activity response on activity result
+        this.handleResponseAfterSignIn(requestCode, resultCode, data);
+    }
 
     @OnClick(R.id.main_activity_button_login_google)
     public void onClickLoginButton() {
@@ -45,7 +64,45 @@ public class AuthActivity extends AppCompatActivity {
                                         //new AuthUI.IdpConfig.FacebookBuilder().build())
                         )
                         .setIsSmartLockEnabled(false, true)
-                        .setLogo(R.drawable.ic_go4lunch_logo)
+                        .setLogo(R.drawable.go4lunch_icon)
                         .build(), RC_SIGN_IN);
+    }
+
+    //////////////////////////////////////////////////////
+    // UI
+    ///////////////////////////////////////////////////////
+
+    // 2 - Show Snack Bar with a message
+    private void showSnackBar(CoordinatorLayout coordinatorLayout, String message){
+        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    ///////////////////////////////////////////////////////
+    // UTILS
+    //////////////////////////////////////////////////////
+    // 3 - Method that handles response after SignIn Activity close
+    private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data){
+
+        IdpResponse response = IdpResponse.fromResultIntent(data);
+
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) { // SUCCESS
+                this.startMainActivity();
+            } else { // ERRORS
+                if (response == null) {
+                    showSnackBar(this.coordinatorLayout, "error_authentication_canceled");
+                } else if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    showSnackBar(this.coordinatorLayout, "error_no_internet");
+                } else if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                    showSnackBar(this.coordinatorLayout, "error_unknown_error");
+                }
+            }
+        }
+    }
+
+    // For started the MainActivity
+    private void startMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
