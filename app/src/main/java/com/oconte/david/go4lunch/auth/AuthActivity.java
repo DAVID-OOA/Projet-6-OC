@@ -2,6 +2,7 @@ package com.oconte.david.go4lunch.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.SettingsActivity;
+import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
 
 import java.util.Arrays;
 
@@ -29,21 +31,22 @@ public class AuthActivity extends AppCompatActivity {
 
     //FOR DESIGN
     @BindView(R.id.auth_activity_layout) CoordinatorLayout coordinatorLayout;
+    //private ActivityAuthBinding binding;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_auth);
-            ButterKnife.bind(this);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //binding = ActivityAuthBinding.inflate(getLayoutInflater());
+        //View view = binding.getRoot();
+        //setContentView(view);
+        setContentView(R.layout.activity_auth);
+        ButterKnife.bind(this);
 
-
-        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ButterKnife.bind(this);
-        setContentView(R.layout.activity_auth);
         // 4 - Handle SignIn Activity response on activity result
         this.handleResponseAfterSignIn(requestCode, resultCode, data);
     }
@@ -53,6 +56,13 @@ public class AuthActivity extends AppCompatActivity {
         // 3 - Launch Sign-In Activity when user clicked on Login Button
         this.startSignInActivity();
     }
+
+
+   /* binding.main_activity_button_login_google.setOnClickListener(new View.OnClickListener() {
+        viewModel.userClicked(),
+        this.startSignInActivity();
+    });*/
+
 
     // 2 - Launch Sign-In Activity
     private void startSignInActivity(){
