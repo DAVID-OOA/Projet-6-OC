@@ -1,5 +1,6 @@
 package com.oconte.david.go4lunch.auth;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +42,17 @@ public class AuthActivity extends AppCompatActivity {
         //setContentView(view);
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
+
+        this.setUpSignActivity();
+
+    }
+
+
+    public void setUpSignActivity(){
+        Intent returnIntent = new Intent();
+        //returnIntent
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
 
     }
 

@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.activity_main_nav_view) NavigationView navigationView;
 
 
+    // 1 - Identifier for Sign-In Activity
+    private static final int RC_SIGN_IN = 123;
+
     //FOR FRAGMENTS
     // 1 - Declare fragment handled by Navigation Drawer
     private Fragment fragmentHome;
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.showFirstFragment();
 
 
+        this.setUpForStartThisActivity();
 
     }
 
@@ -77,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+    public void setUpForStartThisActivity(){
+        Intent i = new Intent(this, AuthActivity.class);
+        startActivityForResult(i,RC_SIGN_IN);
+    }
 
     //////////////////////////////////////////////////////////////////
     // NAVIGATION DRAWER                                            //
