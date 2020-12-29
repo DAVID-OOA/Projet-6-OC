@@ -43,14 +43,14 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
 
-        this.setUpSignActivity();
+        //this.setUpSignActivity();
 
     }
 
 
     public void setUpSignActivity(){
         Intent returnIntent = new Intent();
-        //returnIntent
+        //returnIntent.putExtra("result", result);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
 
