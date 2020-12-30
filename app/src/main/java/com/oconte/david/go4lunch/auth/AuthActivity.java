@@ -45,10 +45,12 @@ public class AuthActivity extends AppCompatActivity {
 
         //this.setUpSignActivity();
 
+
     }
 
 
     public void setUpSignActivity(){
+
         Intent returnIntent = new Intent();
         //returnIntent.putExtra("result", result);
         setResult(Activity.RESULT_OK, returnIntent);
@@ -61,6 +63,7 @@ public class AuthActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         // 4 - Handle SignIn Activity response on activity result
         this.handleResponseAfterSignIn(requestCode, resultCode, data);
+
     }
 
     @OnClick(R.id.main_activity_button_login_google)
@@ -109,7 +112,7 @@ public class AuthActivity extends AppCompatActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) { // SUCCESS
-                this.startMainActivity();
+                this.setUpSignActivity();
             } else { // ERRORS
                 if (response == null) {
                     showSnackBar(this.coordinatorLayout, "error_authentication_canceled");
@@ -122,9 +125,5 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-    // For started the MainActivity
-    private void startMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
+
 }
