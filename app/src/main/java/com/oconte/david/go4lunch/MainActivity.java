@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.oconte.david.go4lunch.auth.AuthActivity;
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this.startSettingsActivity();
                 return true;
             case R.id.activity_main_drawer_logout:
-                //this.showFragment(FRAGMENT_LOGOUT);
+                this.signOutUserFromFirebase();
                 break;
             default:
                 break;
@@ -140,6 +141,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //For SIGN OUT
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    // 1 - Create http requests (SignOut & Delete)
+
+    private void signOutUserFromFirebase(){
+        AuthUI.getInstance()
+                .signOut(this);
+        //.addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
     }
 
 
