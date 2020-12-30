@@ -1,0 +1,49 @@
+language: android
+dist: trusty
+jdk: oraclejdk8
+sudo: false
+
+android:
+  components:
+    - build-tools-29.0.0
+    - android-15
+    - add-on
+    - extra-android-support
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - sys-img-x86-android-25
+    - sys-img-armeabi-v7a-google_apis-google-25
+  licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+    - intel-android-extra-license.+
+
+before_install:
+  - yes | sdkmanager "platforms;android-25"
+  - yes | sdkmanager "platforms;android-26"
+
+install: true
+
+addons:
+  apt:
+    packages:
+      - python3.5
+
+before_script:
+  # Download and install gcloud cli to run firebase test commands
+  - wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-308.0.0-linux-x86_64.tar.gz
+  - tar zxf google-cloud-sdk-308.0.0-linux-x86_64.tar.gz
+  - echo n | ./google-cloud-sdk/install.sh
+  - echo y | ./google-cloud-sdk/bin/gcloud components update
+  - echo y | ./google-cloud-sdk/bin/gcloud components install beta
+  - wget https://firebasestorage.googleapis.com/v0/b/my-news-8af6b.appspot.com/o/my-news-8af6b-b670739b4592.json?alt=media&token=05b3f526-bbfc-4d93-aa65-77039513da5a
+
+script:
+  - chmod +x gradlew
+  - ./gradlew assembleDebug
+  - ./gradlew assembleDebugAndroidTest
+  - ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file need the key here
+  - ./google-cloud-sdk/bin/gcloud config set project NAME OF PROJECT
+  - ./google-cloud-sdk/bin/gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=25
