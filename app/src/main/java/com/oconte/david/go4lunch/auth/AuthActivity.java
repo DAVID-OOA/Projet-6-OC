@@ -50,25 +50,6 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
 
-        //this.setUpSignActivity();
-
-        //this.onClickSignOutButton();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //For SIGN OUT
-    ///////////////////////////////////////////////////////////////////////////////////////
-    /*@OnClick(R.id.activity_main_drawer_logout)
-    public void onClickSignOutButton() {
-        this.signOutUserFromFirebase();
-    }*/
-
-    // 1 - Create http requests (SignOut & Delete)
-
-    private void signOutUserFromFirebase(){
-        AuthUI.getInstance()
-                .signOut(this);
-                //.addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
     }
 
 
