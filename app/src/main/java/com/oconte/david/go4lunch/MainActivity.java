@@ -152,15 +152,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void signOutUserFromFirebase(){
         AuthUI.getInstance()
                 .signOut(this);
-        //.addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
     }
-
 
     private void startSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
-
 
     // ---------------------
     // TOOLBAR

@@ -52,24 +52,6 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
-
-    /*/ 3 - Create OnCompleteListener called after tasks ended
-    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
-        return new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                switch (origin){
-                    case SIGN_OUT_TASK:
-                        finish();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-    }*/
-
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     public void setUpSignActivity(){
 
