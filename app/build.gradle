@@ -25,6 +25,22 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+
+            //buildConfigField("String", "API_SERVER", "\"https://api.nytimes.com\"")
+        }
+
+        espresso{
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+
+            //buildConfigField("String", "API_SERVER", "\"http://127.0.0.1:9900\"")
+        }
     }
 
     buildFeatures {
@@ -34,6 +50,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
