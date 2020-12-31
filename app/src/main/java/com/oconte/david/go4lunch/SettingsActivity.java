@@ -32,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
      */
     protected void configureToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("I'm Hungry");
+        getSupportActionBar().setTitle("I'm Hungry !");
 
     }
 }

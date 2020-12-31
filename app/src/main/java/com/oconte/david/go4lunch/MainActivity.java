@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this.startSettingsActivity();
                 return true;
             case R.id.activity_main_drawer_logout:
-                this.signOutUserFromFirebase();
+                this.resultSignOut();
                 break;
             default:
                 break;
@@ -147,13 +147,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //For SIGN OUT
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    // 1 - Create http requests (SignOut & Delete)
+    // It's for sign out and restart AuthActivity
+    private void resultSignOut() {
+        this.signOutUserFromFirebase();
+        this.startAuthActivity();
+    }
 
+    // It's for sign Out
     private void signOutUserFromFirebase(){
         AuthUI.getInstance()
                 .signOut(this);
     }
 
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void startSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
@@ -169,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     protected void configureToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("I'm Hungry");
+        getSupportActionBar().setTitle("I'm Hungry !");
     }
 
 
@@ -205,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // FRAGMENTS
     // ---------------------
 
-    // 1 - Show first fragment when activity is created
+    // Show first fragment when activity is created
     private void showFirstFragment(){
 
         fragmentMapView = (FragmentMapView) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
@@ -255,6 +264,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showWorkMatesFragment(){
         if (this.fragmentWorkMates == null) this.fragmentWorkMates = FragmentWorkMates.newInstance();
         this.startTransactionFragment(this.fragmentWorkMates);
+    }
+
+    private void changeTitleToolbar(){
+
     }
 
     //Fragment Navigation view
