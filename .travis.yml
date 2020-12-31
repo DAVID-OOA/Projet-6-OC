@@ -38,12 +38,12 @@ before_script:
   - echo n | ./google-cloud-sdk/install.sh
   - echo y | ./google-cloud-sdk/bin/gcloud components update
   - echo y | ./google-cloud-sdk/bin/gcloud components install beta
-  - wget https://firebasestorage.googleapis.com/v0/b/my-news-8af6b.appspot.com/o/my-news-8af6b-b670739b4592.json?alt=media&token=05b3f526-bbfc-4d93-aa65-77039513da5a
+  - wget https://firebasestorage.googleapis.com/v0/b/go4lunch-e53cf.appspot.com/o/go4lunch-300214-63bc29d99e27.json?alt=media&token=0d5cb145-0546-45ac-b433-f93a97a022a1
 
 script:
   - chmod +x gradlew
   - ./gradlew assembleDebug
   - ./gradlew assembleDebugAndroidTest
-  - ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file need the key here
+  - ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file go4lunch-300214-63bc29d99e27.json?alt=media&token=0d5cb145-0546-45ac-b433-f93a97a022a1
   - ./google-cloud-sdk/bin/gcloud config set project go4lunch-e53cf
   - ./google-cloud-sdk/bin/gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=25
