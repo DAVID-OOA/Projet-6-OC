@@ -17,6 +17,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.oconte.david.go4lunch.auth.AuthActivity;
+import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

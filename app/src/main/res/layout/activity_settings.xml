@@ -6,22 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_toolbar">
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/layout_toolbar">
 
-        <include
-            layout="@layout/toolbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
-    </LinearLayout>
+         <include
+             layout="@layout/toolbar"
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent" />
+     </LinearLayou
 
-
-    <!-- Notifications Un message de notification devra être automatiquement envoyé à tous les
-    utilisateurs qui ont sélectionné un restaurant dans l'application. Le message sera envoyé à 12h.
-    Il rappellera à l'utilisateur le nom du restaurant qu'il a choisi, l'adresse, ainsi que la liste
-    des collègues qui viendront avec lui.-->
+     Notifications Un message de notification devra être automatiquement envoyé à tous les
+     utilisateurs qui ont sélectionné un restaurant dans l'application. Le message sera envoyé à 12h.
+     Il rappellera à l'utilisateur le nom du restaurant qu'il a choisi, l'adresse, ainsi que la liste
+     des collègues qui viendront avec lui.-->
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -40,114 +39,113 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <LinearLayout
+                    android:id="@+id/layout_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <include
+                        layout="@layout/toolbar" />
+                </LinearLayout>
+
                 <ImageView
                     android:id="@+id/photo_user"
                     android:layout_width="@dimen/settings_photo_size"
                     android:layout_height="@dimen/settings_photo_size"
                     android:layout_margin="@dimen/big_margin"
-
+                    app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:src="@drawable/baseline_account_circle_24"
-                    tools:ignore="MissingConstraints" />
+                    android:src="@drawable/baseline_account_circle_24"/>
 
                 <ImageView
                     android:layout_width="@dimen/settings_photo_size"
                     android:layout_height="@dimen/settings_photo_size"
-
+                    android:src="@drawable/add_photo_icon"
                     android:layout_margin="@dimen/big_margin"
+                    app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@id/photo_user">
+
+                    <EditText
+                        android:id="@+id/username_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="settings_username"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@id/username_input">
+
+                    <EditText
+                        android:id="@+id/email_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="settings_email_address"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/notifications_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/email_input"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/small_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="settings_enable_notifications"
+                        android:textSize="@dimen/settings_notification_text_size"/>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/notification_switch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="@dimen/settings_progressbar_size"
+                    android:layout_height="@dimen/settings_progressbar_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintTop_toBottomOf="@id/notifications_layout"
+                    android:layout_margin="@dimen/big_margin"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin"
-                app:errorEnabled="@{viewmodel.isUsernameError}"
-                app:errorMessage="@{viewmodel.errorMessageUsername}"
-                app:layout_constraintTop_toBottomOf="@id/photo_user">
-
-                <EditText
-                    android:id="@+id/username_field"
+                <Button
+                    android:id="@+id/update_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="settings_username"
-                    android:text="@={viewmodel.username}"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="settings_update_user_information"
+                    app:layout_constraintTop_toBottomOf="@id/progress_bar"
+                    android:layout_margin="@dimen/small_margin"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin"
-                app:errorEnabled="@{viewmodel.isEmailError}"
-                app:errorMessage="@{viewmodel.errorMessageEmail}"
-                app:layout_constraintTop_toBottomOf="@id/username_input">
-
-                <EditText
-                    android:id="@+id/email_field"
+                <Button
+                    android:id="@+id/delete_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="settings_email_address"
-                    android:text="@={viewmodel.email}"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="settings_delete_account"
+                    app:layout_constraintTop_toBottomOf="@id/update_button"
+                    android:layout_margin="@dimen/small_margin"/>
 
-            <LinearLayout
-                android:id="@+id/notifications_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/email_input"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/small_margin">
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </ScrollView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="settings_enable_notifications"
-                    android:textSize="@dimen/settings_notification_text_size"/>
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/notification_switch"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="@{viewmodel.isNotificationEnabled}"
-                    android:onClick="@{(view) -> listener.onClick(view)}"/>
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="@dimen/settings_progressbar_size"
-                android:layout_height="@dimen/settings_progressbar_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/notifications_layout"
-                android:layout_margin="@dimen/big_margin"
-                android:visibility="@{viewmodel.isLoading ? View.VISIBLE : View.INVISIBLE}"/>
-
-            <Button
-                android:id="@+id/update_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="settings_update_user_information"
-                app:layout_constraintTop_toBottomOf="@id/progress_bar"
-                android:layout_margin="@dimen/small_margin"
-                android:onClick="@{(view) -> listener.onClick(view)}"/>
-
-            <Button
-                android:id="@+id/delete_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="settings_delete_account"
-                app:layout_constraintTop_toBottomOf="@id/update_button"
-                android:layout_margin="@dimen/small_margin"
-                android:onClick="@{(view) -> listener.onClick(view)}"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</ScrollView>
 
 </LinearLayout>

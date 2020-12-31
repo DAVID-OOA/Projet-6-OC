@@ -1,14 +1,14 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.workMates;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import butterknife.BindView;
+import com.oconte.david.go4lunch.R;
+
 import butterknife.ButterKnife;
 
 public class FragmentWorkMates extends Fragment {
