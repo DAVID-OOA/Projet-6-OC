@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.showFirstFragment();
 
-
         this.setUpForStartThisActivity();
 
     }
+
 
     private void startAuthActivity() {
         Intent intent = new Intent(this, AuthActivity.class);
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
+    //It's for start after the authentification
     public void setUpForStartThisActivity(){
         Intent i = new Intent(this, AuthActivity.class);
         startActivityForResult(i,RC_SIGN_IN);
@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AuthUI.getInstance()
                 .signOut(this);
     }
+
 
     private void startSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);

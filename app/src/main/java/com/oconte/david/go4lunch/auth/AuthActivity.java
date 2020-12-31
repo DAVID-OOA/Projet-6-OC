@@ -29,16 +29,14 @@ import butterknife.OnClick;
 public class AuthActivity extends AppCompatActivity {
 
     //FOR DATA
-    // 1 - Identifier for Sign-In Activity
+    // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
 
-    // 2 - Identify each Http Request
+    // Identify each Http Request
     private static final int SIGN_OUT_TASK = 10;
 
     //FOR DESIGN
     @BindView(R.id.auth_activity_layout) CoordinatorLayout coordinatorLayout;
-
-
     //private ActivityAuthBinding binding;
 
     @Override
@@ -52,11 +50,12 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //For Signing
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     public void setUpSignActivity(){
 
         Intent returnIntent = new Intent();
-        //returnIntent.putExtra("result", result);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
 
@@ -76,14 +75,7 @@ public class AuthActivity extends AppCompatActivity {
         this.startSignInActivity();
     }
 
-
-   /* binding.main_activity_button_login_google.setOnClickListener(new View.OnClickListener() {
-        viewModel.userClicked(),
-        this.startSignInActivity();
-    });*/
-
-
-    // 2 - Launch Sign-In Activity
+    // Launch Sign-In Activity
     private void startSignInActivity(){
         startActivityForResult(AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -97,19 +89,7 @@ public class AuthActivity extends AppCompatActivity {
                         .build(), RC_SIGN_IN);
     }
 
-    //////////////////////////////////////////////////////
-    // UI
-    ///////////////////////////////////////////////////////
-
-    // 2 - Show Snack Bar with a message
-    private void showSnackBar(CoordinatorLayout coordinatorLayout, String message){
-        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    ///////////////////////////////////////////////////////
-    // UTILS
-    //////////////////////////////////////////////////////
-    // 3 - Method that handles response after SignIn Activity close
+    // Method that handles response after SignIn Activity close
     private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data){
 
         IdpResponse response = IdpResponse.fromResultIntent(data);
@@ -129,5 +109,18 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
+    //////////////////////////////////////////////////////
+    // UI
+    ///////////////////////////////////////////////////////
+
+    // Show Snack Bar with a message
+    private void showSnackBar(CoordinatorLayout coordinatorLayout, String message){
+        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    /*binding.main_activity_button_login_google.setOnClickListener(new View.OnClickListener() {
+        viewModel.userClicked(),
+        this.startSignInActivity();
+    });*/
 
 }
