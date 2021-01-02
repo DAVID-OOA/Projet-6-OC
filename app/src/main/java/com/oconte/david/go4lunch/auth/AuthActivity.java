@@ -21,6 +21,7 @@ import com.oconte.david.go4lunch.SettingsActivity;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +36,7 @@ public class AuthActivity extends AppCompatActivity {
     // Identify each Http Request
     private static final int SIGN_OUT_TASK = 10;
 
-    //FOR DESIGN
-    //@BindView(R.id.auth_activity_layout) CoordinatorLayout coordinatorLayout;
+    //FOR DESIGN;
     private ActivityAuthBinding binding;
 
     @Override
@@ -45,16 +45,16 @@ public class AuthActivity extends AppCompatActivity {
         binding = ActivityAuthBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        //setContentView(R.layout.activity_auth);
-        //ButterKnife.bind(this);
 
-        binding.mainActivityButtonLoginGoogle.setOnClickListener(new View.OnClickListener() {
-
+        /*binding.mainActivityButtonLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Launch Sign-In Activity when user clicked on Login Button
                 startSignInActivity();
             }
-        });
+        });*/
+
+        this.onClickLoginButton();
 
     }
 
@@ -78,13 +78,15 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.main_activity_button_login_google)
-    public void onClickLoginButton() {
-        // 3 - Launch Sign-In Activity when user clicked on Login Button
-        this.startSignInActivity();
+    public void onClickLoginButton(){
+        binding.mainActivityButtonLoginGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Launch Sign-In Activity when user clicked on Login Button
+                startSignInActivity();
+            }
+        });
     }
-    
-
 
     // Launch Sign-In Activity
     private void startSignInActivity(){
@@ -110,11 +112,11 @@ public class AuthActivity extends AppCompatActivity {
                 this.setUpSignActivity();
             } else { // ERRORS
                 if (response == null) {
-                    //showSnackBar(this.coordinatorLayout, "error_authentication_canceled");
-                } else if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    //showSnackBar(this.coordinatorLayout, "error_no_internet");
+                    showSnackBar(binding.authActivityLayout, "error_authentication_canceled");
+                } else if (Objects.requireNonNull(response.getError()).getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    showSnackBar(binding.authActivityLayout, "error_no_internet");
                 } else if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    //showSnackBar(this.coordinatorLayout, "error_unknown_error");
+                    showSnackBar(binding.authActivityLayout, "error_unknown_error");
                 }
             }
         }
