@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 import butterknife.ButterKnife;
 
 public class FragmentMapView extends Fragment {
@@ -21,7 +23,7 @@ public class FragmentMapView extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map_view, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("I'm Hungry !");
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("I'm Hungry !");
 
         return view;
     }

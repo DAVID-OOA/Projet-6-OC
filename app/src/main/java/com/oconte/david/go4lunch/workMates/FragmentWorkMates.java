@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 
 import com.oconte.david.go4lunch.R;
 
+import java.util.Objects;
+
 import butterknife.ButterKnife;
 
 public class FragmentWorkMates extends Fragment {
@@ -25,7 +27,7 @@ public class FragmentWorkMates extends Fragment {
         View view = inflater.inflate(R.layout.fragment_workmates, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Available workmates");
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Available workmates");
 
 
         return view;
