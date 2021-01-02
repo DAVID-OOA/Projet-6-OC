@@ -36,19 +36,28 @@ public class AuthActivity extends AppCompatActivity {
     private static final int SIGN_OUT_TASK = 10;
 
     //FOR DESIGN
-    @BindView(R.id.auth_activity_layout) CoordinatorLayout coordinatorLayout;
-    //private ActivityAuthBinding binding;
+    //@BindView(R.id.auth_activity_layout) CoordinatorLayout coordinatorLayout;
+    private ActivityAuthBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //binding = ActivityAuthBinding.inflate(getLayoutInflater());
-        //View view = binding.getRoot();
-        //setContentView(view);
-        setContentView(R.layout.activity_auth);
-        ButterKnife.bind(this);
+        binding = ActivityAuthBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+        //setContentView(R.layout.activity_auth);
+        //ButterKnife.bind(this);
+
+        binding.mainActivityButtonLoginGoogle.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startSignInActivity();
+            }
+        });
 
     }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //For Signing
@@ -74,6 +83,8 @@ public class AuthActivity extends AppCompatActivity {
         // 3 - Launch Sign-In Activity when user clicked on Login Button
         this.startSignInActivity();
     }
+    
+
 
     // Launch Sign-In Activity
     private void startSignInActivity(){
@@ -99,11 +110,11 @@ public class AuthActivity extends AppCompatActivity {
                 this.setUpSignActivity();
             } else { // ERRORS
                 if (response == null) {
-                    showSnackBar(this.coordinatorLayout, "error_authentication_canceled");
+                    //showSnackBar(this.coordinatorLayout, "error_authentication_canceled");
                 } else if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    showSnackBar(this.coordinatorLayout, "error_no_internet");
+                    //showSnackBar(this.coordinatorLayout, "error_no_internet");
                 } else if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    showSnackBar(this.coordinatorLayout, "error_unknown_error");
+                    //showSnackBar(this.coordinatorLayout, "error_unknown_error");
                 }
             }
         }
@@ -118,9 +129,6 @@ public class AuthActivity extends AppCompatActivity {
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
-    /*binding.main_activity_button_login_google.setOnClickListener(new View.OnClickListener() {
-        viewModel.userClicked(),
-        this.startSignInActivity();
-    });*/
+
 
 }
