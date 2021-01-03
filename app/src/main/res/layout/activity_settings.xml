@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <!-- <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:id="@+id/layout_toolbar">
-
-         <include
-             layout="@layout/toolbar"
-             android:layout_height="wrap_content"
-             android:layout_width="match_parent" />
-     </LinearLayou
-
-     Notifications Un message de notification devra être automatiquement envoyé à tous les
-     utilisateurs qui ont sélectionné un restaurant dans l'application. Le message sera envoyé à 12h.
-     Il rappellera à l'utilisateur le nom du restaurant qu'il a choisi, l'adresse, ainsi que la liste
-     des collègues qui viendront avec lui.-->
-
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -34,8 +16,6 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_setting_layout"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
