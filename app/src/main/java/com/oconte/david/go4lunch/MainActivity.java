@@ -27,9 +27,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    //@BindView(R.id.bottom_nav) BottomNavigationView bottomNavigationView;
-    //@BindView(R.id.activity_main_drawerLayout) DrawerLayout drawerLayout;
-    //@BindView(R.id.activity_main_nav_view) NavigationView navigationView;
 
 
     private ActivityMainBinding binding;
@@ -45,16 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentWorkMates;
     private Fragment fragmentLangues;
     private Fragment fragmentInterests;
-
-    //FOR DATAS
-    // 2 - Identify each fragment with a number
-    private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_MAP_VIEW = 1;
-    private static final int FRAGMENT_LIST_VIEW = 2;
-    private static final int FRAGMENT_LUNCH = 3;
-    private static final int FRAGMENT_SETTINGS = 4;
-    private static final int FRAGMENT_LOGOUT = 5;
-
 
 
     @Override
@@ -233,21 +220,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    // 5 - Show fragment according an Identifier
-
-    /*private void showFragment(int fragmentIdentifier){
-        switch (fragmentIdentifier){
-            case FRAGMENT_MAP_VIEW:
-                this.showMapViewFragment();
-                break;
-            case FRAGMENT_LIST_VIEW:
-                this.showListViewFragment();
-                break;
-            default:
-                break;
-        }
-    }*/
-
     private void startTransactionFragment(Fragment fragment) {
         if (!fragment.isVisible()) {
             getSupportFragmentManager().beginTransaction()
@@ -270,12 +242,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (this.fragmentWorkMates == null) this.fragmentWorkMates = FragmentWorkMates.newInstance();
         this.startTransactionFragment(this.fragmentWorkMates);
     }
-
-    private void changeTitleToolbar(){
-
-    }
-
-    //Fragment Navigation view
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
