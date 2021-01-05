@@ -46,14 +46,6 @@ public class AuthActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        /*binding.mainActivityButtonLoginGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Launch Sign-In Activity when user clicked on Login Button
-                startSignInActivity();
-            }
-        });*/
-
         this.onClickLoginButton();
 
     }
@@ -73,7 +65,7 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 4 - Handle SignIn Activity response on activity result
+        // Handle SignIn Activity response on activity result
         this.handleResponseAfterSignIn(requestCode, resultCode, data);
 
     }

@@ -1,10 +1,10 @@
 package com.oconte.david.go4lunch;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
@@ -15,10 +15,12 @@ import android.view.View;
 
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
+import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
 import butterknife.BindView;
@@ -35,13 +37,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int RC_SIGN_IN = 123;
 
     //FOR FRAGMENTS
-    // 1 - Declare fragment handled by Navigation Drawer
-    private Fragment fragmentHome;
+    // Declare fragment handled by Navigation Drawer
     private Fragment fragmentMapView;
     private Fragment fragmentListView;
     private Fragment fragmentWorkMates;
-    private Fragment fragmentLangues;
-    private Fragment fragmentInterests;
 
 
     @Override
@@ -52,25 +51,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(view);
         ButterKnife.bind(this);
 
-        this.startAuthActivity();
-
+        // For UI -------------------
         this.configureToolbar();
-
         this.configureDrawerLayout();
-
         this.configureNavigationView();
+        this.configureBottomView();;
 
-        this.configureBottomView();
-
+        // For Fragment -------------
         this.showFirstFragment();
 
+        // For auth
         this.setUpForStartThisActivity();
+
+        //this.startIfLoginOrNot();
+
+        this.startAuthActivity();
 
     }
 
+    private void startIfLoginOrNot() {
+        if (isCurrentUserLogged() != null) {
+            startMainActivity();
+
+
+        } else if (isCurrentUserLogged() == null) {
+            startAuthActivity();
+        }
+    }
+
+    //For see if already connected or not.
+
+    @Nullable
+    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
+
+    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
+
+    //////////////////////////////////////////////////////////
 
     private void startAuthActivity() {
         Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+    }
+
+    private void startMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -79,62 +103,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setUpForStartThisActivity(){
         Intent i = new Intent(this, AuthActivity.class);
         startActivityForResult(i,RC_SIGN_IN);
-    }
-
-    //////////////////////////////////////////////////////////////////
-    // NAVIGATION DRAWER                                            //
-    //////////////////////////////////////////////////////////////////
-    @Override
-    public void onBackPressed() {
-        // 5 - Handle back click to close menu
-        if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    /**
-     *  - Configure Drawer Layout
-     */
-    private void configureDrawerLayout(){
-        //this.drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawerLayout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        binding.activityMainDrawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-    }
-
-    /**
-     *  - Configure NavigationView
-     */
-    private void configureNavigationView(){
-        //this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
-        binding.activityMainNavView.setNavigationItemSelectedListener(this);
-    }
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        // 4 - Handle Navigation Item Click
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.activity_main_drawer_lunch:
-                //this.showFragment(FRAGMENT_LUNCH);
-                break;
-            case R.id.activity_main_drawer_settings:
-                this.startSettingsActivity();
-                return true;
-            case R.id.activity_main_drawer_logout:
-                this.resultSignOut();
-                break;
-            default:
-                break;
-        }
-
-        binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START);
-
-        return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -154,12 +122,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     private void startSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
+
+    //////////////////////////// UI ///////////////////////////////////////////////////////////////
 
     // ---------------------
     // TOOLBAR
@@ -171,6 +141,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void configureToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("I'm Hungry !");
+    }
+
+    //////////////////////////////////////////////////////////////////
+    // NAVIGATION DRAWER                                            //
+    //////////////////////////////////////////////////////////////////
+    @Override
+    public void onBackPressed() {
+        // 5 - Handle back click to close menu
+        if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /** Configure Drawer Layout*/
+    private void configureDrawerLayout(){
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        binding.activityMainDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    /**
+     *  - Configure NavigationView
+     */
+    private void configureNavigationView(){
+        binding.activityMainNavView.setNavigationItemSelectedListener(this);
+    }
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        // Handle Navigation Item Click
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.activity_main_drawer_lunch:
+                //this.showFragment(FRAGMENT_LUNCH);
+                break;
+            case R.id.activity_main_drawer_settings:
+                this.startSettingsActivity();
+                return true;
+            case R.id.activity_main_drawer_logout:
+                this.resultSignOut();
+                break;
+            default:
+                break;
+        }
+
+        binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
 

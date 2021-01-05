@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.mapView;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.oconte.david.go4lunch.R;
 
 import java.util.Objects;
 
