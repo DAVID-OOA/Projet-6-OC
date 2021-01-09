@@ -13,7 +13,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     //For Design
     private ActivitySettingsBinding binding;
-    //@BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +20,6 @@ public class SettingsActivity extends AppCompatActivity {
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-        ButterKnife.bind(this);
 
         this.configureToolbar();
 
@@ -37,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
      *  - Configure the Toolbar
      */
     protected void configureToolbar() {
-        setSupportActionBar(binding.toolbar);
+        setSupportActionBar(binding.layoutToolbar.toolbar);
         getSupportActionBar().setTitle("I'm Hungry !");
 
     }
