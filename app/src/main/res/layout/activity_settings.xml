@@ -6,6 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/textPrimaryColor"
+        android:minHeight="?attr/actionBarSize">
+    </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/layout_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -27,27 +36,31 @@
 
                     <include
                         layout="@layout/toolbar" />
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <ImageView
                     android:id="@+id/photo_user"
                     android:layout_width="@dimen/settings_photo_size"
                     android:layout_height="@dimen/settings_photo_size"
                     android:layout_margin="@dimen/big_margin"
-                    app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:src="@drawable/baseline_account_circle_24"/>
+                    android:src="@drawable/baseline_account_circle_24"
+                    tools:ignore="MissingConstraints" />
+
+                <!--app:layout_constraintTop_toBottomOf="@id/layout_toolbar"-->
 
                 <ImageView
                     android:layout_width="@dimen/settings_photo_size"
                     android:layout_height="@dimen/settings_photo_size"
                     android:src="@drawable/add_photo_icon"
                     android:layout_margin="@dimen/big_margin"
-                    app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+                    tools:ignore="MissingConstraints"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
-
+                <!--app:layout_constraintTop_toBottomOf="@id/layout_toolbar"-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username_input"
                     android:layout_width="match_parent"
@@ -125,7 +138,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </ScrollView>
-
-
 
 </LinearLayout>

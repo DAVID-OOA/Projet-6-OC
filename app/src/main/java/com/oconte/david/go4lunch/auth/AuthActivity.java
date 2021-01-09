@@ -2,23 +2,30 @@ package com.oconte.david.go4lunch.auth;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.SettingsActivity;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -26,6 +33,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -38,6 +46,9 @@ public class AuthActivity extends AppCompatActivity {
 
     //FOR DESIGN;
     private ActivityAuthBinding binding;
+    @BindView(R.id.imageview_header_navigationview) ImageView imageViewProfile;
+
+    private static final String EXTRA_LOG = "extra_log";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,8 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(view);
 
         this.onClickLoginButton();
+
+
 
     }
 
@@ -100,8 +113,10 @@ public class AuthActivity extends AppCompatActivity {
         IdpResponse response = IdpResponse.fromResultIntent(data);
 
         if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) { // SUCCESS
+            if (resultCode == RESULT_OK ) { // SUCCESS
                 this.setUpSignActivity();
+                getResultLogForTest();
+
             } else { // ERRORS
                 if (response == null) {
                     showSnackBar(binding.authActivityLayout, "error_authentication_canceled");
@@ -123,6 +138,48 @@ public class AuthActivity extends AppCompatActivity {
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
+    /////////////////////////////////////////////////////
+    //For Info about connected user
+
+    @Nullable
+    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
+
+    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
+
+    // Update UI when activity is creating
+    private void updateUIWhenCreating(){
+
+        if (this.getCurrentUser() != null){
+
+            //Get picture URL from Firebase
+            if (this.getCurrentUser().getPhotoUrl() != null) {
+                Picasso.get()
+                        .load(this.getCurrentUser().getPhotoUrl())
+                        .transform(new CropCircleTransformation())
+                        .into(this.imageViewProfile);
+            }
+
+            //Get email & username from Firebase
+            //String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
+            //String username = TextUtils.isEmpty(this.getCurrentUser().getDisplayName()) ? getString(R.string.info_no_username_found) : this.getCurrentUser().getDisplayName();
+
+            //Update views with data
+            //this.textInputEditTextUsername.setText(username);
+            //this.textViewEmail.setText(email);
+        }
+    }
+
+    private void getResultLogForTest() {
+
+
+        String resultLog = String.valueOf(true);
+
+        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(EXTRA_LOG, resultLog);
+
+        editor.apply();
+    }
 
 
 }

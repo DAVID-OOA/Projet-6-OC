@@ -1,39 +1,34 @@
 package com.oconte.david.go4lunch;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    //@BindView(R.id.toolbar) Toolbar toolbar;
 
 
     private ActivityMainBinding binding;
 
-    // 1 - Identifier for Sign-In Activity
+    // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
 
     //FOR FRAGMENTS
@@ -61,30 +56,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.showFirstFragment();
 
         // For auth
-        this.setUpForStartThisActivity();
+        //this.setUpForStartThisActivity();
 
         //this.startIfLoginOrNot();
 
         this.startAuthActivity();
 
+        //faire la verification a se niveau.
+
     }
-
-    private void startIfLoginOrNot() {
-        if (isCurrentUserLogged() != null) {
-            startMainActivity();
-
-
-        } else if (isCurrentUserLogged() == null) {
-            startAuthActivity();
-        }
-    }
-
-    //For see if already connected or not.
-
-    @Nullable
-    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
-
-    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
 
     //////////////////////////////////////////////////////////
 
@@ -131,15 +111,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //////////////////////////// UI ///////////////////////////////////////////////////////////////
 
-    // ---------------------
-    // TOOLBAR
-    // ---------------------
-
-    /**
-     *  - Configure the Toolbar
-     */
+    /** Configure the Toolbar */
     protected void configureToolbar() {
-        setSupportActionBar(toolbar);
+        
+        setSupportActionBar(binding.layoutToolbar.toolbar);
         getSupportActionBar().setTitle("I'm Hungry !");
     }
 
@@ -148,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //////////////////////////////////////////////////////////////////
     @Override
     public void onBackPressed() {
-        // 5 - Handle back click to close menu
+        // Handle back click to close menu
         if (binding.activityMainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
@@ -156,19 +131,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    /** Configure Drawer Layout*/
+    /** Configure Drawer Layout */
     private void configureDrawerLayout(){
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, binding.layoutToolbar.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.activityMainDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
 
-    /**
-     *  - Configure NavigationView
-     */
+    /** Configure NavigationView  */
     private void configureNavigationView(){
         binding.activityMainNavView.setNavigationItemSelectedListener(this);
     }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -199,9 +173,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ////////////////////////////////////////////////////
     // BOTTOM MENU
     ////////////////////////////////////////////////////
-    /**
-     *  - Configure BottomView
-     */
+
+    /** Configure BottomView */
     public boolean onNavigationItemSelected(Integer integer) {
 
         switch (integer){
