@@ -60,7 +60,6 @@ public class AuthActivity extends AppCompatActivity {
         this.onClickLoginButton();
 
 
-
     }
 
 
@@ -160,8 +159,8 @@ public class AuthActivity extends AppCompatActivity {
             }
 
             //Get email & username from Firebase
-            //String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
-            //String username = TextUtils.isEmpty(this.getCurrentUser().getDisplayName()) ? getString(R.string.info_no_username_found) : this.getCurrentUser().getDisplayName();
+            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
+            String username = TextUtils.isEmpty(this.getCurrentUser().getDisplayName()) ? getString(R.string.info_no_username_found) : this.getCurrentUser().getDisplayName();
 
             //Update views with data
             //this.textInputEditTextUsername.setText(username);
@@ -170,7 +169,6 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void getResultLogForTest() {
-
 
         String resultLog = String.valueOf(true);
 

@@ -12,4 +12,10 @@
     <string name="bottom_navigation_menu_workmates">Workmates</string>
     <string name="bottom_navigation_menu_list_view">List View</string>
     <string name="bottom_navigation_menu_map_view">Map View</string>
+
+
+    <string name="info_no_email_found">Info no email found</string>
+    <string name="info_no_username_found">Info no username found</string>
+
+
 </resources>
