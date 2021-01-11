@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /** Configure the Toolbar */
     protected void configureToolbar() {
-        
         setSupportActionBar(binding.layoutToolbar.toolbar);
         getSupportActionBar().setTitle("I'm Hungry !");
     }
