@@ -25,16 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <!--<LinearLayout
-                    android:id="@+id/layout_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <include
-                        layout="@layout/toolbar" />
-                </LinearLayout>-->
-
                 <ImageView
                     android:id="@+id/photo_user"
                     android:layout_width="@dimen/settings_photo_size"
