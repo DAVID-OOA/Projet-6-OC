@@ -114,7 +114,7 @@ public class AuthActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK ) { // SUCCESS
                 this.setUpSignActivity();
-                getResultLogForTest();
+                this.getResultLogForTest();
 
             } else { // ERRORS
                 if (response == null) {
@@ -170,7 +170,7 @@ public class AuthActivity extends AppCompatActivity {
 
     private void getResultLogForTest() {
 
-        String resultLog = String.valueOf(true);
+        String resultLog = "true";
 
         /*SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -181,6 +181,8 @@ public class AuthActivity extends AppCompatActivity {
         Bundle resultLogString = new Bundle();
         resultLogString.putString("extra_resultLog", resultLog);
         intent.putExtras(resultLogString);
+        startActivity(intent);
+
     }
 
 
