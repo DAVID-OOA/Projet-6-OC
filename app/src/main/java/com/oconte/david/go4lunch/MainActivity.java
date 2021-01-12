@@ -60,13 +60,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //this.startIfLoginOrNot();
 
-        this.startAuthActivity();
+        //this.startAuthActivity();
+
+        this.checkLogOrNotLog();
 
         //faire la verification a se niveau.
 
     }
 
     //////////////////////////////////////////////////////////
+
+    private void checkLogOrNotLog(){
+        String resultLogging;
+        Bundle resultLogString = getIntent().getExtras();
+        resultLogging = resultLogString.getString("extra_resultLog");
+        if (resultLogging.equals("true")) {
+            this.startMainActivity();
+        } else {
+            this.startAuthActivity();
+        }
+
+    }
 
     private void startAuthActivity() {
         Intent intent = new Intent(this, AuthActivity.class);

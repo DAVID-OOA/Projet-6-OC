@@ -77,9 +77,7 @@
                         app:layout_row="0"
                         android:src="@drawable/baseline_phone_24"
                         app:layout_columnWeight="1"
-                        android:background="@null"
-                        android:visibility="@{viewmodel.phoneAvailable ? View.VISIBLE : View.INVISIBLE}"
-                        android:onClick="@{(view) -> listener.onClick(view)}"/>
+                        android:background="@null"/>
                     <TextView
                         app:layout_column="0"
                         app:layout_row="1"
@@ -88,8 +86,7 @@
                         android:text="phone_button_text"
                         android:textColor="@color/colorPrimary"
                         app:layout_columnWeight="1"
-                        android:gravity="center"
-                        android:visibility="@{viewmodel.phoneAvailable ? View.VISIBLE : View.INVISIBLE}"/>
+                        android:gravity="center"/>
 
                     <ImageButton
                         android:id="@+id/like_button"
@@ -99,16 +96,12 @@
                         android:layout_height="@dimen/size_image_button_restaurant"
                         android:src="@drawable/baseline_star_24"
                         app:layout_columnWeight="1"
-                        android:tint="@{viewmodel.isRestaurantLiked ? @color/colorAccent : @color/colorPrimary}"
-                        android:onClick="@{(view) -> listener.onClick(view)}"
                         android:background="@null"/>
                     <TextView
                         app:layout_column="1"
                         app:layout_row="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewmodel.isRestaurantLiked ? @string/liked_text_button : @string/like_button_text}"
-                        android:textColor="@{viewmodel.isRestaurantLiked ? @color/colorAccent : @color/colorPrimary}"
                         app:layout_columnWeight="1"
                         android:gravity="center" />
 
@@ -118,9 +111,7 @@
                         app:layout_row="0"
                         android:src="@drawable/baseline_public_24"
                         app:layout_columnWeight="1"
-                        android:background="@null"
-                        android:visibility="@{viewmodel.websiteAvailable ? View.VISIBLE : View.INVISIBLE}"
-                        android:onClick="@{(view) -> listener.onClick(view)}"/>
+                        android:background="@null"/>
                     <TextView
                         app:layout_column="2"
                         app:layout_row="1"
@@ -129,8 +120,7 @@
                         android:text="website_button_text"
                         android:textColor="@color/colorPrimary"
                         app:layout_columnWeight="1"
-                        android:gravity="center"
-                        android:visibility="@{viewmodel.websiteAvailable ? View.VISIBLE : View.INVISIBLE}"/>
+                        android:gravity="center"/>
 
                 </androidx.gridlayout.widget.GridLayout>
 
@@ -144,10 +134,8 @@
                 android:id="@+id/pick_restaurant_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@{viewmodel.isRestaurantPicked ? @drawable/baseline_check_circle_24 : @drawable/baseline_check_circle_outline_24}"
                 app:layout_anchor="@id/image_restaurant"
-                app:layout_anchorGravity="bottom|right|end"
-                android:onClick="@{(view) -> listener.onClick(view)}"/>
+                app:layout_anchorGravity="bottom|right|end"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </ScrollView>

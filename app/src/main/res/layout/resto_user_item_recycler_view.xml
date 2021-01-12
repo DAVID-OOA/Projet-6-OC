@@ -6,7 +6,6 @@
     android:layout_marginTop="@dimen/margin_between_cardview">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

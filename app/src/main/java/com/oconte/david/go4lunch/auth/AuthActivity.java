@@ -172,11 +172,15 @@ public class AuthActivity extends AppCompatActivity {
 
         String resultLog = String.valueOf(true);
 
-        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        /*SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(EXTRA_LOG, resultLog);
+        editor.apply();*/
 
-        editor.apply();
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle resultLogString = new Bundle();
+        resultLogString.putString("extra_resultLog", resultLog);
+        intent.putExtras(resultLogString);
     }
 
 
