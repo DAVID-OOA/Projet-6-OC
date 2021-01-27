@@ -2,13 +2,13 @@ package com.oconte.david.go4lunch;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentMapView;
     private Fragment fragmentListView;
     private Fragment fragmentWorkMates;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +70,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //////////////////////////////////////////////////////////
 
     private void checkLogOrNotLog(){
-        String resultLogging;
-        Bundle resultLogString = getIntent().getExtras();
-        resultLogging = resultLogString.getString("extra_resultLog");
-        if (resultLogging.equals("true")) {
-            this.startMainActivity();
-        } else {
+
+
+        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        boolean resultLogging = preferences.getBoolean(AuthActivity.EXTRA_IS_CONNECTED,false);
+        if (!resultLogging) { //siginfie que si ce boolean est faux. equivaux a resultLogging == false
             this.startAuthActivity();
+            finish();
         }
 
     }
@@ -105,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // It's for sign out and restart AuthActivity
     private void resultSignOut() {
+        //modifier mes sharedpreference pour mettre false au niveau de la clé extra_is_connected lors de la deconnection.
         this.signOutUserFromFirebase();
         this.startAuthActivity();
     }

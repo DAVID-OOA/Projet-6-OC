@@ -6,24 +6,19 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
-import com.oconte.david.go4lunch.SettingsActivity;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
 import com.squareup.picasso.Picasso;
 
@@ -31,8 +26,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class AuthActivity extends AppCompatActivity {
@@ -48,7 +41,7 @@ public class AuthActivity extends AppCompatActivity {
     private ActivityAuthBinding binding;
     @BindView(R.id.imageview_header_navigationview) ImageView imageViewProfile;
 
-    private static final String EXTRA_LOG = "extra_log";
+    public static final String EXTRA_IS_CONNECTED = "extra_is_connected";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +107,7 @@ public class AuthActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK ) { // SUCCESS
                 this.setUpSignActivity();
-                this.getResultLogForTest();
+                this.setIsConnected();
 
             } else { // ERRORS
                 if (response == null) {
@@ -168,20 +161,14 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-    private void getResultLogForTest() {
+    private void setIsConnected() {
 
-        String resultLog = "true";
-
-        /*SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(EXTRA_LOG, resultLog);
-        editor.apply();*/
+        editor.putBoolean(EXTRA_IS_CONNECTED, true);
+        editor.apply();
 
-        Intent intent = new Intent(this, MainActivity.class);
-        Bundle resultLogString = new Bundle();
-        resultLogString.putString("extra_resultLog", resultLog);
-        intent.putExtras(resultLogString);
-        startActivity(intent);
+
 
     }
 
