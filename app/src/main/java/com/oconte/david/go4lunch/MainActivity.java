@@ -21,6 +21,8 @@ import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
 import butterknife.ButterKnife;
 
+import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //@BindView(R.id.toolbar) Toolbar toolbar;
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
-        boolean resultLogging = preferences.getBoolean(AuthActivity.EXTRA_IS_CONNECTED,false);
+        boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED,false);
         if (!resultLogging) { //siginfie que si ce boolean est faux. equivaux a resultLogging == false
             this.startAuthActivity();
             finish();
@@ -104,9 +106,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // It's for sign out and restart AuthActivity
     private void resultSignOut() {
-        //modifier mes sharedpreference pour mettre false au niveau de la clé extra_is_connected lors de la deconnection.
+        this.setIsDeconnected();
         this.signOutUserFromFirebase();
         this.startAuthActivity();
+    }
+
+    //When you log out save the state for the next launch application.
+    private void setIsDeconnected() {
+
+        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(EXTRA_IS_CONNECTED, false);
+        editor.apply();
+
     }
 
     // It's for sign Out
