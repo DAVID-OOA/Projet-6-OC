@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void checkLogOrNotLog(){
 
-
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED,false);
         if (!resultLogging) { //siginfie que si ce boolean est faux. equivaux a resultLogging == false
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.startAuthActivity();
     }
 
-    //When you log out save the state for the next launch application.
+    // When you log out save the state for the next launch application.
     private void setIsDeconnected() {
 
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
@@ -139,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /** Configure the Toolbar */
     protected void configureToolbar() {
-        setSupportActionBar(binding.layoutToolbar.toolbar);
+        setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("I'm Hungry !");
     }
 
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /** Configure Drawer Layout */
     private void configureDrawerLayout(){
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, binding.layoutToolbar.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.activityMainDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
