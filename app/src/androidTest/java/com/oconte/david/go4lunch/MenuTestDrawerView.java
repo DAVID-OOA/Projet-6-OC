@@ -49,7 +49,6 @@ public class MenuTestDrawerView {
         mActivityRule.launchActivity(null);
 
         //Select the toolbar
-        //onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
 
 
