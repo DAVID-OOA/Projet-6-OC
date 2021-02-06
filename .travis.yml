@@ -38,12 +38,12 @@ before_script:
   - echo n | ./google-cloud-sdk/install.sh
   - echo y | ./google-cloud-sdk/bin/gcloud components update
   - echo y | ./google-cloud-sdk/bin/gcloud components install beta
-  - wget https://firebasestorage.googleapis.com/v0/b/go4lunch-e53cf.appspot.com/o/go4lunch-e53cf-51901af29b9f.json?alt=media&token=80caf8f7-e9a8-4a5f-ab86-7150602d9b4f
+  - wget https://firebasestorage.googleapis.com/v0/b/go4lunch-e53cf.appspot.com/o/go4lunch-e53cf-51901af29b9f.json\?alt\=media&token=80caf8f7-e9a8-4a5f-ab86-7150602d9b4f
 
 script:
   - chmod +x gradlew
   - ./gradlew assembleDebug
   - ./gradlew assembleDebugAndroidTest
-  - ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file go4lunch-e53cf-51901af29b9f.json?alt=media&token=80caf8f7-e9a8-4a5f-ab86-7150602d9b4f
+  - ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file go4lunch-e53cf-51901af29b9f.json\?alt\=media&token=80caf8f7-e9a8-4a5f-ab86-7150602d9b4f
   - ./google-cloud-sdk/bin/gcloud config set project go4lunch-e53cf
   - ./google-cloud-sdk/bin/gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=25
