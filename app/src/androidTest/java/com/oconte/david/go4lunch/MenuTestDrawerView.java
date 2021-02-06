@@ -5,6 +5,7 @@ import android.view.Gravity;
 
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.contrib.DrawerActions;
+import androidx.test.espresso.contrib.NavigationViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -46,16 +47,21 @@ public class MenuTestDrawerView {
 
         //Start the MainActivity
         mActivityRule.launchActivity(null);
-        //resultLog =
-
 
         //Select the toolbar
+        //onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
 
+
+        // Open Drawer to click on navigation.
+        onView(withId(R.id.activity_main_drawerLayout))
+                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
+                .perform(DrawerActions.open());
+
+
         // Select the drawer menu
-        /*onView(withId(R.id.activity_main_nav_view))
-                .check(matches(isClosed(Gravity.LEFT)))
-                .perform(DrawerActions.open());*/
+        onView(withId(R.id.activity_main_nav_view))
+                .perform(NavigationViewActions.navigateTo(R.id.activity_main_drawer_lunch));
 
         //Select the first item
         //onView(withId(R.id.activity_main_drawer_lunch)).perform(click());
@@ -71,9 +77,6 @@ public class MenuTestDrawerView {
 
         //Select the toolbar
         onView(withId(R.id.toolbar)).perform(click());
-
-
-
 
     }
 
