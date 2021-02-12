@@ -150,6 +150,7 @@ public class MenuTestDrawerView {
         onView(withId(R.id.action_workmates))
                 .check(matches(isDisplayed())).perform(click());
                 //.perform(BottomNavigationMenuView.navigateTo(R.id.action_map));
+        Thread.sleep(1000);
 
 
 
