@@ -92,7 +92,6 @@ public class MenuTestDrawerView {
         // Select the drawer menu for settings button
         onView(withId(R.id.activity_main_nav_view))
                 .perform(NavigationViewActions.navigateTo(R.id.activity_main_drawer_settings));
-        Thread.sleep(1000);
 
     }
 
@@ -136,23 +135,15 @@ public class MenuTestDrawerView {
         // Select the bottom view menu for map button
         onView(withId(R.id.bottom_nav))
                 .check(matches(isDisplayed()));
-        Thread.sleep(1000);
-
 
         onView(withId(R.id.action_map))
                 .check(matches(isDisplayed())).perform(click());
-        Thread.sleep(1000);
 
         onView(withId(R.id.action_list))
                 .check(matches(isDisplayed())).perform(click());
-        Thread.sleep(1000);
 
         onView(withId(R.id.action_workmates))
                 .check(matches(isDisplayed())).perform(click());
-                //.perform(BottomNavigationMenuView.navigateTo(R.id.action_map));
-        Thread.sleep(1000);
-
-
 
     }
 

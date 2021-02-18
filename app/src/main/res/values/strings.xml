@@ -17,5 +17,8 @@
     <string name="info_no_email_found">Info no email found</string>
     <string name="info_no_username_found">Info no username found</string>
 
+    <string name="facebook_app_id" translatable="false">1326892067693127</string>
+    <string name="fb_login_protocol_scheme" translatable="false">1326892067693127</string>
+
 
 </resources>

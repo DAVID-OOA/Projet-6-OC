@@ -83,6 +83,7 @@ public class AuthActivity extends AppCompatActivity {
                 startSignInActivity();
             }
         });
+
     }
 
     // Launch Sign-In Activity
