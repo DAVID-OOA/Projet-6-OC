@@ -52,7 +52,6 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(view);
 
         this.onClickLoginButtonGoogle();
-
         this.onClickLoginButtonFacebook();
 
 
