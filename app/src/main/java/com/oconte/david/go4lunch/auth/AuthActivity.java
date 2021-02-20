@@ -28,6 +28,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
+
 public class AuthActivity extends AppCompatActivity {
 
     //FOR DATA
@@ -50,7 +51,9 @@ public class AuthActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        this.onClickLoginButton();
+        this.onClickLoginButtonGoogle();
+
+        this.onClickLoginButtonFacebook();
 
 
     }
@@ -75,8 +78,19 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
-    public void onClickLoginButton(){
+    public void onClickLoginButtonGoogle(){
         binding.mainActivityButtonLoginGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Launch Sign-In Activity when user clicked on Login Button
+                startSignInActivity();
+            }
+        });
+
+    }
+
+    public void onClickLoginButtonFacebook(){
+        binding.mainActivityButtonLoginFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Launch Sign-In Activity when user clicked on Login Button
@@ -92,8 +106,8 @@ public class AuthActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setTheme(R.style.LoginTheme)
                         .setAvailableProviders(
-                                Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build())
-                                        //new AuthUI.IdpConfig.FacebookBuilder().build())
+                                Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                            new AuthUI.IdpConfig.FacebookBuilder().build())
                         )
                         .setIsSmartLockEnabled(false, true)
                         .setLogo(R.drawable.go4lunch_icon)
