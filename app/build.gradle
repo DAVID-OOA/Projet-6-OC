@@ -40,8 +40,7 @@ android {
             shrinkResources false
             signingConfig signingConfigs.debug
 
-
-            //buildConfigField("String", "API_SERVER", "\"https://api.nytimes.com\"")
+            buildConfigField("String", "API_SERVER", "\"https://maps.googleapis.com/maps/api/\"")
         }
 
         espresso{
@@ -49,7 +48,7 @@ android {
             minifyEnabled false
             shrinkResources false
 
-            //buildConfigField("String", "API_SERVER", "\"http://127.0.0.1:9900\"")
+            buildConfigField("String", "API_SERVER", "\"http://127.0.0.1:9900\"")
         }
     }
 
@@ -93,6 +92,17 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
+    //MOCKITO
+    testImplementation("org.mockito:mockito-core:3.2.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.7.2")
+    androidTestImplementation ("org.mockito:mockito-core:3.2.0")
+    androidTestImplementation ("com.squareup.okhttp3:mockwebserver:4.7.2")
+
+    //NOTIFICATION
+    implementation 'androidx.core:core:1.3.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+
 
     //FIREBASE
     implementation platform('com.google.firebase:firebase-bom:26.0.0')
@@ -110,7 +120,7 @@ dependencies {
 
 
     //GOOGLE MAP
-    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     //ESPRESSO
     implementation 'androidx.test.espresso:espresso-idling-resource:3.3.0'

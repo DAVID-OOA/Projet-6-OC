@@ -16,6 +16,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
+import com.oconte.david.go4lunch.listView.FragmentListView;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
