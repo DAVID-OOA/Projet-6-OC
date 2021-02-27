@@ -46,6 +46,7 @@ public class FragmentListView extends Fragment implements GooglePlaceCallRestaur
     public void onResponse(@Nullable ApiDetailResponse apiDetailResponse) {
 
 
+
     }
 
     @Override
