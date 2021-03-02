@@ -3,6 +3,9 @@ package com.oconte.david.go4lunch;
 import androidx.annotation.Nullable;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
+import com.oconte.david.go4lunch.api.GooglePlaceService;
+import com.oconte.david.go4lunch.models.ApiRestaurantDetails;
+
 import java.lang.ref.WeakReference;
 
 import retrofit2.Call;
@@ -20,7 +23,7 @@ public class GooglePlaceCallRestaurantDetails {
 
     // Creating a callback
     public interface Callbacks {
-        void onResponse(@Nullable ApiDetailResponse apiDetailResponse);
+        void onResponse(@Nullable ApiRestaurantDetails apiRestaurantDetails);
         void onFailure();
     }
 
@@ -37,12 +40,12 @@ public class GooglePlaceCallRestaurantDetails {
         final WeakReference<GooglePlaceCallRestaurantDetails.Callbacks> callbacksWeakReference = new WeakReference<GooglePlaceCallRestaurantDetails.Callbacks>(callbacks);
 
         // The call on NYT API
-        Call<ApiDetailResponse> call = service.getRestaurantDetail(placeId);
+        Call<ApiRestaurantDetails> call = service.getRestaurantDetail(placeId);
 
         // Start the Call
-        call.enqueue(new Callback<ApiDetailResponse>() {
+        call.enqueue(new Callback<ApiRestaurantDetails>() {
             @Override
-            public void onResponse(Call<ApiDetailResponse> call, Response<ApiDetailResponse> apiDetailResponse) {
+            public void onResponse(Call<ApiRestaurantDetails> call, Response<ApiRestaurantDetails> apiDetailResponse) {
 
                 // Call the proper callback used in controller mainfragment
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(apiDetailResponse.body());
@@ -50,7 +53,7 @@ public class GooglePlaceCallRestaurantDetails {
             }
 
             @Override
-            public void onFailure(Call<ApiDetailResponse> call, Throwable t) {
+            public void onFailure(Call<ApiRestaurantDetails> call, Throwable t) {
 
                 // Call the proper callback used in controller mainfragment
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();

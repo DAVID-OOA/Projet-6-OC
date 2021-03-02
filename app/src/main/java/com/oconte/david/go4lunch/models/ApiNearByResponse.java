@@ -1,6 +1,7 @@
 
 package com.oconte.david.go4lunch.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -15,7 +16,7 @@ public class ApiNearByResponse {
     private String nextPageToken;
     @SerializedName("results")
     @Expose
-    private List<Result> results = null;
+    public List<Result> results = new ArrayList<>();
     @SerializedName("status")
     @Expose
     private String status;
