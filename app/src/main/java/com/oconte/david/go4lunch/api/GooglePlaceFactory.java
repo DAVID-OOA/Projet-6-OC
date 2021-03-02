@@ -1,5 +1,7 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.api;
 
+
+import com.oconte.david.go4lunch.BuildConfig;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
