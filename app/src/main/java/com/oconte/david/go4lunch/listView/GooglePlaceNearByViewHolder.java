@@ -43,7 +43,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         nameResto.setText(result.getName());
         adressTypeResto.setText(result.getVicinity());
 
-        //openingHoursResto.setText(result.getOpeningHours());
+        openingHoursResto.setText(result.getOpeningHours().getOpenNow().toString());
 
         Picasso.get()
                 .load(getUrlPhoto(result))
@@ -58,7 +58,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
 
     public String getUrlPhoto(Result result) {
         if (result.getPhotos() != null && result.getPhotos().size() >0) {
-            String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" +result.getPhotos().get(0).getPhotoReference()+ "&key=AIzaSyCAxdxjPS79wAQ5WTz9FTtmvAfZXgIsOP8";
+            String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + result.getPhotos().get(0).getPhotoReference()+ "&key=AIzaSyCAxdxjPS79wAQ5WTz9FTtmvAfZXgIsOP8";
             return url;
         }
 
