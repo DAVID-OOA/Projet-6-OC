@@ -48,6 +48,11 @@ public class FragmentListView extends Fragment implements GooglePlaceCallRestaur
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     private void configureRecyclerView() {
 
         // Create adapter passing the list of articles

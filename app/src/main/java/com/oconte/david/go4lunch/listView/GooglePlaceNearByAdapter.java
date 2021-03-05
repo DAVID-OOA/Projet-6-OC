@@ -25,14 +25,13 @@ public class GooglePlaceNearByAdapter extends RecyclerView.Adapter<GooglePlaceNe
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.resto_item_recycler_view, parent,false);
+
         return new GooglePlaceNearByViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GooglePlaceNearByViewHolder viewHolder, int position) {
         viewHolder.updateWithGooglePlaceNearBy(this.apiNearByResponse.results.get(position));
-
-
 
 
 
