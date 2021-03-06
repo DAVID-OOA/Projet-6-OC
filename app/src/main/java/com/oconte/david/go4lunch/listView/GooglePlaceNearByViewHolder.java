@@ -17,6 +17,8 @@ import com.oconte.david.go4lunch.util.ForOpeningHours;
 import com.oconte.david.go4lunch.util.ForRating;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,10 +37,13 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     private Resources res;
 
 
+    private String formatTimeDisplay;
 
     public GooglePlaceNearByViewHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
+
+        formatTimeDisplay = res.getString(R.string.format_time_display);
 
     }
 
@@ -46,7 +51,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         nameResto.setText(result.getName());
         adressTypeResto.setText(result.getVicinity());
 
-        //openingHoursResto.setText(result.getOpeningHours().getOpenNow());
+        //this.displayOpeningHours(result);
 
         Picasso.get()
                 .load(getUrlPhoto(result))
@@ -70,11 +75,29 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         return null;
     }
 
-    private void displayOpeningHours(Result result) {
+   /* private void displayOpeningHours(Result result) {
+        int openTime = result.getOpeningHours().getOpenNow();
+        switch (openTime) {
+            case R.string.closed:
+                openingHoursResto.setText(openTime);
+                break;
+            case R.string.closing_soon:
+                openingHoursResto.setText(openTime);
+                break;
+            case R.string.no_time:
+                openingHoursResto.setText(openTime);
+            case R.string.open_24_7:
+                openingHoursResto.setText(openTime);
+            default:
+                DateFormat dateFormat = new SimpleDateFormat(formatTimeDisplay);
+                String timeToDisplay = dateFormat.format(ForOpeningHours.converStringInDate(openTime));
+                openingHoursResto.setText(String.format(res.getString(R.string.open_untill), timeToDisplay));
+                break;
+        }
 
     }
 
-    /*private void forRating(Result result) {
+    private void forRating(Result result) {
         int rating = result.getRating();
         ratingStar1.setImageDrawable(res.getDrawable(ForRating.firstStar(rating)));
     }*/
