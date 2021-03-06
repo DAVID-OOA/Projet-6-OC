@@ -100,7 +100,6 @@
             android:id="@+id/image_resto"
             android:layout_width="@dimen/user_image_recyclerview_workmates_size"
             android:layout_height="@dimen/user_image_recyclerview_workmates_size"
-            android:background="@drawable/go4lunch_icon"
             android:scaleType="fitCenter"
             android:layout_gravity="end|center"/>
 

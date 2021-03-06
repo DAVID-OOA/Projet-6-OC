@@ -8,9 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.oconte.david.go4lunch.BuildConfig;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
+import com.oconte.david.go4lunch.models.OpeningHours;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.util.ForOpeningHours;
 import com.oconte.david.go4lunch.util.ForRating;
 import com.squareup.picasso.Picasso;
 
@@ -43,7 +46,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         nameResto.setText(result.getName());
         adressTypeResto.setText(result.getVicinity());
 
-        openingHoursResto.setText(result.getOpeningHours().getOpenNow().toString());
+        //openingHoursResto.setText(result.getOpeningHours().getOpenNow());
 
         Picasso.get()
                 .load(getUrlPhoto(result))
@@ -56,6 +59,8 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     }
 
 
+
+
     public String getUrlPhoto(Result result) {
         if (result.getPhotos() != null && result.getPhotos().size() >0) {
             String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + result.getPhotos().get(0).getPhotoReference()+ "&key=AIzaSyCAxdxjPS79wAQ5WTz9FTtmvAfZXgIsOP8";
@@ -63,6 +68,10 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         }
 
         return null;
+    }
+
+    private void displayOpeningHours(Result result) {
+
     }
 
     /*private void forRating(Result result) {

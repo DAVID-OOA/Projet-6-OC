@@ -26,8 +26,9 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb1326892067693127</string>
 
     <!-- For Opening Hours -->
-    <string name="closed"> Closed</string>
-    <string name="no_time"> No Time</string>
-
+    <string name="closed">Closed</string>
+    <string name="no_time">No Time</string>
+    <string name="closing_soon">Closing soon</string>
+    <string name="open_24_7">Open 24/7</string>
 
 </resources>
