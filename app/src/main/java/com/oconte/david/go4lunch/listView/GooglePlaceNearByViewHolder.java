@@ -43,7 +43,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this,itemView);
 
-        formatTimeDisplay = res.getString(R.string.format_time_display);
+        //formatTimeDisplay = res.getString(R.string.format_time_display);
 
     }
 

@@ -5,33 +5,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
+import com.oconte.david.go4lunch.models.Result;
 
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FragmentListView extends Fragment implements GooglePlaceCallRestaurantNearBy.Callbacks{
-
-    //@BindView(R.id.list_view) TextView textView;
-    //@BindView(R.id.testhttprequest) TextView textView;
+public class FragmentListViewRestaurant extends Fragment {
 
     @BindView(R.id.fragment_main_recycler_view) RecyclerView recyclerView;
 
     private GooglePlaceNearByAdapter adapter;
     ApiNearByResponse apiNearByResponse;
 
-    public static FragmentListView newInstance() {
-        return (new FragmentListView());
+    private ListRestaurantViewModel viewModel;
+
+    public static FragmentListViewRestaurant newInstance() {
+        return (new FragmentListViewRestaurant());
     }
 
     @Override
@@ -41,7 +42,10 @@ public class FragmentListView extends Fragment implements GooglePlaceCallRestaur
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("I'm Hungry !");
 
-        this.executeHttpRequestWithRetrofitGooglePlaceNearBy();
+        this.configureViewModel();
+
+
+        //this.executeHttpRequestWithRetrofitGooglePlaceNearBy();
 
         this.configureRecyclerView();
 
@@ -51,6 +55,17 @@ public class FragmentListView extends Fragment implements GooglePlaceCallRestaur
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    public void configureViewModel() {
+        viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
+        viewModel.getRestaurants();
+        viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), new Observer<List<Result>>() {
+            @Override
+            public void onChanged(List<Result> results) {
+                adapter.updateCallRetrofitGoogleNearBy(results);
+            }
+        });
     }
 
     private void configureRecyclerView() {
@@ -66,8 +81,8 @@ public class FragmentListView extends Fragment implements GooglePlaceCallRestaur
     }
 
 
-    private void executeHttpRequestWithRetrofitGooglePlaceNearBy() {
-        GooglePlaceCallRestaurantNearBy restaurantNearBy = Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
+   /* private void executeHttpRequestWithRetrofitGooglePlaceNearBy() {
+        RestaurantRepository restaurantNearBy = Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
         restaurantNearBy.getRestaurantNearBy(this,"location");
     }
 
@@ -77,11 +92,6 @@ public class FragmentListView extends Fragment implements GooglePlaceCallRestaur
         this.apiNearByResponse = apiNearByResponses;
         this.adapter.updateCallRetrofitGoogleNearBy(apiNearByResponses);
 
-    }
+    }*/
 
-
-    @Override
-    public void onFailure() {
-
-    }
 }

@@ -83,6 +83,9 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
+    //For MVVM
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
     //PICASSO
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.0.0'

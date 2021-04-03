@@ -16,7 +16,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
-import com.oconte.david.go4lunch.listView.FragmentListView;
+import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
@@ -27,7 +27,6 @@ import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //@BindView(R.id.toolbar) Toolbar toolbar;
-
 
     private ActivityMainBinding binding;
 
@@ -254,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showListViewFragment(){
-        if (this.fragmentListView == null) this.fragmentListView = FragmentListView.newInstance();
+        if (this.fragmentListView == null) this.fragmentListView = FragmentListViewRestaurant.newInstance();
         this.startTransactionFragment(this.fragmentListView);
     }
 

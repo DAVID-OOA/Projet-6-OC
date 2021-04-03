@@ -1,24 +1,33 @@
 package com.oconte.david.go4lunch.listView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
 import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
+import com.oconte.david.go4lunch.models.Result;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GooglePlaceCallRestaurantNearBy {
+public class RestaurantRepository {
 
     private final GooglePlaceService service;
     private final CountingIdlingResource resource;
 
+    private MutableLiveData<List<Result>> apiNearByResponseMutableLiveData;
+
+    public MutableLiveData<List<Result>> getResults() {
+        return apiNearByResponseMutableLiveData;
+    }
+
     /**
-     * It's the Call to API New York Time for see the Top Stories categories.
+     * It's the Call to API GooglePlace.
      */
 
     // Creating a callback
@@ -27,17 +36,17 @@ public class GooglePlaceCallRestaurantNearBy {
         void onFailure();
     }
 
-    public GooglePlaceCallRestaurantNearBy(GooglePlaceService service, CountingIdlingResource resource) {
+    public RestaurantRepository(GooglePlaceService service, CountingIdlingResource resource) {
         this.service = service;
         this.resource = resource;
     }
 
     // Public methode to start fetching
-    public void getRestaurantNearBy(GooglePlaceCallRestaurantNearBy.Callbacks callbacks, String location) {
+    public void getRestaurantNearBy(RestaurantRepository.Callbacks callbacks, String location) {
 
         resource.increment();
         // weak reference to callback (avoid memory leaks)
-        final WeakReference<GooglePlaceCallRestaurantNearBy.Callbacks> callbacksWeakReference = new WeakReference<GooglePlaceCallRestaurantNearBy.Callbacks>(callbacks);
+        final WeakReference<RestaurantRepository.Callbacks> callbacksWeakReference = new WeakReference<RestaurantRepository.Callbacks>(callbacks);
 
         // The call on NYT API
         Call<ApiNearByResponse> call = service.getRestaurantNearBy(location);

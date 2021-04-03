@@ -12,11 +12,14 @@ import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.media.CamcorderProfile.get;
 
 public class GooglePlaceNearByAdapter extends RecyclerView.Adapter<GooglePlaceNearByViewHolder> {
 
-    private ApiNearByResponse apiNearByResponse = new ApiNearByResponse();
+    private List<Result> apiNearByResponse = new ArrayList<>();
 
 
     @NonNull
@@ -31,7 +34,7 @@ public class GooglePlaceNearByAdapter extends RecyclerView.Adapter<GooglePlaceNe
 
     @Override
     public void onBindViewHolder(@NonNull GooglePlaceNearByViewHolder viewHolder, int position) {
-        viewHolder.updateWithGooglePlaceNearBy(this.apiNearByResponse.results.get(position));
+        viewHolder.updateWithGooglePlaceNearBy(this.apiNearByResponse.get(position));
 
 
 
@@ -39,11 +42,11 @@ public class GooglePlaceNearByAdapter extends RecyclerView.Adapter<GooglePlaceNe
 
     @Override
     public int getItemCount() {
-        return this.apiNearByResponse.results.size();
+        return this.apiNearByResponse.size();
     }
 
-    public void updateCallRetrofitGoogleNearBy(ApiNearByResponse apiNearByResponses) {
-        this.apiNearByResponse = apiNearByResponses;
+    public void updateCallRetrofitGoogleNearBy(List<Result> resultList) {
+        this.apiNearByResponse = resultList;
         this.notifyDataSetChanged();
     }
 }
