@@ -44,9 +44,6 @@ public class FragmentListViewRestaurant extends Fragment {
 
         this.configureViewModel();
 
-
-        //this.executeHttpRequestWithRetrofitGooglePlaceNearBy();
-
         this.configureRecyclerView();
 
         return view;
@@ -59,17 +56,16 @@ public class FragmentListViewRestaurant extends Fragment {
 
     public void configureViewModel() {
         viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
-        viewModel.getRestaurants();
         viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), new Observer<List<Result>>() {
             @Override
             public void onChanged(List<Result> results) {
                 adapter.updateCallRetrofitGoogleNearBy(results);
             }
         });
+        viewModel.getRestaurants();
     }
 
     private void configureRecyclerView() {
-
         // Create adapter passing the list of articles
         this.adapter = new GooglePlaceNearByAdapter();
 
@@ -79,19 +75,5 @@ public class FragmentListViewRestaurant extends Fragment {
         // Set layout manager to position the items
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-
-
-   /* private void executeHttpRequestWithRetrofitGooglePlaceNearBy() {
-        RestaurantRepository restaurantNearBy = Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
-        restaurantNearBy.getRestaurantNearBy(this,"location");
-    }
-
-
-    @Override
-    public void onResponse(@Nullable ApiNearByResponse apiNearByResponses) {
-        this.apiNearByResponse = apiNearByResponses;
-        this.adapter.updateCallRetrofitGoogleNearBy(apiNearByResponses);
-
-    }*/
 
 }

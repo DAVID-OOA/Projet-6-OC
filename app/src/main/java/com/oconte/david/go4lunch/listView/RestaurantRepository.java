@@ -46,7 +46,7 @@ public class RestaurantRepository {
 
         resource.increment();
         // weak reference to callback (avoid memory leaks)
-        final WeakReference<RestaurantRepository.Callbacks> callbacksWeakReference = new WeakReference<RestaurantRepository.Callbacks>(callbacks);
+        //final WeakReference<RestaurantRepository.Callbacks> callbacksWeakReference = new WeakReference<RestaurantRepository.Callbacks>(callbacks);
 
         // The call on NYT API
         Call<ApiNearByResponse> call = service.getRestaurantNearBy(location);
@@ -57,7 +57,8 @@ public class RestaurantRepository {
             public void onResponse(Call<ApiNearByResponse> call, Response<ApiNearByResponse> apiNearByResponseResponse) {
 
                 // Call the proper callback used in controller mainfragment
-                if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(apiNearByResponseResponse.body());
+                //if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(apiNearByResponseResponse.body());
+                callbacks.onResponse(apiNearByResponseResponse.body());
                 resource.decrement();
             }
 
@@ -65,7 +66,8 @@ public class RestaurantRepository {
             public void onFailure(Call<ApiNearByResponse> call, Throwable t) {
 
                 // Call the proper callback used in controller mainfragment
-                if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
+                //if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
+                callbacks.onFailure();
                 resource.decrement();
             }
         });

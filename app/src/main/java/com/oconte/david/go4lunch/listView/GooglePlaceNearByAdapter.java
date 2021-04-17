@@ -35,9 +35,6 @@ public class GooglePlaceNearByAdapter extends RecyclerView.Adapter<GooglePlaceNe
     @Override
     public void onBindViewHolder(@NonNull GooglePlaceNearByViewHolder viewHolder, int position) {
         viewHolder.updateWithGooglePlaceNearBy(this.apiNearByResponse.get(position));
-
-
-
     }
 
     @Override

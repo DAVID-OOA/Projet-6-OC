@@ -23,14 +23,13 @@ public class ListRestaurantViewModel extends ViewModel {
 
     private final RestaurantRepository mRestaurantRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
-    private final LiveData <List<Result>> results = apiNearByResponseMutableLiveData;
 
     public ListRestaurantViewModel() {
         mRestaurantRepository =  Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
     }
 
     public LiveData<List<Result>> getRestaurantLiveData() {
-        return results;
+            return apiNearByResponseMutableLiveData;
     }
 
     public void getRestaurants() {
