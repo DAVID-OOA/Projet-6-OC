@@ -57,7 +57,6 @@ public class RestaurantRepository {
             public void onResponse(Call<ApiNearByResponse> call, Response<ApiNearByResponse> apiNearByResponseResponse) {
 
                 // Call the proper callback used in controller mainfragment
-                //if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(apiNearByResponseResponse.body());
                 callbacks.onResponse(apiNearByResponseResponse.body());
                 resource.decrement();
             }
@@ -66,7 +65,6 @@ public class RestaurantRepository {
             public void onFailure(Call<ApiNearByResponse> call, Throwable t) {
 
                 // Call the proper callback used in controller mainfragment
-                //if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
                 callbacks.onFailure();
                 resource.decrement();
             }

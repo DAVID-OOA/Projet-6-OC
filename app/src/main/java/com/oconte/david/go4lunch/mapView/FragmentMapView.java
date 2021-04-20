@@ -36,7 +36,7 @@ import java.util.Objects;
 
 import butterknife.ButterKnife;
 
-public class FragmentMapView extends Fragment implements OnMapReadyCallback {
+public class FragmentMapView extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap googleMap;
     private MapView mapView;
@@ -96,20 +96,20 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback {
 
     }
 
-
-    //@SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         viewModel.getRestaurants();
-
-
-        //googleMap.setMyLocationEnabled(true);
-        //googleMap.setOnMyLocationButtonClickListener(this);
-        //googleMap.setOnMyLocationClickListener(this);
-
+        googleMap.setOnMarkerClickListener(this);
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        //Code for action after click on marker.
+
+        return true;
+    }
 
 
     @Override

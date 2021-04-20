@@ -2,7 +2,7 @@ package com.oconte.david.go4lunch.util;
 
 import com.oconte.david.go4lunch.R;
 
-public class ForRating {
+public abstract class ForRating {
 
     public static int calculateRating(Double rating) {
         if (rating == 0) return 0;
@@ -21,5 +21,16 @@ public class ForRating {
     }
 
 
+    public static int secondStar(int rating) {
+        if (rating <= 2) return R.drawable.star_border;
+        if (rating == 3) return R.drawable.star_half;
+        return R.drawable.star;
+    }
+
+    public static int thirdStar(int rating) {
+        if (rating <= 4) return R.drawable.star_border;
+        if (rating == 5) return R.drawable.star_half;
+        return R.drawable.star;
+    }
 
 }

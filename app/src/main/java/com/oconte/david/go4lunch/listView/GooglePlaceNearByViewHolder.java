@@ -1,5 +1,6 @@
 package com.oconte.david.go4lunch.listView;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,10 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oconte.david.go4lunch.BuildConfig;
 import com.oconte.david.go4lunch.R;
-import com.oconte.david.go4lunch.models.ApiNearByResponse;
-import com.oconte.david.go4lunch.models.OpeningHours;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.util.ForOpeningHours;
 import com.oconte.david.go4lunch.util.ForRating;
@@ -19,7 +17,6 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +30,8 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_resto) ImageView imageResto;
 
     @BindView(R.id.rating_star1) ImageView ratingStar1;
+    @BindView(R.id.rating_star2) ImageView ratingStar2;
+    @BindView(R.id.rating_star3) ImageView ratingStar3;
 
     private Resources res;
 
@@ -43,7 +42,8 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this,itemView);
 
-        //formatTimeDisplay = res.getString(R.string.format_time_display);
+        res = itemView.getResources();
+        formatTimeDisplay = res.getString(R.string.format_time_display);
 
     }
 
@@ -59,12 +59,9 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
                 .resize(60,60)
                 .into(this.imageResto);
 
-
+        this.displayRating(result);
 
     }
-
-
-
 
     public String getUrlPhoto(Result result) {
         if (result.getPhotos() != null && result.getPhotos().size() >0) {
@@ -75,7 +72,9 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         return null;
     }
 
-   /* private void displayOpeningHours(Result result) {
+   /*
+   @SuppressLint("StringFormatInvalid")
+   private void displayOpeningHours(Result result) {
         int openTime = result.getOpeningHours().getOpenNow();
         switch (openTime) {
             case R.string.closed:
@@ -95,11 +94,17 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
 
-    }
-
-    private void forRating(Result result) {
-        int rating = result.getRating();
-        ratingStar1.setImageDrawable(res.getDrawable(ForRating.firstStar(rating)));
     }*/
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void displayRating(Result result) {
+        int rating = ForRating.calculateRating(result.getRating());
+            ratingStar1.setImageDrawable(res.getDrawable(ForRating.firstStar(rating)));
+            ratingStar2.setImageDrawable(res.getDrawable(ForRating.secondStar(rating)));
+            ratingStar3.setImageDrawable(res.getDrawable(ForRating.thirdStar(rating)));
+
+
+
+    }
 
 }
