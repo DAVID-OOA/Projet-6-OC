@@ -5,6 +5,7 @@ import androidx.test.espresso.idling.CountingIdlingResource;
 import com.oconte.david.go4lunch.api.GooglePlaceFactory;
 import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.listView.RestaurantRepository;
+import com.oconte.david.go4lunch.restoDetails.RestaurantDetailRepository;
 
 public class Injection {
 
@@ -16,8 +17,8 @@ public class Injection {
 
 
     //For Call getRestaurantDetail
-    public static GooglePlaceCallRestaurantDetails getRestaurantDetail (GooglePlaceService googlePlaceService, CountingIdlingResource resource) {
-        GooglePlaceCallRestaurantDetails restaurantDetails = new GooglePlaceCallRestaurantDetails(googlePlaceService, resource);
+    public static RestaurantDetailRepository getRestaurantDetail (GooglePlaceService googlePlaceService, CountingIdlingResource resource) {
+        RestaurantDetailRepository restaurantDetails = new RestaurantDetailRepository(googlePlaceService, resource);
         return restaurantDetails;
     }
 
