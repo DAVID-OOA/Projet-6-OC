@@ -29,6 +29,8 @@ import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.util.PermissionUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -37,7 +39,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final float ZOOM_USER_LOCATION_VALUE = 15;
 
-    private boolean permissionDenied = true;
+    //private final boolean permissionDenied = true;
 
     private GoogleMap googleMap;
     private MapView mapView;
@@ -52,7 +54,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
 
     @SuppressLint("MissingPermission")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMapViewBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
