@@ -98,13 +98,12 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void displayRating(Result result) {
-        int rating = ForRating.calculateRating(result.getRating());
+        if (result.getRating() != null) {
+            int rating = ForRating.calculateRating(result.getRating());
             ratingStar1.setImageDrawable(res.getDrawable(ForRating.firstStar(rating)));
             ratingStar2.setImageDrawable(res.getDrawable(ForRating.secondStar(rating)));
             ratingStar3.setImageDrawable(res.getDrawable(ForRating.thirdStar(rating)));
-
-
-
+        }
     }
 
 }
