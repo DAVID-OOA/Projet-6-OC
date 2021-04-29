@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.oconte.david.go4lunch.R;
+import com.oconte.david.go4lunch.databinding.FragmentWorkmatesBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import butterknife.ButterKnife;
-
 public class FragmentWorkMates extends Fragment {
-
 
 
     public static FragmentWorkMates newInstance() {
@@ -23,9 +22,9 @@ public class FragmentWorkMates extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_workmates, container, false);
-        ButterKnife.bind(this, view);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        com.oconte.david.go4lunch.databinding.FragmentWorkmatesBinding binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Available workmates");
 

@@ -18,6 +18,7 @@ import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
+import com.oconte.david.go4lunch.restoDetails.FragmentDetailsRestaurant;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
 import butterknife.ButterKnife;
@@ -261,6 +262,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (this.fragmentWorkMates == null) this.fragmentWorkMates = FragmentWorkMates.newInstance();
         this.startTransactionFragment(this.fragmentWorkMates);
     }
+
+    //Fragment for resto detail from mapview
+    /*@Override
+    public void displayRestaurantDetail(){
+        FragmentDetailsRestaurant fragmentDetailsRestaurant = new FragmentDetailsRestaurant();
+        fragmentDetailsRestaurant.show(getSupportFragmentManager(), "MODAL");
+    }*/
+
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

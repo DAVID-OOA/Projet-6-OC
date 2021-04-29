@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oconte.david.go4lunch.R;
@@ -33,8 +34,9 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.rating_star2) ImageView ratingStar2;
     @BindView(R.id.rating_star3) ImageView ratingStar3;
 
-    private Resources res;
 
+
+    private Resources res;
 
     private String formatTimeDisplay;
 
@@ -51,7 +53,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         nameResto.setText(result.getName());
         adressTypeResto.setText(result.getVicinity());
 
-        //this.displayOpeningHours(result);
+        this.displayOpeningHours(result);
 
         Picasso.get()
                 .load(getUrlPhoto(result))
@@ -68,33 +70,41 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
             String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + result.getPhotos().get(0).getPhotoReference()+ "&key=AIzaSyCAxdxjPS79wAQ5WTz9FTtmvAfZXgIsOP8";
             return url;
         }
-
         return null;
     }
 
-   /*
    @SuppressLint("StringFormatInvalid")
    private void displayOpeningHours(Result result) {
-        int openTime = result.getOpeningHours().getOpenNow();
-        switch (openTime) {
-            case R.string.closed:
-                openingHoursResto.setText(openTime);
-                break;
-            case R.string.closing_soon:
-                openingHoursResto.setText(openTime);
-                break;
-            case R.string.no_time:
-                openingHoursResto.setText(openTime);
-            case R.string.open_24_7:
-                openingHoursResto.setText(openTime);
-            default:
-                DateFormat dateFormat = new SimpleDateFormat(formatTimeDisplay);
-                String timeToDisplay = dateFormat.format(ForOpeningHours.converStringInDate(openTime));
-                openingHoursResto.setText(String.format(res.getString(R.string.open_untill), timeToDisplay));
-                break;
+      /*  boolean openTime = result.getOpeningHours().getOpenNow();
+        if (openTime) {
+            openingHoursResto.setText(R.string.open_24_7);
+        } else if (!openTime){
+            openingHoursResto.setText(R.string.closed);
         }
+       int timeOpening = result.getOpeningHours().getOpenNow();
+       switch (timeOpening){
+           case R.string.closed:
+               openingHoursResto.setText(timeOpening);
+               break;
+           case R.string.closing_soon:
+               openingHoursResto.setText(timeOpening);
+               break;
+           case R.string.no_time:
+               openingHoursResto.setText(timeOpening);
+               break;
+           case R.string.open_24_7:
+               openingHoursResto.setText(timeOpening);
+               break;
+           default:
+               DateFormat dateFormat = new SimpleDateFormat(formatTimeDisplay);
+               String timeToDisplay = dateFormat.format(ForOpeningHours.converStringInDate(timeOpening));
+               openingHoursResto.setText(String.format(res.getString(R.string.open_until), timeToDisplay));
+               break;
 
-    }*/
+
+       }*/
+
+   }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void displayRating(Result result) {

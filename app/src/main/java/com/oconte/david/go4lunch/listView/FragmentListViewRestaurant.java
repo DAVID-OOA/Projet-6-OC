@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oconte.david.go4lunch.R;
+import com.oconte.david.go4lunch.databinding.FragmentListViewBinding;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class FragmentListViewRestaurant extends Fragment {
 
-    @BindView(R.id.fragment_main_recycler_view) RecyclerView recyclerView;
+    private FragmentListViewBinding binding;
 
     private GooglePlaceNearByAdapter adapter;
     ApiNearByResponse apiNearByResponse;
@@ -36,9 +39,9 @@ public class FragmentListViewRestaurant extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
-        ButterKnife.bind(this, view);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+         binding = FragmentListViewBinding.inflate(inflater, container, false);
+         View view = binding.getRoot();
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("I'm Hungry !");
 
@@ -70,10 +73,10 @@ public class FragmentListViewRestaurant extends Fragment {
         this.adapter = new GooglePlaceNearByAdapter();
 
         // Attach the adapter to the recyclerView to populate items
-        this.recyclerView.setAdapter(this.adapter);
+        this.binding.fragmentMainRecyclerView.setAdapter(this.adapter);
 
         // Set layout manager to position the items
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.binding.fragmentMainRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
 }

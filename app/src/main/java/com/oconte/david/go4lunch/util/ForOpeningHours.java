@@ -1,7 +1,9 @@
 package com.oconte.david.go4lunch.util;
 
 import com.oconte.david.go4lunch.R;
+import com.oconte.david.go4lunch.models.Geometry;
 import com.oconte.david.go4lunch.models.OpeningHours;
+import com.oconte.david.go4lunch.models.Result;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,7 +28,7 @@ public abstract class ForOpeningHours {
         }
     }
 
-   /* public static int getOpeningTime(OpeningHours openingHours) {
+   public static int getOpeningTime(OpeningHours openingHours) {
         if(openingHours == null || openingHours.getPeriods() == null) return R.string.no_time;
         if(openingHours.getOpenNow() != null && !openingHours.getOpenNow()){
             return R.string.closed;
@@ -36,10 +38,10 @@ public abstract class ForOpeningHours {
         if(openingHours.getPeriods().size() >= dayOfTheWeek+1){
             Period periodOfTheDay = openingHours.getPeriods().get(dayOfTheWeek);
 
-            if(periodOfTheDay.getClose() == null) return R.string.open_24_7;
+            //if(periodOfTheDay.getClose() == null) return R.string.open_24_7;
 
-            String closureString = periodOfTheDay.getClose().getTime();
-            int closure = Integer.parseInt(closureString);
+            //String closureString = periodOfTheDay.getClose().getTime();
+            /*int closure = Integer.parseInt(closureString);
 
             Date todayDate = Calendar.getInstance().getTime();
             DateFormat dateFormat = new SimpleDateFormat(FORMAT_HOURS);
@@ -50,10 +52,8 @@ public abstract class ForOpeningHours {
                 return R.string.closing_soon;
             } else {
                 return closure;
-            }
-
-
+            }*/
         }
         return R.string.no_time;
-    }*/
+    }
 }
