@@ -18,7 +18,6 @@ import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
-import com.oconte.david.go4lunch.restoDetails.FragmentDetailsRestaurant;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
 import butterknife.ButterKnife;
@@ -26,8 +25,6 @@ import butterknife.ButterKnife;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    //@BindView(R.id.toolbar) Toolbar toolbar;
 
     private ActivityMainBinding binding;
 
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
-        this.configureBottomView();;
+        this.configureBottomView();
 
         // For Fragment -------------
         this.showFirstFragment();
@@ -200,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ////////////////////////////////////////////////////
 
     /** Configure BottomView */
+    @SuppressLint("NonConstantResourceId")
     public boolean onNavigationItemSelected(Integer integer) {
 
         switch (integer){
