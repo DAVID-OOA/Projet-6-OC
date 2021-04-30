@@ -2,6 +2,7 @@ package com.oconte.david.go4lunch.mapView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,9 +25,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.oconte.david.go4lunch.SettingsActivity;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.restoDetails.FragmentDetailsRestaurant;
 import com.oconte.david.go4lunch.util.PermissionUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -115,17 +118,30 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
 
+        this.displayRestaurantDetail();
+
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-
         Toast.makeText(getContext(), "It's ok", Toast.LENGTH_LONG).show();
 
-        //it's ok no make code for open the details of fragments
-
         return false;
+    }
+
+
+    public void displayRestaurantDetail(){
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                //Intent intent = new Intent(getContext(), SettingsActivity.class);
+                //startActivity(intent);
+
+                FragmentDetailsRestaurant fragmentDetailsRestaurant = new FragmentDetailsRestaurant();
+                fragmentDetailsRestaurant.getActivity().getSupportFragmentManager();
+            }
+        });
+
     }
 
     ///////////////////////////////////////FOR LOCATION
