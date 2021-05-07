@@ -112,13 +112,14 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
         enableMyLocation();
 
         //Initial position for the camera change for  LatLng is userPosition
+        //le faire en dinamique
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(44.53275, 0.76772), ZOOM_USER_LOCATION_VALUE));
 
         // For zoom on map
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
 
-        this.displayRestaurantDetail();
+        //this.displayRestaurantDetail();
 
     }
 
@@ -130,7 +131,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
     }
 
 
-    public void displayRestaurantDetail(){
+    /*public void displayRestaurantDetail(){
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -138,11 +139,12 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
                 //startActivity(intent);
 
                 FragmentDetailsRestaurant fragmentDetailsRestaurant = new FragmentDetailsRestaurant();
-                fragmentDetailsRestaurant.getActivity().getSupportFragmentManager();
+                Objects.requireNonNull(fragmentDetailsRestaurant.getActivity()).getSupportFragmentManager();
+
             }
         });
 
-    }
+    }*/
 
     ///////////////////////////////////////FOR LOCATION
     private void enableMyLocation() {

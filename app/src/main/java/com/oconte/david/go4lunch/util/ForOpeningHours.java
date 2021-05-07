@@ -1,5 +1,7 @@
 package com.oconte.david.go4lunch.util;
 
+import android.annotation.SuppressLint;
+
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.models.Geometry;
 import com.oconte.david.go4lunch.models.OpeningHours;
@@ -20,7 +22,7 @@ public abstract class ForOpeningHours {
 
     public static Date converStringInDate(int hour) {
         String hourString = String.valueOf(hour);
-        DateFormat dateFormat = new SimpleDateFormat(FORMAT_HOURS);
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat(FORMAT_HOURS);
         try {
             return dateFormat.parse(hourString);
         } catch (ParseException e) {

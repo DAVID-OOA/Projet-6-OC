@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActivityMainBinding binding;
 
+    private MainActivityViewModel viewModel;
+
     // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
 
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
-    private void startMainActivity() {
+    /*private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setUpForStartThisActivity(){
         Intent i = new Intent(this, AuthActivity.class);
         startActivityForResult(i,RC_SIGN_IN);
-    }
+    }*/
 
     ///////////////////////////////////////////////////////////////////////////////////////
     //For SIGN OUT
@@ -260,14 +262,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (this.fragmentWorkMates == null) this.fragmentWorkMates = FragmentWorkMates.newInstance();
         this.startTransactionFragment(this.fragmentWorkMates);
     }
-
-    //Fragment for resto detail from mapview
-    /*@Override
-    public void displayRestaurantDetail(){
-        FragmentDetailsRestaurant fragmentDetailsRestaurant = new FragmentDetailsRestaurant();
-        fragmentDetailsRestaurant.show(getSupportFragmentManager(), "MODAL");
-    }*/
-
 
 
 

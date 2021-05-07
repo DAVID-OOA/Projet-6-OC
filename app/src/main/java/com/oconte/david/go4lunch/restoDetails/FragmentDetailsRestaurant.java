@@ -26,7 +26,7 @@ public class FragmentDetailsRestaurant extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_workmates, container, false);
+        View view = inflater.inflate(R.layout.detail_view_resto, container, false);
         ButterKnife.bind(this, view);
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Available workmates");
