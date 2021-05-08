@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DetailsRestaurantViewModel extends ViewModel {
 
-    /*private final RestaurantDetailRepository mRestaurantDetailRepository;
+    private final RestaurantDetailRepository mRestaurantDetailRepository;
     private final MutableLiveData<Result> apiDetailsResponseMutableLiveData = new MutableLiveData<>();
 
     public DetailsRestaurantViewModel() {
@@ -44,5 +44,5 @@ public class DetailsRestaurantViewModel extends ViewModel {
             }
         }, "placeId");
 
-    }*/
+    }
 }

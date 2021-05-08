@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActivityMainBinding binding;
 
-    private MainActivityViewModel viewModel;
+
 
     // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
@@ -53,19 +53,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureNavigationView();
         this.configureBottomView();
 
-        // For Fragment -------------
+        // For Fragment
         this.showFirstFragment();
 
-        // For auth
-        //this.setUpForStartThisActivity();
-
-        //this.startIfLoginOrNot();
-
-        //this.startAuthActivity();
-
         this.checkLogOrNotLog();
-
-        //faire la verification a se niveau.
 
     }
 
@@ -86,18 +77,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, AuthActivity.class);
         startActivity(intent);
     }
-
-    /*private void startMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-
-    //It's for start after the authentification
-    public void setUpForStartThisActivity(){
-        Intent i = new Intent(this, AuthActivity.class);
-        startActivityForResult(i,RC_SIGN_IN);
-    }*/
 
     ///////////////////////////////////////////////////////////////////////////////////////
     //For SIGN OUT
