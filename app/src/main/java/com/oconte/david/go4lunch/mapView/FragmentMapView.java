@@ -3,30 +3,21 @@ package com.oconte.david.go4lunch.mapView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -35,8 +26,6 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
@@ -44,12 +33,8 @@ import com.oconte.david.go4lunch.util.PermissionUtils;
 
 import org.jetbrains.annotations.NotNull;
 
-
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executor;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class FragmentMapView extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -95,15 +80,12 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
             return;
         }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    Double latitude = location.getLatitude();
-                    Double longitude = location.getLongitude();
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) getContext(), location -> {
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
 
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
-                }
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
             }
         });
     }
@@ -112,26 +94,23 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     public void configureMapViewModel() {
         viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
 
-        viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), new Observer<List<Result>>() {
-            @Override
-            public void onChanged(List<Result> results) {
+        viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), results -> {
 
-                FragmentMapView.this.results = results;
-                if (googleMap != null) {
-                    for (Result result : results) {
-                        Double latitude = result.getGeometry().getLocation().getLat();
-                        Double longitude = result.getGeometry().getLocation().getLng();
-                        LatLng positionRestaurant = new LatLng(latitude, longitude);
+            FragmentMapView.this.results = results;
+            if (googleMap != null) {
+                for (Result result : results) {
+                    Double latitude = result.getGeometry().getLocation().getLat();
+                    Double longitude = result.getGeometry().getLocation().getLng();
+                    LatLng positionRestaurant = new LatLng(latitude, longitude);
 
-                        Marker marker = googleMap.addMarker(new MarkerOptions()
-                                .position(positionRestaurant)
-                                .title(result.getName()));
-                        marker.setTag(result.getPlaceId());
+                    Marker marker = googleMap.addMarker(new MarkerOptions()
+                            .position(positionRestaurant)
+                            .title(result.getName()));
+                    marker.setTag(result.getPlaceId());
 
-                    }
                 }
-
             }
+
         });
 
 
@@ -150,9 +129,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         enableMyLocation();
 
         //Initial position for the camera change for  LatLng is userPosition
-        //le faire en dinamique
         getLocationTel();
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(44.53275, 0.76772), ZOOM_USER_LOCATION_VALUE));
 
         // For zoom on map
         UiSettings uiSettings = googleMap.getUiSettings();
@@ -163,22 +140,18 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     }
 
     public void displayRestaurantDetail(){
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                Toast.makeText(getContext(), "It's ok", Toast.LENGTH_LONG).show();
-                //Met a jour le live data
-                //Marker to result trouver un identifiant commun
-                String placeId = (String) marker.getTag();
-                Result result = null;
-                for (Result r : FragmentMapView.this.results) {
-                    if (r.getPlaceId().equals(placeId)) {
-                        result = r;
-                    }
+        googleMap.setOnInfoWindowClickListener(marker -> {
+            Toast.makeText(getContext(), "It's ok", Toast.LENGTH_LONG).show();
+            //Met a jour le live data
+            String placeId = (String) marker.getTag();
+            Result result = null;
+            for (Result r : FragmentMapView.this.results) {
+                if (r.getPlaceId().equals(placeId)) {
+                    result = r;
                 }
-
-                viewModel.selectRestaurant(result);
             }
+
+            viewModel.selectRestaurant(result);
         });
 
     }
