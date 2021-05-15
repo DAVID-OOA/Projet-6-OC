@@ -2,14 +2,21 @@ package com.oconte.david.go4lunch.mapView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -17,6 +24,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -25,19 +35,23 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.oconte.david.go4lunch.SettingsActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.restoDetails.FragmentDetailsRestaurant;
 import com.oconte.david.go4lunch.util.PermissionUtils;
 
 import org.jetbrains.annotations.NotNull;
 
+
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 
-public class FragmentMapView extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+import static androidx.core.content.ContextCompat.getSystemService;
+
+public class FragmentMapView extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final float ZOOM_USER_LOCATION_VALUE = 15;
@@ -46,6 +60,10 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
 
     private GoogleMap googleMap;
     private MapView mapView;
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
+    private List<Result> results;
 
     private FragmentMapViewBinding binding;
 
@@ -63,6 +81,8 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
 
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("I'm Hungry !");
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
+
         this.configureMapView(savedInstanceState);
 
         this.configureMapViewModel();
@@ -70,6 +90,23 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
         return view;
     }
 
+    public void getLocationTel() {
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) getContext(), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    Double latitude = location.getLatitude();
+                    Double longitude = location.getLongitude();
+
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
+                }
+            }
+        });
+    }
 
 
     public void configureMapViewModel() {
@@ -79,15 +116,17 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
             @Override
             public void onChanged(List<Result> results) {
 
+                FragmentMapView.this.results = results;
                 if (googleMap != null) {
                     for (Result result : results) {
                         Double latitude = result.getGeometry().getLocation().getLat();
                         Double longitude = result.getGeometry().getLocation().getLng();
                         LatLng positionRestaurant = new LatLng(latitude, longitude);
 
-                        googleMap.addMarker(new MarkerOptions()
+                        Marker marker = googleMap.addMarker(new MarkerOptions()
                                 .position(positionRestaurant)
                                 .title(result.getName()));
+                        marker.setTag(result.getPlaceId());
 
                     }
                 }
@@ -108,43 +147,41 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         viewModel.getRestaurants();
-        googleMap.setOnMarkerClickListener(this);
         enableMyLocation();
 
         //Initial position for the camera change for  LatLng is userPosition
         //le faire en dinamique
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(44.53275, 0.76772), ZOOM_USER_LOCATION_VALUE));
+        getLocationTel();
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(44.53275, 0.76772), ZOOM_USER_LOCATION_VALUE));
 
         // For zoom on map
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
 
-        //this.displayRestaurantDetail();
+        this.displayRestaurantDetail();
 
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        Toast.makeText(getContext(), "It's ok", Toast.LENGTH_LONG).show();
-
-        return false;
-    }
-
-
-    /*public void displayRestaurantDetail(){
+    public void displayRestaurantDetail(){
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                //Intent intent = new Intent(getContext(), SettingsActivity.class);
-                //startActivity(intent);
+                Toast.makeText(getContext(), "It's ok", Toast.LENGTH_LONG).show();
+                //Met a jour le live data
+                //Marker to result trouver un identifiant commun
+                String placeId = (String) marker.getTag();
+                Result result = null;
+                for (Result r : FragmentMapView.this.results) {
+                    if (r.getPlaceId().equals(placeId)) {
+                        result = r;
+                    }
+                }
 
-                FragmentDetailsRestaurant fragmentDetailsRestaurant = new FragmentDetailsRestaurant();
-                Objects.requireNonNull(fragmentDetailsRestaurant.getActivity()).getSupportFragmentManager();
-
+                viewModel.selectRestaurant(result);
             }
         });
 
-    }*/
+    }
 
     ///////////////////////////////////////FOR LOCATION
     private void enableMyLocation() {
@@ -159,6 +196,8 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
                    Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
     }
+
+
 
     @Override
     public void onResume() {
@@ -183,5 +222,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Goo
         super.onLowMemory();
         mapView.onLowMemory();
     }
+
+
 
 }
