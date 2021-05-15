@@ -11,13 +11,18 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
+import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
+import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.restoDetails.FragmentDetailsRestaurant;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
 import butterknife.ButterKnife;
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityMainBinding binding;
 
 
+    private ListRestaurantViewModel viewModel;
 
     // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
@@ -38,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentMapView;
     private Fragment fragmentListView;
     private Fragment fragmentWorkMates;
+
+    private Fragment fragmentDetailsRestaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.checkLogOrNotLog();
 
+
+        //this.configurationViewModelDetails();
+
+    }
+
+    ///////////////////////////////////////////////////////////
+    public void configurationViewModelDetails() {
+        viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
+        viewModel.getSelectedRestaurant().observe(fragmentMapView.getViewLifecycleOwner(), new Observer<Result>() {
+            @Override
+            public void onChanged(Result result) {
+                if (result != null) {
+
+                }
+
+            }
+        });
+    }
+
+    private void showDetailsRestaurantFragment() {
+        if (this.fragmentDetailsRestaurant == null) this.fragmentDetailsRestaurant = FragmentDetailsRestaurant.newInstance();
+        this.startTransactionFragment(this.fragmentDetailsRestaurant);
     }
 
     //////////////////////////////////////////////////////////
@@ -241,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (this.fragmentWorkMates == null) this.fragmentWorkMates = FragmentWorkMates.newInstance();
         this.startTransactionFragment(this.fragmentWorkMates);
     }
-
 
 
     @Override

@@ -32,6 +32,19 @@ public class ListRestaurantViewModel extends ViewModel {
             return apiNearByResponseMutableLiveData;
     }
 
+
+    // contient l'information du restaurant selectionné
+    private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<Result>();
+    public void selectRestaurant(Result result) {
+        //mettre a jour l'info
+        selectedRestaurant.postValue(result);
+    }
+    public LiveData<Result> getSelectedRestaurant() {
+        //recuperer l'information
+        return selectedRestaurant;
+    }
+
+
     public void getRestaurants() {
 
         //Classe Anonyme
