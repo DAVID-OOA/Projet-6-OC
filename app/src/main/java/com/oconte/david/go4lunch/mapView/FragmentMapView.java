@@ -41,8 +41,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final float ZOOM_USER_LOCATION_VALUE = 15;
 
-    //private final boolean permissionDenied = true;
-
     private GoogleMap googleMap;
     private MapView mapView;
 
@@ -75,9 +73,10 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         return view;
     }
 
-    public void getLocationTel() {
-        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+    public void getLocationPhone() {
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) getContext(), location -> {
@@ -89,7 +88,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
             }
         });
     }
-
 
     public void configureMapViewModel() {
         viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
@@ -106,18 +104,16 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                     Marker marker = googleMap.addMarker(new MarkerOptions()
                             .position(positionRestaurant)
                             .title(result.getName()));
+                    assert marker != null;
                     marker.setTag(result.getPlaceId());
 
                 }
             }
-
         });
-
-
     }
 
     private void configureMapView(Bundle savedInstanceState) {
-        mapView = (MapView) binding.mapView;
+        mapView = binding.mapView;
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
     }
@@ -129,7 +125,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         enableMyLocation();
 
         //Initial position for the camera change for  LatLng is userPosition
-        getLocationTel();
+        getLocationPhone();
 
         // For zoom on map
         UiSettings uiSettings = googleMap.getUiSettings();
@@ -169,8 +165,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                    Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
     }
-
-
 
     @Override
     public void onResume() {

@@ -1,6 +1,5 @@
 package com.oconte.david.go4lunch.api;
 
-import com.oconte.david.go4lunch.BuildConfig;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.ApiRestaurantDetails;
 

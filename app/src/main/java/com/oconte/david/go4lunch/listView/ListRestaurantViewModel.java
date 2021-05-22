@@ -1,23 +1,15 @@
 package com.oconte.david.go4lunch.listView;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.test.espresso.idling.CountingIdlingResource;
 
 import com.oconte.david.go4lunch.Injection;
-import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
 
 import java.util.List;
-
-import static androidx.test.espresso.intent.Intents.init;
 
 public class ListRestaurantViewModel extends ViewModel {
 

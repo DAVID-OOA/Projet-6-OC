@@ -11,6 +11,7 @@ import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oconte.david.go4lunch.R;
+import com.oconte.david.go4lunch.models.OpeningHours;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.util.ForOpeningHours;
 import com.oconte.david.go4lunch.util.ForRating;
@@ -73,36 +74,14 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         return null;
     }
 
-   @SuppressLint("StringFormatInvalid")
+
    private void displayOpeningHours(Result result) {
-      /*  boolean openTime = result.getOpeningHours().getOpenNow();
-        if (openTime) {
-            openingHoursResto.setText(R.string.open_24_7);
-        } else if (!openTime){
-            openingHoursResto.setText(R.string.closed);
-        }
-       int timeOpening = result.getOpeningHours().getOpenNow();
-       switch (timeOpening){
-           case R.string.closed:
-               openingHoursResto.setText(timeOpening);
-               break;
-           case R.string.closing_soon:
-               openingHoursResto.setText(timeOpening);
-               break;
-           case R.string.no_time:
-               openingHoursResto.setText(timeOpening);
-               break;
-           case R.string.open_24_7:
-               openingHoursResto.setText(timeOpening);
-               break;
-           default:
-               DateFormat dateFormat = new SimpleDateFormat(formatTimeDisplay);
-               String timeToDisplay = dateFormat.format(ForOpeningHours.converStringInDate(timeOpening));
-               openingHoursResto.setText(String.format(res.getString(R.string.open_until), timeToDisplay));
-               break;
-
-
-       }*/
+      OpeningHours openTime = result.getOpeningHours();
+      if (openTime == null) {
+          openingHoursResto.setText(R.string.open_24_7);
+      } else {
+          openingHoursResto.setText(R.string.closed);
+      }
 
    }
 
