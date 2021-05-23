@@ -6,13 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,7 +22,6 @@ import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.restoDetails.FragmentDetailsRestaurant;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 
 import butterknife.ButterKnife;
@@ -36,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityMainBinding binding;
 
     private ListRestaurantViewModel viewModel;
-
 
     // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
@@ -69,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.checkLogOrNotLog();
 
 
-        //this.configurationViewModelDetails();
+        this.configurationViewModelDetails();
 
     }
 
@@ -78,28 +74,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ///////////////////////////////////////////////////////////
     public void configurationViewModelDetails() {
         viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
-        viewModel.getSelectedRestaurant().observe(fragmentMapView.getViewLifecycleOwner(), new Observer<Result>() {
+        viewModel.getSelectedRestaurant().observe(this, new Observer<Result>() {
             @Override
             public void onChanged(Result result) {
                 if (result != null) {
-                    showDetailsRestaurantFragment();
+
 
                 }
             }
 
         });
 
-    }
-
-    private void showDetailsRestaurantFragment() {
-        fragmentDetailsRestaurant = getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
-
-        if (fragmentDetailsRestaurant == null) {
-            fragmentDetailsRestaurant = new FragmentDetailsRestaurant();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_main_frame_layout, fragmentDetailsRestaurant)
-                    .commit();
-        }
     }
 
     //////////////////////////////////////////////////////////

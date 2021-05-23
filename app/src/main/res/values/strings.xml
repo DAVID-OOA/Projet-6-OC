@@ -18,7 +18,7 @@
     <string name="info_no_username_found">Info no username found</string>
 
 
-    <string name="google_map_key" >AIzaSyBq5YQ-3LwqD0gaRZ9B7zJf5tYw2qhSQHo</string>
+    <string name="google_map_key">AIzaSyBq5YQ-3LwqD0gaRZ9B7zJf5tYw2qhSQHo</string>
 
     <!-- For Facebook -->
     <string name="facebook_app_id" translatable="false">1326892067693127</string>

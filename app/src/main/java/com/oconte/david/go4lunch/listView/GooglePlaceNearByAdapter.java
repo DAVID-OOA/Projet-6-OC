@@ -9,13 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oconte.david.go4lunch.R;
-import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.media.CamcorderProfile.get;
 
 public class GooglePlaceNearByAdapter extends RecyclerView.Adapter<GooglePlaceNearByViewHolder> {
 

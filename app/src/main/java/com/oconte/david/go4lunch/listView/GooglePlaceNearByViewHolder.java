@@ -35,7 +35,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.rating_star2) ImageView ratingStar2;
     @BindView(R.id.rating_star3) ImageView ratingStar3;
 
-
+    
 
     private Resources res;
 
@@ -82,7 +82,6 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
       } else {
           openingHoursResto.setText(R.string.closed);
       }
-
    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
