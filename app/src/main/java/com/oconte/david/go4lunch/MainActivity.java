@@ -80,17 +80,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(Result result) {
                 if (result != null) {
-                    Toast.makeText(MainActivity.this, "What !!! it's well !!!!!!!!!!!!!!", Toast.LENGTH_LONG).show();
-                   //startDetailsRestaurantActivity();
                    Intent intent = new Intent(MainActivity.this, DetailsRestaurantActivity.class);
                    startActivity(intent);
                 }
             }
         });
-    }
-
-    private void startDetailsRestaurantActivity() {
-
     }
 
     //////////////////////////////////////////////////////////

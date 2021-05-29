@@ -32,7 +32,7 @@
         </activity> <!-- For google -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_map_key" /> <!-- For Facebook -->
+            android:value="${MAPS_API_KEY}" /> <!-- For Facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id"
