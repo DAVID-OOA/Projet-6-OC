@@ -1,8 +1,13 @@
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
 
 //For Firebase
-apply plugin: 'com.google.gms.google-services'
-
+//apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.secrets_gradle_plugin'
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.secrets_gradle_plugin' version '0.6'
+}
 
 android {
     compileSdkVersion 30

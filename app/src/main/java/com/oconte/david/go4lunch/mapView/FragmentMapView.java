@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
@@ -43,6 +45,8 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
     private GoogleMap googleMap;
     private MapView mapView;
+
+
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -73,6 +77,8 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         return view;
     }
 
+
+
     public void getLocationPhone() {
         if (ActivityCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
@@ -90,7 +96,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     }
 
     public void configureMapViewModel() {
-        viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(ListRestaurantViewModel.class);
 
         viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), results -> {
 
@@ -132,6 +138,9 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         uiSettings.setZoomControlsEnabled(true);
 
         this.displayRestaurantDetail();
+
+        //Location.distanceBetween(); pr calculer la distance entre deux point
+
 
     }
 

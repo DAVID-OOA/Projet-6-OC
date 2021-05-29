@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-
     ///////////////////////////////////////////////////////////
     public void configurationViewModelDetails() {
         viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
@@ -105,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             this.startAuthActivity();
             finish();
         }
-
     }
 
     private void startAuthActivity() {
