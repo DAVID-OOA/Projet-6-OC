@@ -1,6 +1,7 @@
 package com.oconte.david.go4lunch.listView;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
 
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.models.OpeningHours;
@@ -35,7 +37,6 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.rating_star2) ImageView ratingStar2;
     @BindView(R.id.rating_star3) ImageView ratingStar3;
 
-    
 
     private Resources res;
 
@@ -49,6 +50,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         formatTimeDisplay = res.getString(R.string.format_time_display);
 
     }
+
 
     public void updateWithGooglePlaceNearBy(Result result) {
         nameResto.setText(result.getName());

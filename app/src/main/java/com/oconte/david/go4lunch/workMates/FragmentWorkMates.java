@@ -26,7 +26,7 @@ public class FragmentWorkMates extends Fragment {
         com.oconte.david.go4lunch.databinding.FragmentWorkmatesBinding binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("Available workmates");
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Available workmates");
 
 
         return view;

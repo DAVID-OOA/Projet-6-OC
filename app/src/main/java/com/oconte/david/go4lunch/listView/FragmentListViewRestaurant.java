@@ -31,7 +31,7 @@ public class FragmentListViewRestaurant extends Fragment {
          binding = FragmentListViewBinding.inflate(inflater, container, false);
          View view = binding.getRoot();
 
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("I'm Hungry !");
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
         this.configureViewModel();
 

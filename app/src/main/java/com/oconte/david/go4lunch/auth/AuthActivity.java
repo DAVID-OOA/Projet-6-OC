@@ -62,7 +62,6 @@ public class AuthActivity extends AppCompatActivity {
     //For Signing
     ///////////////////////////////////////////////////////////////////////////////////////////////
     public void setUpSignActivity(){
-
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
@@ -78,23 +77,17 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     public void onClickLoginButtonGoogle(){
-        binding.mainActivityButtonLoginGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Launch Sign-In Activity when user clicked on Login Button
-                startSignInActivity();
-            }
+        binding.mainActivityButtonLoginGoogle.setOnClickListener(v -> {
+            //Launch Sign-In Activity when user clicked on Login Button
+            startSignInActivity();
         });
 
     }
 
     public void onClickLoginButtonFacebook(){
-        binding.mainActivityButtonLoginFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Launch Sign-In Activity when user clicked on Login Button
-                startSignInActivity();
-            }
+        binding.mainActivityButtonLoginFacebook.setOnClickListener(v -> {
+            //Launch Sign-In Activity when user clicked on Login Button
+            startSignInActivity();
         });
 
     }
@@ -176,14 +169,10 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void setIsConnected() {
-
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(EXTRA_IS_CONNECTED, true);
         editor.apply();
-
-
-
     }
 
 

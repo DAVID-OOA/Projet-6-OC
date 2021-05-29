@@ -1,11 +1,14 @@
 package com.oconte.david.go4lunch;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +25,10 @@ import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.restoDetails.DetailsRestaurantActivity;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
+
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 
@@ -43,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentListView;
     private Fragment fragmentWorkMates;
 
-    private Fragment fragmentDetailsRestaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.checkLogOrNotLog();
 
-
         this.configurationViewModelDetails();
 
     }
@@ -78,12 +82,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(Result result) {
                 if (result != null) {
-
-
+                    Toast.makeText(MainActivity.this, "What !!! it's well !!!!!!!!!!!!!!", Toast.LENGTH_LONG).show();
+                   //startDetailsRestaurantActivity();
+                   Intent intent = new Intent(MainActivity.this, DetailsRestaurantActivity.class);
+                   startActivity(intent);
                 }
             }
-
         });
+    }
+
+    private void startDetailsRestaurantActivity() {
 
     }
 
@@ -145,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /** Configure the Toolbar */
     protected void configureToolbar() {
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setTitle("I'm Hungry !");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
     }
 
     //////////////////////////////////////////////////////////////////

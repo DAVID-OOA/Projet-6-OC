@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
 import com.oconte.david.go4lunch.api.GooglePlaceService;
-import com.oconte.david.go4lunch.listView.RestaurantRepository;
-import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.ApiRestaurantDetails;
 import com.oconte.david.go4lunch.models.Result;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class RestaurantDetailRepository {
         // Start the Call
         call.enqueue(new Callback<ApiRestaurantDetails>() {
             @Override
-            public void onResponse(Call<ApiRestaurantDetails> call, Response<ApiRestaurantDetails> apiRestaurantDetailsResponse) {
+            public void onResponse(@NotNull Call<ApiRestaurantDetails> call, @NotNull Response<ApiRestaurantDetails> apiRestaurantDetailsResponse) {
 
                 // Call the proper callback used in controller mainfragment
                 callbacks.onResponse(apiRestaurantDetailsResponse.body());
@@ -63,7 +63,7 @@ public class RestaurantDetailRepository {
             }
 
             @Override
-            public void onFailure(Call<ApiRestaurantDetails> call, Throwable t) {
+            public void onFailure(@NotNull Call<ApiRestaurantDetails> call, @NotNull Throwable t) {
 
                 // Call the proper callback used in controller mainfragment
                 callbacks.onFailure();

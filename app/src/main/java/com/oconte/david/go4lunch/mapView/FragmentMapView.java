@@ -62,9 +62,9 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         binding = FragmentMapViewBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).setTitle("I'm Hungry !");
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         this.configureMapView(savedInstanceState);
 
@@ -74,7 +74,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     }
 
     public void getLocationPhone() {
-        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+        if (ActivityCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -154,7 +154,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
     ///////////////////////////////////////FOR LOCATION
     private void enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             if (googleMap!= null) {
                 googleMap.setMyLocationEnabled(true);
@@ -189,7 +189,4 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         super.onLowMemory();
         mapView.onLowMemory();
     }
-
-
-
 }

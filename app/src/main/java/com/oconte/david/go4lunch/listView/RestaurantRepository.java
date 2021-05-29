@@ -8,7 +8,8 @@ import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
 
-import java.lang.ref.WeakReference;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,7 +55,7 @@ public class RestaurantRepository {
         // Start the Call
         call.enqueue(new Callback<ApiNearByResponse>() {
             @Override
-            public void onResponse(Call<ApiNearByResponse> call, Response<ApiNearByResponse> apiNearByResponseResponse) {
+            public void onResponse(@NotNull Call<ApiNearByResponse> call, @NotNull Response<ApiNearByResponse> apiNearByResponseResponse) {
 
                 // Call the proper callback used in controller mainfragment
                 callbacks.onResponse(apiNearByResponseResponse.body());
@@ -62,7 +63,7 @@ public class RestaurantRepository {
             }
 
             @Override
-            public void onFailure(Call<ApiNearByResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<ApiNearByResponse> call, @NotNull Throwable t) {
 
                 // Call the proper callback used in controller mainfragment
                 callbacks.onFailure();
