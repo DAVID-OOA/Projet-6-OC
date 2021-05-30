@@ -10,6 +10,8 @@ import retrofit2.http.Query;
 public interface GooglePlaceService {
 
     public static String API_KEY = "AIzaSyBq5YQ-3LwqD0gaRZ9B7zJf5tYw2qhSQHo";
+    //public static String API_KEY = "${MAPS_API_KEY}";
+
 
     @GET("place/details/json?fields=vicinity,place_id,id,geometry,opening_hours,name,rating,photo&key=" + API_KEY)
     Call<ApiRestaurantDetails> getRestaurantDetail(@Query("placeid") String placeId);

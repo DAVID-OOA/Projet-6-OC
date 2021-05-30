@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
@@ -45,8 +43,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
     private GoogleMap googleMap;
     private MapView mapView;
-
-
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -77,19 +73,16 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         return view;
     }
 
-
-
     public void getLocationPhone() {
         if (ActivityCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) getContext(), location -> {
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) requireContext(), location -> {
             if (location != null) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
-
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
             }
         });
@@ -141,7 +134,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
         //Location.distanceBetween(); pr calculer la distance entre deux point
 
-
     }
 
     public void displayRestaurantDetail(){
@@ -155,7 +147,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                     result = r;
                 }
             }
-
             viewModel.selectRestaurant(result);
         });
 
