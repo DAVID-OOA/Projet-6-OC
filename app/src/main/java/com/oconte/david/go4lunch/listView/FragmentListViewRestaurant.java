@@ -7,13 +7,16 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.oconte.david.go4lunch.databinding.FragmentListViewBinding;
+import com.oconte.david.go4lunch.models.Result;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 
 public class FragmentListViewRestaurant extends Fragment {
@@ -21,6 +24,9 @@ public class FragmentListViewRestaurant extends Fragment {
     private FragmentListViewBinding binding;
 
     private GooglePlaceNearByAdapter adapter;
+
+
+
 
     public static FragmentListViewRestaurant newInstance() {
         return (new FragmentListViewRestaurant());
@@ -47,7 +53,12 @@ public class FragmentListViewRestaurant extends Fragment {
 
     public void configureViewModel() {
         ListRestaurantViewModel viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
-        viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), results -> adapter.updateCallRetrofitGoogleNearBy(results));
+        viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), new Observer<List<Result>>() {
+            @Override
+            public void onChanged(List<Result> results) {
+                adapter.updateCallRetrofitGoogleNearBy(results);
+            }
+        });
         viewModel.getRestaurants();
     }
 

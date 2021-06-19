@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.oconte.david.go4lunch.databinding.ActivitySettingsBinding;
 
+import java.util.Objects;
+
 public class SettingsActivity extends AppCompatActivity {
 
     //For Design
@@ -33,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
      */
     protected void configureToolbar() {
         setSupportActionBar(binding.layoutToolbar.toolbar);
-        getSupportActionBar().setTitle("I'm Hungry !");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
 
     }
 }

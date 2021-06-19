@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -80,9 +79,14 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
             return;
         }
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) requireContext(), location -> {
-            if (location != null) {
+            if (location != null) {//un element declaré ds une scope n'est accessible que ds cette scope
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
+
+                // recupere la position
+                LatLng myLocation = new LatLng(latitude, longitude);
+                viewModel.setMyLocation(myLocation);
+
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
             }
         });
@@ -90,9 +94,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
     public void configureMapViewModel() {
         viewModel = new ViewModelProvider(requireActivity()).get(ListRestaurantViewModel.class);
-
         viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), results -> {
-
             FragmentMapView.this.results = results;
             if (googleMap != null) {
                 for (Result result : results) {
@@ -105,7 +107,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                             .title(result.getName()));
                     assert marker != null;
                     marker.setTag(result.getPlaceId());
-
                 }
             }
         });
@@ -132,13 +133,10 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
         this.displayRestaurantDetail();
 
-        //Location.distanceBetween(); pr calculer la distance entre deux point
-
     }
 
     public void displayRestaurantDetail(){
         googleMap.setOnInfoWindowClickListener(marker -> {
-            Toast.makeText(getContext(), "It's ok", Toast.LENGTH_LONG).show();
             //Met a jour le live data
             String placeId = (String) marker.getTag();
             Result result = null;

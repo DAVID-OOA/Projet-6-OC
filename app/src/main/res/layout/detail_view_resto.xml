@@ -35,10 +35,10 @@
                         android:layout_marginBottom="@dimen/really_small_margin"
                         android:layout_marginTop="@dimen/small_margin">
                         <TextView
+                            android:id="@+id/nameRestaurant"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorTextPrimary"
-                            android:text="@{viewmodel.nameRestaurant}"
                             android:textStyle="bold"/>
                         <ImageView
                             android:id="@+id/first_star"
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorTextPrimary"
-                        android:text="@{viewmodel.addressRestaurant}"/>
+                        android:id="@+id/addressRestaurant"/>
                 </LinearLayout>
 
                 <androidx.gridlayout.widget.GridLayout

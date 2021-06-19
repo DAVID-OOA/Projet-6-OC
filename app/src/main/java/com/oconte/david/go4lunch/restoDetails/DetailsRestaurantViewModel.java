@@ -36,6 +36,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
                 if (apiRestaurantDetails != null) {
                     apiDetailsResponseMutableLiveData.postValue(apiRestaurantDetails.getResult());
 
+
                 }
             }
 

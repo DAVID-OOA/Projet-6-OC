@@ -13,6 +13,16 @@ public class Geometry {
     @Expose
     private Viewport viewport;
 
+    private Double distance;
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
     public Location getLocation() {
         return location;
     }
