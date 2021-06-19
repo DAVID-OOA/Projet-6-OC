@@ -25,9 +25,6 @@ public class FragmentListViewRestaurant extends Fragment {
 
     private GooglePlaceNearByAdapter adapter;
 
-
-
-
     public static FragmentListViewRestaurant newInstance() {
         return (new FragmentListViewRestaurant());
     }

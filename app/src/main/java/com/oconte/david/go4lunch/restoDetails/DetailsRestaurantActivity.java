@@ -29,7 +29,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         setContentView(view);
 
 
-        this.configureViewModel();
+        //this.configureViewModel();
 
 
 

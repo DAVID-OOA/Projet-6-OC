@@ -42,7 +42,6 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     private String formatTimeDisplay;
 
 
-
     public GooglePlaceNearByViewHolder(@NonNull RestoItemRecyclerViewBinding binding) {
         super(binding.getRoot());
          this.binding = binding;
