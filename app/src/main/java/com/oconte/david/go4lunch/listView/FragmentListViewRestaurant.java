@@ -49,7 +49,7 @@ public class FragmentListViewRestaurant extends Fragment {
     }
 
     public void configureViewModel() {
-        ListRestaurantViewModel viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
+        ListRestaurantViewModel viewModel = new ViewModelProvider(requireActivity()).get(ListRestaurantViewModel.class);
         viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), new Observer<List<Result>>() {
             @Override
             public void onChanged(List<Result> results) {

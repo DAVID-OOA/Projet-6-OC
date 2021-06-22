@@ -28,6 +28,7 @@ import com.oconte.david.go4lunch.util.ForRating;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
@@ -41,7 +42,6 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
     private final Resources res;
     private String formatTimeDisplay;
 
-
     public GooglePlaceNearByViewHolder(@NonNull RestoItemRecyclerViewBinding binding) {
         super(binding.getRoot());
          this.binding = binding;
@@ -50,7 +50,6 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         formatTimeDisplay = res.getString(R.string.format_time_display);
 
     }
-
 
     @SuppressLint("SetTextI18n")
     public void updateWithGooglePlaceNearBy(Result result) {
@@ -68,9 +67,9 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         this.displayRating(result);
 
         Double distance = result.getGeometry().getDistance();
-        String writeDistance = distance + " m";
+        DecimalFormat df = new DecimalFormat("0");
+        String writeDistance = df.format(distance) + " m";
         binding.distanceResto.setText(writeDistance);
-
 
     }
 
