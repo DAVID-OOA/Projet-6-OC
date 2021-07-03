@@ -1,40 +1,19 @@
 package com.oconte.david.go4lunch.listView;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.res.Resources;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.widget.TextViewCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.SphericalUtil;
-import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.RestoItemRecyclerViewBinding;
-import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.OpeningHours;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.util.ForOpeningHours;
 import com.oconte.david.go4lunch.util.ForRating;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static androidx.test.InstrumentationRegistry.getContext;
 
 public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
 
@@ -81,7 +60,6 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         return null;
     }
 
-
    private void displayOpeningHours(Result result) {
       OpeningHours openTime = result.getOpeningHours();
       if (openTime == null) {
@@ -100,6 +78,4 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
             binding.ratingStar3.setImageDrawable(res.getDrawable(ForRating.thirdStar(rating)));
         }
     }
-
-
 }
