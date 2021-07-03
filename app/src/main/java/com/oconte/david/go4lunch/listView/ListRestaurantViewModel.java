@@ -20,19 +20,16 @@ import java.util.List;
 
 public class ListRestaurantViewModel extends ViewModel {
 
-
     private final RestaurantRepository mRestaurantRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
 
     public ListRestaurantViewModel() {
         mRestaurantRepository =  Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
-
     }
 
     public LiveData<List<Result>> getRestaurantLiveData() {
             return apiNearByResponseMutableLiveData;
     }
-
 
     // contient l'information du restaurant selectionné
     private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<Result>();
@@ -40,6 +37,7 @@ public class ListRestaurantViewModel extends ViewModel {
         //mettre a jour l'info
         selectedRestaurant.postValue(result);
     }
+
     public LiveData<Result> getSelectedRestaurant() {
         //recuperer l'information pour l'utiliser
         return selectedRestaurant;
