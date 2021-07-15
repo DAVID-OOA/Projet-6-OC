@@ -1,62 +1,86 @@
 package com.oconte.david.go4lunch.workMates;
 
+import androidx.annotation.Nullable;
+
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.models.User;
 
+import java.util.Objects;
+
 public final class UserRepository {
 
     private static final String COLLECTION_NAME = "users";
-    private CollectionReference userCollection;
-    private User user;
 
-    private static volatile UserRepository INSTANCE;
 
-    public static UserRepository getInstance(){
-        if(INSTANCE == null){
-            INSTANCE = new UserRepository();
-        }
-        return INSTANCE;
-    }
+    private static volatile UserRepository instance;
 
     private UserRepository(){
-        this.userCollection = getUserCollection();
     }
 
+    public static UserRepository getInstance(){
+        UserRepository result = instance;
+        if(result != null){
+            return result;
+        }
+        synchronized (UserRepository.class) {
+            if (instance == null) {
+                instance = new UserRepository();
+            }
+            return instance;
+        }
+    }
+
+    @Nullable
+    public FirebaseUser getCurrentUser(){
+        return FirebaseAuth.getInstance().getCurrentUser();
+    }
+
+    public Boolean isCurrentUserLogged(){
+        return (this.getCurrentUser() != null);
+    }
+
+    @Nullable
+    public String getCurrentUserUID(){
+        FirebaseUser currentUser = getCurrentUser();
+        return (currentUser != null)? currentUser.getUid() : null;
+    }
+
+    //Get the Collection Reference
     private CollectionReference getUserCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    //---- CREATE ----
-    public Task<Void> createUser(String uid, String username, String email, String urlPicture){
-        user = new User(uid, username, email, urlPicture);
-        return userCollection.document(uid).set(user);
+    //Create User
+    public void createUser(){
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            String email = currentUser.getEmail();
+            String uid = currentUser.getUid();
+            String photoUrl = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
+            String displayName = currentUser.getDisplayName();
+
+            User userRepositoryCreate = new User(uid,displayName,email,photoUrl);
+            this.getUserCollection().document(uid).set(userRepositoryCreate);
+
+        }
+
     }
 
-    //---- GET ----
-    public User getUser(){
-        return user;
+    // Get User Data from Firestore
+    public Task<DocumentSnapshot> getUserData(){
+        String uid = this.getCurrentUserUID();
+        if(uid != null){
+            return this.getUserCollection().document(uid).get();
+        }else{
+            return null;
+        }
     }
 
-    public Task<DocumentSnapshot> getUserFromFirebase(String uid){
-        return userCollection.document(uid).get();
 
-    }
-
-    //---- UPDATE ----
-    public Task<Void> updateUserNameAndEmail(String username, String email, String uid){
-        user.setUsername(username);
-        user.setEmail(email);
-        return userCollection.document(uid).update(
-                "username", username, "email", email);
-    }
-
-    public Task<Void> updateUrlPicture(String urlPicture, String uid){
-        user.setUrlPicture(urlPicture);
-        return userCollection.document(uid).update("urlPicture", urlPicture);
-    }
 
 }
