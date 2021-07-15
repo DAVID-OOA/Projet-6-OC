@@ -43,15 +43,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="@dimen/nav_header_username_size"
-                android:textColor="@color/colorTextPrimary"
-                android:text="@{viewmodel.username}"/>
+                android:textSize="@dimen/nav_header_username_size"/>
 
             <TextView
                 android:id="@+id/nav_header_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewmodel.email}"
                 android:textSize="@dimen/nav_header_email_size"
                 android:textColor="@color/colorTextPrimary"/>
 
