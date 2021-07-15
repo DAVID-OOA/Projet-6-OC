@@ -1,16 +1,17 @@
 package com.oconte.david.go4lunch;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -20,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
@@ -28,6 +30,8 @@ import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restoDetails.DetailsRestaurantActivity;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
+import com.oconte.david.go4lunch.workMates.UserRepository;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -51,6 +55,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentListView;
     private Fragment fragmentWorkMates;
 
+    // For firebase
+
+    @SuppressLint("NonConstantResourceId")
+    @Nullable
+    @BindView(R.id.nav_header_username) TextView usernameProfil;
+    @SuppressLint("StaticFieldLeak")
+    private static volatile MainActivity instance;
+    private final UserRepository userRepository;
+
+    public MainActivity() {
+        userRepository = UserRepository.getInstance();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(view);
         ButterKnife.bind(this);
 
-        // For UI -------------------
+        // For UI
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
@@ -72,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.checkLogOrNotLog();
 
         this.configurationViewModelDetails();
+
+        this.updateUIWithUserData();
 
     }
 
@@ -274,6 +293,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+
+    //For Data UserCOnnected
+    private void updateUIWithUserData() {
+        if (userRepository.isCurrentUserLogged()) {
+            FirebaseUser currentUser = userRepository.getCurrentUser();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
+            @SuppressLint("ResourceType")
+            View headerView = LayoutInflater.from(this).inflate(R.layout.activity_main_nav_header, navigationView, false);
+            navigationView.addHeaderView(headerView);
+            TextView username = (TextView) headerView.findViewById(R.id.nav_header_username);
+            username.setText(TextUtils.isEmpty(currentUser.getDisplayName()) ? getString(R.string.info_no_username_found) : currentUser.getDisplayName());
+
+            if (currentUser.getPhotoUrl() != null) {
+                ImageView imageUser = (ImageView) headerView.findViewById(R.id.imageview_header_navigationview);
+                Picasso.get().
+                        load(currentUser.getPhotoUrl())
+                        .placeholder(R.drawable.go4lunch_icon)
+                        .into(imageUser);
+
+            }
+
+            TextView useremail = (TextView) headerView.findViewById(R.id.nav_header_email);
+            useremail.setText(TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_username_found) : currentUser.getEmail());
+
+        }
     }
 
 }
