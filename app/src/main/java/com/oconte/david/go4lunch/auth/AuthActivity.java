@@ -3,10 +3,13 @@ package com.oconte.david.go4lunch.auth;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,11 +18,14 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
+import com.oconte.david.go4lunch.models.User;
+import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
@@ -42,7 +48,19 @@ public class AuthActivity extends AppCompatActivity {
     private ActivityAuthBinding binding;
     @BindView(R.id.imageview_header_navigationview) ImageView imageViewProfile;
 
+
     public static final String EXTRA_IS_CONNECTED = "extra_is_connected";
+
+
+    // For firebase
+
+    private static volatile AuthActivity instance;
+    private UserRepository userRepository;
+
+    public AuthActivity() {
+        userRepository = UserRepository.getInstance();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +71,8 @@ public class AuthActivity extends AppCompatActivity {
 
         this.onClickLoginButtonGoogle();
         this.onClickLoginButtonFacebook();
+
+
 
 
     }
@@ -113,9 +133,9 @@ public class AuthActivity extends AppCompatActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK ) { // SUCCESS
-                this.setUpSignActivity();
                 this.setIsConnected();
-
+                this.createUser();
+                this.setUpSignActivity();
             } else { // ERRORS
                 if (response == null) {
                     showSnackBar(binding.authActivityLayout, "error_authentication_canceled");
@@ -140,33 +160,33 @@ public class AuthActivity extends AppCompatActivity {
     /////////////////////////////////////////////////////
     //For Info about connected user
 
-    @Nullable
-    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
+    public void createUser(){
+        userRepository.createUser();
+    }
 
-    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
+    public FirebaseUser getCurrentUser() {
+        return userRepository.getCurrentUser();
+    }
 
-    // Update UI when activity is creating
-    private void updateUIWhenCreating(){
-
-        if (this.getCurrentUser() != null){
-
-            //Get picture URL from Firebase
-            if (this.getCurrentUser().getPhotoUrl() != null) {
-                Picasso.get()
-                        .load(this.getCurrentUser().getPhotoUrl())
-                        .transform(new CropCircleTransformation())
-                        .into(this.imageViewProfile);
+    public static AuthActivity getInstance() {
+        AuthActivity result = instance;
+        if(result != null){
+            return result;
+        }
+        synchronized (AuthActivity.class) {
+            if (instance == null) {
+                instance = new AuthActivity();
             }
-
-            //Get email & username from Firebase
-            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
-            String username = TextUtils.isEmpty(this.getCurrentUser().getDisplayName()) ? getString(R.string.info_no_username_found) : this.getCurrentUser().getDisplayName();
-
-            //Update views with data
-            //this.textInputEditTextUsername.setText(username);
-            //this.textViewEmail.setText(email);
+            return instance;
         }
     }
+
+    public Task<User> getUserData() {
+        // Get the user from Firestore and cast it to a User model Object
+        return Objects.requireNonNull(userRepository.getUserData()).continueWith(task -> task.getResult().toObject(User.class)) ;
+    }
+
+
 
     private void setIsConnected() {
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
