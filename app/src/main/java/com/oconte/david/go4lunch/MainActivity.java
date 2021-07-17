@@ -1,6 +1,7 @@
 package com.oconte.david.go4lunch;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +22,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
@@ -32,6 +37,8 @@ import com.oconte.david.go4lunch.restoDetails.DetailsRestaurantActivity;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -57,17 +64,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // For firebase
 
-    @SuppressLint("NonConstantResourceId")
-    @Nullable
-    @BindView(R.id.nav_header_username) TextView usernameProfil;
-    @SuppressLint("StaticFieldLeak")
     private static volatile MainActivity instance;
     private final UserRepository userRepository;
 
     public MainActivity() {
         userRepository = UserRepository.getInstance();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(Result result) {
                 if (result != null) {
-                   Intent intent = new Intent(MainActivity.this, DetailsRestaurantActivity.class);
-                   startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, DetailsRestaurantActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -110,10 +112,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //////////////////////////////////////////////////////////
 
-    private void checkLogOrNotLog(){
-
+    private void checkLogOrNotLog() {
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
-        boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED,false);
+        boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED, false);
         if (!resultLogging) { //siginfie que si ce boolean est faux. equivaux a resultLogging == false
             this.startAuthActivity();
             finish();
@@ -138,31 +139,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // When you log out save the state for the next launch application.
     private void setIsDeconnected() {
-
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(EXTRA_IS_CONNECTED, false);
         editor.apply();
-
     }
 
     // It's for sign Out
-    private void signOutUserFromFirebase(){
+    private void signOutUserFromFirebase() {
         AuthUI.getInstance()
-                .signOut(this);
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                        deleteUser();
+                    }
+                });
     }
 
+    /*For delete User*/
+    public void deleteUser() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            return;
+        }
+
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            userRepository.deleteUserFromFirestore();
+                        }
+                    }
+                });
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void startSettingsActivity(){
+    private void startSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
     //////////////////////////// UI ///////////////////////////////////////////////////////////////
 
-    /** Configure the Toolbar */
+    /**
+     * Configure the Toolbar
+     */
     protected void configureToolbar() {
         setSupportActionBar(binding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
@@ -181,16 +206,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    /** Configure Drawer Layout */
-    private void configureDrawerLayout(){
+    /**
+     * Configure Drawer Layout
+     */
+    private void configureDrawerLayout() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.activityMainDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
 
-    /** Configure NavigationView  */
-    private void configureNavigationView(){
+    /**
+     * Configure NavigationView
+     */
+    private void configureNavigationView() {
         binding.activityMainNavView.setNavigationItemSelectedListener(this);
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -200,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle Navigation Item Click
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.activity_main_drawer_lunch:
                 //this.showFragment(FRAGMENT_LUNCH);
                 break;
@@ -224,11 +254,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // BOTTOM MENU
     ////////////////////////////////////////////////////
 
-    /** Configure BottomView */
+    /**
+     * Configure BottomView
+     */
     @SuppressLint("NonConstantResourceId")
     public boolean onNavigationItemSelected(Integer integer) {
 
-        switch (integer){
+        switch (integer) {
             case R.id.action_map:
                 this.showMapViewFragment();
                 break;
@@ -245,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureBottomView() {
-        binding.bottomNav.setOnNavigationItemSelectedListener(item-> onNavigationItemSelected(item.getItemId()));
+        binding.bottomNav.setOnNavigationItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
     }
 
     // ---------------------
@@ -253,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // ---------------------
 
     // Show first fragment when activity is created
-    private void showFirstFragment(){
+    private void showFirstFragment() {
 
         fragmentMapView = (FragmentMapView) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
 
@@ -274,18 +306,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //Fragment bottom view
-    private void showMapViewFragment(){
+    private void showMapViewFragment() {
         if (this.fragmentMapView == null) this.fragmentMapView = FragmentMapView.newInstance();
         this.startTransactionFragment(this.fragmentMapView);
     }
 
-    private void showListViewFragment(){
-        if (this.fragmentListView == null) this.fragmentListView = FragmentListViewRestaurant.newInstance();
+    private void showListViewFragment() {
+        if (this.fragmentListView == null)
+            this.fragmentListView = FragmentListViewRestaurant.newInstance();
         this.startTransactionFragment(this.fragmentListView);
     }
 
-    private void showWorkMatesFragment(){
-        if (this.fragmentWorkMates == null) this.fragmentWorkMates = FragmentWorkMates.newInstance();
+    private void showWorkMatesFragment() {
+        if (this.fragmentWorkMates == null)
+            this.fragmentWorkMates = FragmentWorkMates.newInstance();
         this.startTransactionFragment(this.fragmentWorkMates);
     }
 
@@ -301,25 +335,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (userRepository.isCurrentUserLogged()) {
             FirebaseUser currentUser = userRepository.getCurrentUser();
 
-            NavigationView navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
+            NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
             @SuppressLint("ResourceType")
-            View headerView = LayoutInflater.from(this).inflate(R.layout.activity_main_nav_header, navigationView, false);
-            navigationView.addHeaderView(headerView);
-            TextView username = (TextView) headerView.findViewById(R.id.nav_header_username);
-            username.setText(TextUtils.isEmpty(currentUser.getDisplayName()) ? getString(R.string.info_no_username_found) : currentUser.getDisplayName());
+            View headerView = navigationView.getHeaderView(0);
+            TextView username = headerView.findViewById(R.id.nav_header_username);
+            username.setText(TextUtils.isEmpty(Objects.requireNonNull(currentUser).getDisplayName()) ? getString(R.string.info_no_username_found) : currentUser.getDisplayName());
 
             if (currentUser.getPhotoUrl() != null) {
-                ImageView imageUser = (ImageView) headerView.findViewById(R.id.imageview_header_navigationview);
+                ImageView imageUser = headerView.findViewById(R.id.imageview_header_navigationview);
                 Picasso.get().
                         load(currentUser.getPhotoUrl())
-                        .placeholder(R.drawable.go4lunch_icon)
+                        .placeholder(R.drawable.baseline_account_circle_24)
                         .into(imageUser);
-
             }
 
-            TextView useremail = (TextView) headerView.findViewById(R.id.nav_header_email);
+            TextView useremail = headerView.findViewById(R.id.nav_header_email);
             useremail.setText(TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_username_found) : currentUser.getEmail());
-
         }
     }
 

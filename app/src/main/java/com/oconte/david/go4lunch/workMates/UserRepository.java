@@ -81,6 +81,11 @@ public final class UserRepository {
         }
     }
 
-
-
+    // Delete the User from Firestore
+    public void deleteUserFromFirestore() {
+        String uid = this.getCurrentUserUID();
+        if(uid != null){
+            this.getUserCollection().document(uid).delete();
+        }
+    }
 }
