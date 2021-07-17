@@ -72,9 +72,6 @@ public class AuthActivity extends AppCompatActivity {
         this.onClickLoginButtonGoogle();
         this.onClickLoginButtonFacebook();
 
-
-
-
     }
 
 
@@ -101,7 +98,6 @@ public class AuthActivity extends AppCompatActivity {
             //Launch Sign-In Activity when user clicked on Login Button
             startSignInActivity();
         });
-
     }
 
     public void onClickLoginButtonFacebook(){
@@ -109,7 +105,6 @@ public class AuthActivity extends AppCompatActivity {
             //Launch Sign-In Activity when user clicked on Login Button
             startSignInActivity();
         });
-
     }
 
     // Launch Sign-In Activity
@@ -180,12 +175,6 @@ public class AuthActivity extends AppCompatActivity {
             return instance;
         }
     }
-
-    public Task<User> getUserData() {
-        // Get the user from Firestore and cast it to a User model Object
-        return Objects.requireNonNull(userRepository.getUserData()).continueWith(task -> task.getResult().toObject(User.class)) ;
-    }
-
 
 
     private void setIsConnected() {
