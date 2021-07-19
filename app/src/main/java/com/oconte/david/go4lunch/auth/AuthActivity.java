@@ -1,38 +1,26 @@
 package com.oconte.david.go4lunch.auth;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.UserManager;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
-import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.workMates.UserRepository;
-import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.Objects;
-
-import butterknife.BindView;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class AuthActivity extends AppCompatActivity {
@@ -42,25 +30,21 @@ public class AuthActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
 
     // Identify each Http Request
-    private static final int SIGN_OUT_TASK = 10;
+    //private static final int SIGN_OUT_TASK = 10;
 
     //FOR DESIGN;
     private ActivityAuthBinding binding;
-    @BindView(R.id.imageview_header_navigationview) ImageView imageViewProfile;
-
 
     public static final String EXTRA_IS_CONNECTED = "extra_is_connected";
 
-
     // For firebase
-
+    @SuppressLint("StaticFieldLeak")
     private static volatile AuthActivity instance;
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public AuthActivity() {
         userRepository = UserRepository.getInstance();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +56,12 @@ public class AuthActivity extends AppCompatActivity {
         this.onClickLoginButtonGoogle();
         this.onClickLoginButtonFacebook();
 
+        this.startSignInActivity();
+
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    //For Signing
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // For Signing
     public void setUpSignActivity(){
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
@@ -96,14 +80,14 @@ public class AuthActivity extends AppCompatActivity {
     public void onClickLoginButtonGoogle(){
         binding.mainActivityButtonLoginGoogle.setOnClickListener(v -> {
             //Launch Sign-In Activity when user clicked on Login Button
-            startSignInActivity();
+            //startSignInActivity();
         });
     }
 
     public void onClickLoginButtonFacebook(){
         binding.mainActivityButtonLoginFacebook.setOnClickListener(v -> {
             //Launch Sign-In Activity when user clicked on Login Button
-            startSignInActivity();
+            //startSignInActivity();
         });
     }
 
@@ -176,13 +160,10 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-
     private void setIsConnected() {
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(EXTRA_IS_CONNECTED, true);
         editor.apply();
     }
-
-
 }
