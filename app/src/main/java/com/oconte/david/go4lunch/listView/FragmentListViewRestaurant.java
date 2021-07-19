@@ -80,8 +80,6 @@ public class FragmentListViewRestaurant extends Fragment {
     private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(binding.fragmentMainRecyclerView, R.layout.detail_view_resto)
                 .setOnItemClickListener((recyclerView, position, v) -> {
-                    
-                    //result.articles.get(position);
 
                     Intent intent = new Intent(getContext(), DetailsRestaurantActivity.class);
                     startActivity(intent);
