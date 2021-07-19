@@ -58,10 +58,11 @@
 
                     </LinearLayout>
                     <TextView
+                        android:id="@+id/addressRestaurant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextPrimary"
-                        android:id="@+id/addressRestaurant"/>
+                        android:textColor="@color/colorTextPrimary"/>
+
                 </LinearLayout>
 
                 <androidx.gridlayout.widget.GridLayout
