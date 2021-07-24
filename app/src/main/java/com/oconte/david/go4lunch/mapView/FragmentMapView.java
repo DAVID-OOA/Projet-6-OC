@@ -42,13 +42,9 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
     private GoogleMap googleMap;
     private MapView mapView;
-
     private FusedLocationProviderClient fusedLocationProviderClient;
-
     private List<Result> results;
-
     private FragmentMapViewBinding binding;
-
     private ListRestaurantViewModel viewModel;
 
     public static FragmentMapView newInstance() {
@@ -64,9 +60,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
-
         this.configureMapView(savedInstanceState);
-
         this.configureMapViewModel();
 
         return view;
@@ -150,7 +144,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
     }
 
-    ///////////////////////////////////////FOR LOCATION
+    // FOR LOCATION
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
