@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +47,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.content.ContentValues.TAG;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -111,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //////////////////////////////////////////////////////////
-
     private void checkLogOrNotLog() {
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED, false);
@@ -126,15 +128,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////
+
     //For SIGN OUT
-    ///////////////////////////////////////////////////////////////////////////////////////
 
     // It's for sign out and restart AuthActivity
     private void resultSignOut() {
-        this.setIsDeconnected();
         this.signOutUserFromFirebase();
-        this.startAuthActivity();
+
     }
 
     // When you log out save the state for the next launch application.
@@ -145,35 +145,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         editor.apply();
     }
 
+
     // It's for sign Out
     private void signOutUserFromFirebase() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        String uid = user.getUid();
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
-                        deleteUser();
+                        setIsDeconnected();
+                        deleteUser(uid);
+                        startAuthActivity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
                     }
                 });
     }
 
     /*For delete User*/
-    public void deleteUser() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user == null) {
+    public void deleteUser(String uid) {
+        if (uid == null) {
             return;
         }
-
-        user.delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            userRepository.deleteUserFromFirestore();
-                        }
-                    }
-                });
+        userRepository.deleteUserFromFirestore(uid);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
 
 import java.util.Objects;
@@ -15,8 +16,6 @@ import java.util.Objects;
 public final class UserRepository {
 
     private static final String COLLECTION_NAME = "users";
-
-
     private static volatile UserRepository instance;
 
     private UserRepository(){
@@ -44,11 +43,6 @@ public final class UserRepository {
         return (this.getCurrentUser() != null);
     }
 
-    @Nullable
-    public String getCurrentUserUID(){
-        FirebaseUser currentUser = getCurrentUser();
-        return (currentUser != null)? currentUser.getUid() : null;
-    }
 
     //Get the Collection Reference
     private CollectionReference getUserCollection(){
@@ -68,24 +62,18 @@ public final class UserRepository {
             this.getUserCollection().document(uid).set(userRepositoryCreate);
 
         }
-
     }
 
-    // Get User Data from Firestore
-    public Task<DocumentSnapshot> getUserData(){
-        String uid = this.getCurrentUserUID();
-        if(uid != null){
-            return this.getUserCollection().document(uid).get();
-        }else{
-            return null;
-        }
-    }
 
     // Delete the User from Firestore
-    public void deleteUserFromFirestore() {
-        String uid = this.getCurrentUserUID();
+    public void deleteUserFromFirestore(String uid) {
         if(uid != null){
             this.getUserCollection().document(uid).delete();
         }
+    }
+
+    // Get all Users
+    public Task<QuerySnapshot> getAllUserFromFirebase() {
+        return getUserCollection().orderBy("username").get();
     }
 }

@@ -54,6 +54,7 @@ public class ListRestaurantViewModel extends ViewModel {
     }
 
 
+    // contient l'info de la list des restaurants
     public void getRestaurants() {
         //Classe Anonyme
         mRestaurantRepository.getRestaurantNearBy(new RestaurantRepository.Callbacks() {
