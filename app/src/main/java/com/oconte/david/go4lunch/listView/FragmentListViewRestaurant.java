@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentListViewBinding;
@@ -29,6 +28,8 @@ public class FragmentListViewRestaurant extends Fragment {
     private FragmentListViewBinding binding;
 
     private GooglePlaceNearByAdapter adapter;
+
+    //private DetailsRestaurantViewModel viewModel;
 
     public static FragmentListViewRestaurant newInstance() {
         return (new FragmentListViewRestaurant());

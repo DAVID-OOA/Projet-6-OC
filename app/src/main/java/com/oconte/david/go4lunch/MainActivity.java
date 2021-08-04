@@ -1,20 +1,17 @@
 package com.oconte.david.go4lunch;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -44,7 +41,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.ContentValues.TAG;
@@ -60,14 +56,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int RC_SIGN_IN = 123;
 
     //FOR FRAGMENTS
-    // Declare fragment handled by Navigation Drawer
     private Fragment fragmentMapView;
     private Fragment fragmentListView;
     private Fragment fragmentWorkMates;
 
     // For firebase
-
-    private static volatile MainActivity instance;
+    //private static volatile MainActivity instance;
     private final UserRepository userRepository;
 
     public MainActivity() {
@@ -180,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
     private void startSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
@@ -196,9 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
     }
 
-    //////////////////////////////////////////////////////////////////
-    // NAVIGATION DRAWER                                            //
-    //////////////////////////////////////////////////////////////////
+    // NAVIGATION DRAWER
     @Override
     public void onBackPressed() {
         // Handle back click to close menu
@@ -289,16 +280,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Show first fragment when activity is created
     private void showFirstFragment() {
-
-        fragmentMapView = (FragmentMapView) getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
-
+        fragmentMapView = getSupportFragmentManager().findFragmentById(R.id.activity_main_frame_layout);
         if (fragmentMapView == null) {
             fragmentMapView = new FragmentMapView();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.activity_main_frame_layout, fragmentMapView)
                     .commit();
         }
-
     }
 
     private void startTransactionFragment(Fragment fragment) {
@@ -326,12 +314,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.startTransactionFragment(this.fragmentWorkMates);
     }
 
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
-
 
     //For Data UserCOnnected
     private void updateUIWithUserData() {

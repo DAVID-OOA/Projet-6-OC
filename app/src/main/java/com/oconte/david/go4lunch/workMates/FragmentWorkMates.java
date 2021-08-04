@@ -50,8 +50,9 @@ public class FragmentWorkMates extends Fragment {
 
 
     public void configureViewModel() {
-        WorkMatesViewModel viewModel = new ViewModelProvider(requireActivity()).get(WorkMatesViewModel.class);
-        viewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
+        ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity(), new ViewModelRestaurantFactory(UserRepository.getInstance()));
+        WorkMatesViewModel viewModel = viewModelProvider.get(WorkMatesViewModel.class);
+        viewModel.getUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
                 workMatesAdapter.updateCallUserList(users);

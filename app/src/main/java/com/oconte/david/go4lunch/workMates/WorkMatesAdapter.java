@@ -16,7 +16,7 @@ import java.util.List;
 
 public class WorkMatesAdapter extends RecyclerView.Adapter<WorkMatesViewHolder> {
 
-    private List<User> listUser = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     @NonNull
     @NotNull
@@ -27,17 +27,21 @@ public class WorkMatesAdapter extends RecyclerView.Adapter<WorkMatesViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull WorkMatesViewHolder viewHolder, int position) {
-        viewHolder.updateWithUser(this.listUser.get(position));
+        viewHolder.updateWithUser(users.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return this.listUser.size();
+        return this.users.size();
     }
 
     public void updateCallUserList(List<User> userList) {
-        this.listUser = userList;
+        this.users = userList;
         this.notifyDataSetChanged();
+    }
+
+    User getUser(int position) {
+        return users.get(position);
     }
 }

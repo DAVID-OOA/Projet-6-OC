@@ -15,6 +15,19 @@ import java.util.List;
 
 public class DetailsRestaurantViewModel extends ViewModel {
 
+
+    // contient l'information du restaurant selectionné
+    private final MutableLiveData<Result> selectedDetailsRestaurant = new MutableLiveData<Result>();
+    public void selectDetailsRestaurant(Result result) {
+        //mettre a jour l'info
+        selectedDetailsRestaurant.postValue(result);
+    }
+
+    public LiveData<Result> getSelectedDetailsRestaurant() {
+        //recuperer l'information pour l'utiliser
+        return selectedDetailsRestaurant;
+    }
+
     private final RestaurantDetailRepository mRestaurantDetailRepository;
     private final MutableLiveData<Result> apiDetailsResponseMutableLiveData = new MutableLiveData<>();
 

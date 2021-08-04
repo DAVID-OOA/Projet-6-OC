@@ -12,6 +12,7 @@ import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
+import com.oconte.david.go4lunch.models.DetailsRestaurant;
 import com.oconte.david.go4lunch.models.Result;
 import com.squareup.picasso.Picasso;
 
@@ -29,10 +30,17 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         setContentView(view);
 
 
+        //this.configureDetailsView();
         //this.configureViewModel();
 
 
 
+    }
+
+    public void configureDetailsView() {
+        Intent intent = getIntent();
+        DetailsRestaurant detailsRestaurant = (DetailsRestaurant) intent.getSerializableExtra("DetailsRestaurantObject");
+        binding.nameRestaurant.setText(detailsRestaurant.getAdressRestaurant());
     }
 
     public void configureViewModel() {

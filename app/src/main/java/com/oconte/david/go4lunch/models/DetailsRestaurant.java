@@ -2,7 +2,9 @@ package com.oconte.david.go4lunch.models;
 
 import android.widget.ImageView;
 
-public class DetailsRestaurant {
+import java.io.Serializable;
+
+public class DetailsRestaurant implements Serializable {
 
     ImageView imageresto;
     String nameRestaurant;

@@ -1,18 +1,15 @@
 package com.oconte.david.go4lunch.listView;
 
 import android.annotation.SuppressLint;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
-import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
 
@@ -30,29 +27,6 @@ public class ListRestaurantViewModel extends ViewModel {
     public LiveData<List<Result>> getRestaurantLiveData() {
             return apiNearByResponseMutableLiveData;
     }
-
-    // contient l'information du restaurant selectionné
-    private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<Result>();
-    public void selectRestaurant(Result result) {
-        //mettre a jour l'info
-        selectedRestaurant.postValue(result);
-    }
-
-    public LiveData<Result> getSelectedRestaurant() {
-        //recuperer l'information pour l'utiliser
-        return selectedRestaurant;
-    }
-
-    // contient l'information de la position
-    private LatLng myLocation = null;
-    public void setMyLocation(LatLng latLng) {
-        this.myLocation= latLng;
-    }
-
-    public LatLng getMyLocation() {
-        return myLocation;
-    }
-
 
     // contient l'info de la list des restaurants
     public void getRestaurants() {
@@ -73,6 +47,29 @@ public class ListRestaurantViewModel extends ViewModel {
         }, "location");
     }
 
+    // contient l'information du restaurant selectionné
+    private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<Result>();
+    public void selectRestaurant(Result result) {
+        //mettre a jour l'info
+        selectedRestaurant.postValue(result);
+    }
+
+    public LiveData<Result> getSelectedRestaurant() {
+        //recuperer l'information pour l'utiliser
+        return selectedRestaurant;
+    }
+
+    // contient l'information de la position
+    private LatLng myLocation = null;
+    public void setMyLocation(LatLng latLng) {
+        this.myLocation = latLng;
+    }
+
+    public LatLng getMyLocation() {
+        return myLocation;
+    }
+
+    // Calculate the distance for listRestaurant.
     private List<Result> calculateDistances(LatLng myLocation, List<Result> results) {
         for (Result result: results) {
             distanceBetweenPositionAndResto(result,myLocation);
@@ -82,7 +79,6 @@ public class ListRestaurantViewModel extends ViewModel {
 
     @SuppressLint("DefaultLocale")
     private void distanceBetweenPositionAndResto(Result result, LatLng myLocation){
-
         if (myLocation != null && result != null) {
             Double latitude = result.getGeometry().getLocation().getLat();
             Double longitude = result.getGeometry().getLocation().getLng();
@@ -91,7 +87,6 @@ public class ListRestaurantViewModel extends ViewModel {
             Double distance = SphericalUtil.computeDistanceBetween(myLocation, positionRestaurant);
             result.getGeometry().setDistance(distance);
         }
-
     }
 
 }

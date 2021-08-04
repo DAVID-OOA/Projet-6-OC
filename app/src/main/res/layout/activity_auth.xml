@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <ImageView
+    <!--<ImageView
         android:layout_width="260dp"
         android:layout_height="260dp"
         android:layout_gravity="center"
@@ -15,7 +14,7 @@
         android:layout_marginBottom="80dp"
         android:src="@drawable/go4lunch_icon"/>
 
-    <!-- BUTTON LOGIN-->
+     BUTTON LOGIN
     <Button
         android:id="@+id/main_activity_button_login_google"
         android:layout_width="match_parent"
@@ -28,7 +27,7 @@
         android:layout_margin="@dimen/default_large_margin"
         android:padding="@dimen/default_large_margin"/>
 
-    <!-- BUTTON LOGIN-->
+    BUTTON LOGIN
     <Button
         android:id="@+id/main_activity_button_login_facebook"
         android:layout_width="match_parent"
@@ -38,7 +37,7 @@
         android:textSize="@dimen/default_text_size"
         style="@style/FirebaseUI.Button.AccountChooser.FacebookButton"
         android:layout_margin="@dimen/default_large_margin"
-        android:padding="@dimen/default_large_margin" />
+        android:padding="@dimen/default_large_margin" />-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/auth_activity_layout"

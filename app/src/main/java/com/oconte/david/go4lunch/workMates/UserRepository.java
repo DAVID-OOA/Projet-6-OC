@@ -16,9 +16,11 @@ import java.util.Objects;
 public final class UserRepository {
 
     private static final String COLLECTION_NAME = "users";
+    private static final String USERNAME_FIELD = "username";
     private static volatile UserRepository instance;
+    private User user;
 
-    private UserRepository(){
+    public UserRepository(){
     }
 
     public static UserRepository getInstance(){
@@ -64,11 +66,24 @@ public final class UserRepository {
         }
     }
 
+    public User getUser() {
+        return user;
+    }
 
     // Delete the User from Firestore
     public void deleteUserFromFirestore(String uid) {
         if(uid != null){
             this.getUserCollection().document(uid).delete();
+        }
+    }
+
+    // Update User Username
+    public Task<Void> updateUsername(String username) {
+        /*String uid = this.getCurrentUser();
+        if(uid != null){
+            return this.getUserCollection().document(uid).update(USERNAME_FIELD, username);
+        }else*/{
+            return null;
         }
     }
 
