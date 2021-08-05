@@ -4,7 +4,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -15,7 +14,8 @@
             android:layout_width="@dimen/user_image_recyclerview_workmates_size"
             android:layout_height="@dimen/user_image_recyclerview_workmates_size"
             android:background="@drawable/baseline_account_circle_24"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/this_is_account_picture" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,5 +1,7 @@
 package com.oconte.david.go4lunch.workMates;
 
+import static android.content.ContentValues.TAG;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static android.content.ContentValues.TAG;
 
 public class WorkMatesViewModel extends ViewModel {
 
@@ -49,12 +49,12 @@ public class WorkMatesViewModel extends ViewModel {
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             List<User> fetcheUsers = new ArrayList<>();
-                            /*for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
                                 User userFetched = documentSnapshot.toObject(User.class);
-                                if (!Objects.requireNonNull(userFetched).getUid().equals(user.getUid())) {
+                                if (Objects.requireNonNull(userFetched).getUid() != null) {
                                     fetcheUsers.add(userFetched);
                                 }
-                            }*/
+                            }
                             users.postValue(fetcheUsers);
                         }
                     }
