@@ -41,5 +41,11 @@
     <string name="popup_message_choice_no">Non</string>
     <string name="check_box_is_mentor">Etes-vous un mentor ?</string>
     <string name="this_is_account_picture">This is account picture</string>
+    <string name="phone_button_text">CALL</string>
+    <string name="website_button_text">WEBSITE</string>
+    <string name="rating_resto">LIKE</string>
+
+    <!-- For details View -->
+
 
 </resources>
