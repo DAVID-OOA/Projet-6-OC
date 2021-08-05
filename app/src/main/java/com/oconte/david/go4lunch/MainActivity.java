@@ -42,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import static android.content.ContentValues.TAG;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
@@ -333,6 +334,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ImageView imageUser = headerView.findViewById(R.id.imageview_header_navigationview);
                 Picasso.get().
                         load(currentUser.getPhotoUrl())
+                        .transform(new CropCircleTransformation())
                         .placeholder(R.drawable.baseline_account_circle_24)
                         .into(imageUser);
             }
