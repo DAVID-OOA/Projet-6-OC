@@ -40,5 +40,6 @@
     <string name="popup_message_choice_yes">Oui !</string>
     <string name="popup_message_choice_no">Non</string>
     <string name="check_box_is_mentor">Etes-vous un mentor ?</string>
+    <string name="this_is_account_picture">This is account picture</string>
 
 </resources>

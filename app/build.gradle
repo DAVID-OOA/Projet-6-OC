@@ -1,8 +1,4 @@
-//apply plugin: 'com.android.application'
 
-//For Firebase
-//apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'com.google.secrets_gradle_plugin'
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
