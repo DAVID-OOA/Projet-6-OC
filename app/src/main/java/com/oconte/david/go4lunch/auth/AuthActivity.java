@@ -53,9 +53,6 @@ public class AuthActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //this.onClickLoginButtonGoogle();
-        //this.onClickLoginButtonFacebook();
-
         this.startSignInActivity();
 
     }
@@ -74,20 +71,6 @@ public class AuthActivity extends AppCompatActivity {
         // Handle SignIn Activity response on activity result
         this.handleResponseAfterSignIn(requestCode, resultCode, data);
     }
-
-    /*public void onClickLoginButtonGoogle(){
-        binding.mainActivityButtonLoginGoogle.setOnClickListener(v -> {
-            //Launch Sign-In Activity when user clicked on Login Button
-            //startSignInActivity();
-        });
-    }
-
-    public void onClickLoginButtonFacebook(){
-        binding.mainActivityButtonLoginFacebook.setOnClickListener(v -> {
-            //Launch Sign-In Activity when user clicked on Login Button
-            //startSignInActivity();
-        });
-    }*/
 
     // Launch Sign-In Activity
     private void startSignInActivity(){

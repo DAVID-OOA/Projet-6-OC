@@ -1,9 +1,13 @@
 package com.oconte.david.go4lunch.restoDetails;
 
 import com.oconte.david.go4lunch.models.DetailsRestaurant;
+import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import static com.squareup.okhttp.internal.Internal.instance;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public final class DetailsRestaurantRepositoryTest {
 
@@ -13,23 +17,15 @@ public final class DetailsRestaurantRepositoryTest {
     public DetailsRestaurantRepositoryTest() {
     }
 
-    public static DetailsRestaurantRepositoryTest getInstance(){
-        DetailsRestaurantRepositoryTest result = instance;
-        if(result != null){
-            return result;
-        }
-        synchronized (DetailsRestaurantRepositoryTest.class) {
-            if (instance == null) {
-                instance = new DetailsRestaurantRepositoryTest();
-            }
-            return instance;
-        }
+    // contient l'information du restaurant click
+    private final MutableLiveData<Result> clickRestaurant = new MutableLiveData<Result>();
+    public void clickRestaurant(Result result) {
+        //mettre a jour l'info
+        clickRestaurant.postValue(result);
     }
 
-    public void detailsRestaurant() {
-        String nameRestaurant = detailsRestaurant.getNameRestaurant();
-
-        //DetailsRestaurant detailsRestaurantRepositoryCreate = new DetailsRestaurant(nameRestaurant);
-
+    public LiveData<Result> getClickRestaurant() {
+        //recuperer l'information pour l'utiliser
+        return clickRestaurant;
     }
 }

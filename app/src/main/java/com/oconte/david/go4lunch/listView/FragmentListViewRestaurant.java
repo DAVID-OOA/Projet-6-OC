@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentListViewBinding;
 import com.oconte.david.go4lunch.models.Result;
@@ -28,6 +29,8 @@ public class FragmentListViewRestaurant extends Fragment {
     private FragmentListViewBinding binding;
 
     private GooglePlaceNearByAdapter adapter;
+
+    private ListRestaurantViewModel viewModel1;
 
     //private DetailsRestaurantViewModel viewModel;
 
@@ -82,10 +85,24 @@ public class FragmentListViewRestaurant extends Fragment {
         ItemClickSupport.addTo(binding.fragmentMainRecyclerView, R.layout.detail_view_resto)
                 .setOnItemClickListener((recyclerView, position, v) -> {
 
-                    Intent intent = new Intent(getContext(), DetailsRestaurantActivity.class);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(getContext(), DetailsRestaurantActivity.class);
+                    startActivity(intent);*/
+                    configurationViewModelClickDetails();
                 });
 
+    }
+
+    public void configurationViewModelClickDetails() {
+        viewModel1 = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
+        viewModel1.getSelectedRestaurant().observe(requireActivity(), new Observer<Result>() {
+            @Override
+            public void onChanged(Result result) {
+                if (result != null) {
+                    Intent intent = new Intent(getContext(), DetailsRestaurantActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 }

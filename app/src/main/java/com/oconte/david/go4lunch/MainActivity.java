@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED, false);
         if (!resultLogging) { //siginfie que si ce boolean est faux. equivaux a resultLogging == false
             this.startAuthActivity();
-            finish();
         }
     }
 
