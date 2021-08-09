@@ -1,12 +1,20 @@
 package com.oconte.david.go4lunch.auth;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
@@ -57,7 +65,6 @@ public class AuthActivity extends AppCompatActivity {
 
     }
 
-
     // For Signing
     public void setUpSignActivity(){
         Intent returnIntent = new Intent();
@@ -65,28 +72,73 @@ public class AuthActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Handle SignIn Activity response on activity result
-        this.handleResponseAfterSignIn(requestCode, resultCode, data);
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    setIsConnected();
+                    createUser();
+                    setUpSignActivity();
+                } else {
+                    Log.e(TAG,"hum it's a big error !!!!! My Bad");
+                }
+
+            });
+
+    private void startSignInActivity() {
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setTheme(R.style.LoginTheme)
+                .setAvailableProviders(
+                        Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                new AuthUI.IdpConfig.FacebookBuilder().build())
+                )
+                .setIsSmartLockEnabled(false, true)
+                .setLogo(R.drawable.go4lunch_icon)
+                .build();
+
+        signInLauncher.launch(signInIntent);
     }
 
-    // Launch Sign-In Activity
-    private void startSignInActivity(){
-        startActivityForResult(AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setTheme(R.style.LoginTheme)
-                        .setAvailableProviders(
-                                Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                            new AuthUI.IdpConfig.FacebookBuilder().build())
-                        )
-                        .setIsSmartLockEnabled(false, true)
-                        .setLogo(R.drawable.go4lunch_icon)
-                        .build(), RC_SIGN_IN);
+    //////////////////////////////////////////////////////
+    // UI
+    ///////////////////////////////////////////////////////
+
+    // Show Snack Bar with a message
+    private void showSnackBar(CoordinatorLayout coordinatorLayout, String message){
+        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
-    // Method that handles response after SignIn Activity close
+    /////////////////////////////////////////////////////
+    //For Info about connected user
+
+    public void createUser(){
+        userRepository.createUser();
+    }
+
+    private void setIsConnected() {
+        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(EXTRA_IS_CONNECTED, true);
+        editor.apply();
+    }
+
+    /*public FirebaseUser getCurrentUser() {
+        return userRepository.getCurrentUser();
+    }
+    public static AuthActivity getInstance() {
+        AuthActivity result = instance;
+        if(result != null){
+            return result;
+        }
+        synchronized (AuthActivity.class) {
+            if (instance == null) {
+                instance = new AuthActivity();
+            }
+            return instance;
+        }
+    }*/
+    /* Method that handles response after SignIn Activity close
     private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data){
 
         IdpResponse response = IdpResponse.fromResultIntent(data);
@@ -106,45 +158,24 @@ public class AuthActivity extends AppCompatActivity {
                 }
             }
         }
+    }*/
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Handle SignIn Activity response on activity result
+        this.handleResponseAfterSignIn(requestCode, resultCode, data);
     }
-
-    //////////////////////////////////////////////////////
-    // UI
-    ///////////////////////////////////////////////////////
-
-    // Show Snack Bar with a message
-    private void showSnackBar(CoordinatorLayout coordinatorLayout, String message){
-        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    /////////////////////////////////////////////////////
-    //For Info about connected user
-
-    public void createUser(){
-        userRepository.createUser();
-    }
-
-    public FirebaseUser getCurrentUser() {
-        return userRepository.getCurrentUser();
-    }
-
-    public static AuthActivity getInstance() {
-        AuthActivity result = instance;
-        if(result != null){
-            return result;
-        }
-        synchronized (AuthActivity.class) {
-            if (instance == null) {
-                instance = new AuthActivity();
-            }
-            return instance;
-        }
-    }
-
-    private void setIsConnected() {
-        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(EXTRA_IS_CONNECTED, true);
-        editor.apply();
-    }
+     Launch Sign-In Activity
+    private void startSignInActivity(){
+        startActivityForResult(AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setTheme(R.style.LoginTheme)
+                        .setAvailableProviders(
+                                Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                            new AuthUI.IdpConfig.FacebookBuilder().build())
+                        )
+                        .setIsSmartLockEnabled(false, true)
+                        .setLogo(R.drawable.go4lunch_icon)
+                        .build(), RC_SIGN_IN);
+    }*/
 }
