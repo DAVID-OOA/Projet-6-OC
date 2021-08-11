@@ -1,34 +1,23 @@
 package com.oconte.david.go4lunch.auth;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 
 public class AuthActivity extends AppCompatActivity {
@@ -80,7 +69,7 @@ public class AuthActivity extends AppCompatActivity {
                     createUser();
                     setUpSignActivity();
                 } else {
-                    Log.e(TAG,"hum it's a big error !!!!! My Bad");
+                    Toast.makeText(this,"It's a bad Day", Toast.LENGTH_LONG).show();
                 }
 
             });
@@ -104,10 +93,10 @@ public class AuthActivity extends AppCompatActivity {
     // UI
     ///////////////////////////////////////////////////////
 
-    // Show Snack Bar with a message
+    /* Show Snack Bar with a message
     private void showSnackBar(CoordinatorLayout coordinatorLayout, String message){
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
-    }
+    }*/
 
     /////////////////////////////////////////////////////
     //For Info about connected user

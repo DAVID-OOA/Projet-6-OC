@@ -19,14 +19,14 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
 
     private final RestoItemRecyclerViewBinding binding;
     private final Resources res;
-    private String formatTimeDisplay;
+    //private String formatTimeDisplay;
 
     public GooglePlaceNearByViewHolder(@NonNull RestoItemRecyclerViewBinding binding) {
         super(binding.getRoot());
          this.binding = binding;
 
         res = itemView.getResources();
-        formatTimeDisplay = res.getString(R.string.format_time_display);
+        //formatTimeDisplay = res.getString(R.string.format_time_display);
 
     }
 
@@ -54,8 +54,7 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
 
     public String getUrlPhoto(Result result) {
         if (result.getPhotos() != null && result.getPhotos().size() > 0) {
-            String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + result.getPhotos().get(0).getPhotoReference()+ "&key=AIzaSyCAxdxjPS79wAQ5WTz9FTtmvAfZXgIsOP8";
-            return url;
+            return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + result.getPhotos().get(0).getPhotoReference()+ "&key=AIzaSyCAxdxjPS79wAQ5WTz9FTtmvAfZXgIsOP8";
         }
         return null;
     }

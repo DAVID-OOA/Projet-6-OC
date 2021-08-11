@@ -272,7 +272,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void configureBottomView() {
         binding.bottomNav.setOnNavigationItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
+
     }
+
+
+
 
     // ---------------------
     // FRAGMENTS

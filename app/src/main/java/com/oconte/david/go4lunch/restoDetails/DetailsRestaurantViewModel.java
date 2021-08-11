@@ -9,14 +9,32 @@ import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.listView.RestaurantRepository;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.ApiRestaurantDetails;
+import com.oconte.david.go4lunch.models.DetailsRestaurant;
 import com.oconte.david.go4lunch.models.Result;
 
 import java.util.List;
 
 public class DetailsRestaurantViewModel extends ViewModel {
 
+    private static volatile DetailsRestaurantRepositoryTest instance;
+    private DetailsRestaurant detailsRestaurant;
 
-    // contient l'information du restaurant selectionné
+    public DetailsRestaurantViewModel() {
+    }
+
+    // contient l'information du restaurant click
+    private final MutableLiveData<Result> clickRestaurant = new MutableLiveData<Result>();
+    public void clickRestaurant(Result result) {
+        //mettre a jour l'info
+        clickRestaurant.postValue(result);
+    }
+
+    public LiveData<Result> getClickRestaurant() {
+        //recuperer l'information pour l'utiliser
+        return clickRestaurant;
+    }
+
+    /* contient l'information du restaurant selectionné
     private final MutableLiveData<Result> selectedDetailsRestaurant = new MutableLiveData<Result>();
     public void selectDetailsRestaurant(Result result) {
         //mettre a jour l'info
@@ -59,5 +77,5 @@ public class DetailsRestaurantViewModel extends ViewModel {
             }
         }, "placeId");
 
-    }
+    }*/
 }

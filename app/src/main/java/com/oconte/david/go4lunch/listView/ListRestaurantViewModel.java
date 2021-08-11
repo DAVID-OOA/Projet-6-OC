@@ -48,7 +48,7 @@ public class ListRestaurantViewModel extends ViewModel {
     }
 
     // contient l'information du restaurant selectionné
-    private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<Result>();
+    private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<>();
     public void selectRestaurant(Result result) {
         //mettre a jour l'info
         selectedRestaurant.postValue(result);
