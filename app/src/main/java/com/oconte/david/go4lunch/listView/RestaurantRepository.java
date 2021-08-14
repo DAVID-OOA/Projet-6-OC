@@ -3,15 +3,10 @@ package com.oconte.david.go4lunch.listView;
 import androidx.annotation.Nullable;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
-import com.oconte.david.go4lunch.models.DetailsRestaurant;
-import com.oconte.david.go4lunch.models.User;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;

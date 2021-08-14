@@ -43,7 +43,7 @@ public class WorkMatesViewModel extends ViewModel {
     }
 
     public void getUserList() {
-        // check de connection internet
+        // Check de connection internet
         mUserRepository.getAllUserFromFirebase()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
