@@ -2,14 +2,15 @@ package com.oconte.david.go4lunch.auth;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.AuthUI;
@@ -69,9 +70,18 @@ public class AuthActivity extends AppCompatActivity {
                     createUser();
                     setUpSignActivity();
                 } else {
-                    Toast.makeText(this,"It's a bad Day", Toast.LENGTH_LONG).show();
-                }
+                    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                    alertDialog.setTitle("Error");
+                    alertDialog.setMessage("Your auth is not worked, try again");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
 
+                }
             });
 
     private void startSignInActivity() {
