@@ -15,7 +15,7 @@ public interface GooglePlaceService {
     @GET("place/details/json?fields=vicinity,place_id,id,geometry,opening_hours,name,rating,photo&key=" + myApiKey)
     Call<ApiRestaurantDetails> getRestaurantDetail(@Query("placeid") String placeId);
 
-    @GET("place/nearbysearch/json?location=44.532616, 0.768252&radius=3000&type=restaurant&key=" + myApiKey)
+    @GET("place/nearbysearch/json?radius=3000&type=restaurant&key=" + myApiKey)
     Call<ApiNearByResponse> getRestaurantNearBy(@Query("location") String location);
 
 }

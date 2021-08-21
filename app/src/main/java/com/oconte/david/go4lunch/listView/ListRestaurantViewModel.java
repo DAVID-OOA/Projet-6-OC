@@ -44,7 +44,8 @@ public class ListRestaurantViewModel extends ViewModel {
             public void onFailure() {
 
             }
-        }, "location");
+        }, myLocation.toString());
+
     }
 
     // contient l'information du restaurant selectionné
@@ -67,6 +68,16 @@ public class ListRestaurantViewModel extends ViewModel {
 
     public LatLng getMyLocation() {
         return myLocation;
+    }
+
+    // contient l'information de la position
+    private LatLng serviceLocation = null;
+    public void setMyServiceLocation(LatLng latLng) {
+        this.serviceLocation = latLng;
+    }
+
+    public LatLng getMyServiceLocation() {
+        return serviceLocation;
     }
 
     // Calculate the distance for listRestaurant.

@@ -1,18 +1,11 @@
-package com.oconte.david.go4lunch.restoDetails;
+package com.oconte.david.go4lunch.restodetails;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.oconte.david.go4lunch.Injection;
-import com.oconte.david.go4lunch.listView.RestaurantRepository;
-import com.oconte.david.go4lunch.models.ApiNearByResponse;
-import com.oconte.david.go4lunch.models.ApiRestaurantDetails;
 import com.oconte.david.go4lunch.models.DetailsRestaurant;
 import com.oconte.david.go4lunch.models.Result;
-
-import java.util.List;
 
 public class DetailsRestaurantViewModel extends ViewModel {
 

@@ -80,7 +80,6 @@ public class AuthActivity extends AppCompatActivity {
                         }
                     });
                     alertDialog.show();
-
                 }
             });
 

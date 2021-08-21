@@ -1,10 +1,7 @@
-package com.oconte.david.go4lunch.restoDetails;
+package com.oconte.david.go4lunch.restodetails;
 
 import com.oconte.david.go4lunch.models.DetailsRestaurant;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.workMates.UserRepository;
-
-import static com.squareup.okhttp.internal.Internal.instance;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

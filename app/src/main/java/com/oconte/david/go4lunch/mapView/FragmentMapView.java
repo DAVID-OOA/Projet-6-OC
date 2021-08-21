@@ -47,6 +47,8 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     private FragmentMapViewBinding binding;
     private ListRestaurantViewModel viewModel;
 
+
+
     public static FragmentMapView newInstance() {
         return (new FragmentMapView());
     }
@@ -81,6 +83,17 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                 LatLng myLocation = new LatLng(latitude, longitude);
                 viewModel.setMyLocation(myLocation);
 
+                enableMyLocation();
+
+                // For zoom on map
+                UiSettings uiSettings = googleMap.getUiSettings();
+                uiSettings.setZoomControlsEnabled(true);
+
+                viewModel.getRestaurants();
+
+                // deplacer ces lignes qe j'ai recuperer la liste des restaurants
+                this.clickForDisplayRestaurantDetail();
+
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
             }
         });
@@ -102,6 +115,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                     assert marker != null;
                     marker.setTag(result.getPlaceId());
                 }
+
             }
         });
     }
@@ -115,21 +129,11 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        viewModel.getRestaurants();
-        enableMyLocation();
-
-        //Initial position for the camera change for  LatLng is userPosition
         getLocationPhone();
-
-        // For zoom on map
-        UiSettings uiSettings = googleMap.getUiSettings();
-        uiSettings.setZoomControlsEnabled(true);
-
-        this.displayRestaurantDetail();
 
     }
 
-    public void displayRestaurantDetail(){
+    public void clickForDisplayRestaurantDetail(){
         googleMap.setOnInfoWindowClickListener(marker -> {
             //Met a jour le live data
             String placeId = (String) marker.getTag();

@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch.restoDetails;
+package com.oconte.david.go4lunch.restodetails;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;

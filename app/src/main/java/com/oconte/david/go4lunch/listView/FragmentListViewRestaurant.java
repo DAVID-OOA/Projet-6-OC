@@ -1,25 +1,22 @@
 package com.oconte.david.go4lunch.listView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentListViewBinding;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.restoDetails.DetailsRestaurantActivity;
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
+import com.oconte.david.go4lunch.util.ForNetIsAvailable;
 import com.oconte.david.go4lunch.util.ItemClickSupport;
 
 import org.jetbrains.annotations.NotNull;
@@ -63,6 +60,10 @@ public class FragmentListViewRestaurant extends Fragment {
     }
 
     public void configureViewModel() {
+        if (!ForNetIsAvailable.isNetworkConnected(requireContext())) {
+            // mettre alerte dialogue no internet
+            return;
+        }
         ListRestaurantViewModel viewModel = new ViewModelProvider(requireActivity()).get(ListRestaurantViewModel.class);
         viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), new Observer<List<Result>>() {
             @Override

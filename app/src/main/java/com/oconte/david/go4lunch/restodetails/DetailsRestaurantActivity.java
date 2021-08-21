@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch.restoDetails;
+package com.oconte.david.go4lunch.restodetails;
 
 import android.content.Intent;
 import android.os.Bundle;

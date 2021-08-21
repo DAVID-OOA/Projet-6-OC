@@ -1,12 +1,14 @@
 package com.oconte.david.go4lunch;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,12 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +40,7 @@ import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.restoDetails.DetailsRestaurantActivity;
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
@@ -46,7 +52,6 @@ import java.util.Objects;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-import static android.content.ContentValues.TAG;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //private static volatile MainActivity instance;
     private final UserRepository userRepository;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+
     public MainActivity() {
         userRepository = UserRepository.getInstance();
     }
@@ -78,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View view = binding.getRoot();
         setContentView(view);
         ButterKnife.bind(this);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // For UI
         this.configureToolbar();
@@ -94,6 +103,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.updateUIWithUserData();
 
+        this.getLocationPhone();
+
+    }
+
+    public void getLocationPhone() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) this, location -> {
+            if (location != null) {//un element declaré ds une scope n'est accessible que ds cette scope
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+
+                // recupere la position
+                LatLng myLocation = new LatLng(latitude, longitude);
+                String serviceLocation = myLocation.toString();
+                viewModel.setMyServiceLocation(myLocation);
+
+
+            }
+        });
     }
 
     ///////////////////////////////////////////////////////////
@@ -280,7 +312,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void configureBottomView() {
         binding.bottomNav.setOnNavigationItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
-
     }
 
 
