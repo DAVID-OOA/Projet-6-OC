@@ -69,10 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentWorkMates;
 
     // For firebase
-    //private static volatile MainActivity instance;
     private final UserRepository userRepository;
-
-    FusedLocationProviderClient fusedLocationProviderClient;
 
     public MainActivity() {
         userRepository = UserRepository.getInstance();
@@ -85,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View view = binding.getRoot();
         setContentView(view);
         ButterKnife.bind(this);
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // For UI
         this.configureToolbar();
@@ -103,30 +98,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.updateUIWithUserData();
 
-        this.getLocationPhone();
-
     }
 
-    public void getLocationPhone() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) this, location -> {
-            if (location != null) {//un element declaré ds une scope n'est accessible que ds cette scope
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
 
-                // recupere la position
-                LatLng myLocation = new LatLng(latitude, longitude);
-                String serviceLocation = myLocation.toString();
-                viewModel.setMyServiceLocation(myLocation);
-
-
-            }
-        });
-    }
 
     ///////////////////////////////////////////////////////////
     public void configurationViewModelDetails() {
@@ -170,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         editor.putBoolean(EXTRA_IS_CONNECTED, false);
         editor.apply();
     }
-
 
     // It's for sign Out
     private void signOutUserFromFirebase() {

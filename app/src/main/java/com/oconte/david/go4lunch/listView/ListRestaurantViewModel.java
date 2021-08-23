@@ -12,6 +12,7 @@ import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.util.ForPosition;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ListRestaurantViewModel extends ViewModel {
             public void onFailure() {
 
             }
-        }, myLocation.toString());
+        }, ForPosition.convertLocationForApi(myLocation));
 
     }
 
@@ -62,22 +63,12 @@ public class ListRestaurantViewModel extends ViewModel {
 
     // contient l'information de la position
     private LatLng myLocation = null;
-    public void setMyLocation(LatLng latLng) {
-        this.myLocation = latLng;
+    public void setMyLocation(LatLng myLocation) {
+        this.myLocation = myLocation;
     }
 
     public LatLng getMyLocation() {
         return myLocation;
-    }
-
-    // contient l'information de la position
-    private LatLng serviceLocation = null;
-    public void setMyServiceLocation(LatLng latLng) {
-        this.serviceLocation = latLng;
-    }
-
-    public LatLng getMyServiceLocation() {
-        return serviceLocation;
     }
 
     // Calculate the distance for listRestaurant.

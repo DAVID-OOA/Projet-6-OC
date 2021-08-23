@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.util.PermissionUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,8 +64,11 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
+
         this.configureMapView(savedInstanceState);
-        this.configureMapViewModel();
+
+        //this.configureMapViewModel();
+        getLocationPhone();
 
         return view;
     }
@@ -81,6 +86,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
                 // recupere la position
                 LatLng myLocation = new LatLng(latitude, longitude);
+                //String myGoodLocation = ForPosition.convertLocationForApi(myLocation);
                 viewModel.setMyLocation(myLocation);
 
                 enableMyLocation();
@@ -91,10 +97,8 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
                 viewModel.getRestaurants();
 
-                // deplacer ces lignes qe j'ai recuperer la liste des restaurants
-                this.clickForDisplayRestaurantDetail();
-
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
+
             }
         });
     }
@@ -114,8 +118,9 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                             .title(result.getName()));
                     assert marker != null;
                     marker.setTag(result.getPlaceId());
-                }
 
+                }
+                this.clickForDisplayRestaurantDetail();
             }
         });
     }
@@ -127,9 +132,9 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap = googleMap;
-        getLocationPhone();
+        configureMapViewModel();
 
     }
 
