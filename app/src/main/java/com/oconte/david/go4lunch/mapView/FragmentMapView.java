@@ -49,8 +49,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     private FragmentMapViewBinding binding;
     private ListRestaurantViewModel viewModel;
 
-
-
     public static FragmentMapView newInstance() {
         return (new FragmentMapView());
     }
@@ -67,7 +65,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
         this.configureMapView(savedInstanceState);
 
-        //this.configureMapViewModel();
         getLocationPhone();
 
         return view;
@@ -86,7 +83,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
                 // recupere la position
                 LatLng myLocation = new LatLng(latitude, longitude);
-                //String myGoodLocation = ForPosition.convertLocationForApi(myLocation);
                 viewModel.setMyLocation(myLocation);
 
                 enableMyLocation();
@@ -98,7 +94,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                 viewModel.getRestaurants();
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
-
             }
         });
     }
