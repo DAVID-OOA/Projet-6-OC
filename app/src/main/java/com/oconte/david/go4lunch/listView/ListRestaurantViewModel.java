@@ -46,7 +46,6 @@ public class ListRestaurantViewModel extends ViewModel {
 
             }
         }, ForPosition.convertLocationForApi(myLocation));
-
     }
 
     // contient l'information du restaurant selectionné
@@ -90,5 +89,4 @@ public class ListRestaurantViewModel extends ViewModel {
             result.getGeometry().setDistance(distance);
         }
     }
-
 }

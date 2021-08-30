@@ -3,7 +3,9 @@ package com.oconte.david.go4lunch.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ApiRestaurantDetails {
+import java.io.Serializable;
+
+public class ApiRestaurantDetails implements Serializable {
 
     @SerializedName("result")
     @Expose

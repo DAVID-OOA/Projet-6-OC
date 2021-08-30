@@ -34,7 +34,9 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginBottom="@dimen/really_small_margin"
-                        android:layout_marginTop="@dimen/small_margin">
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginLeft="@dimen/small_margin">
                         <TextView
                             android:id="@+id/nameRestaurant"
                             android:layout_width="wrap_content"
@@ -62,7 +64,9 @@
                         android:id="@+id/addressRestaurant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextPrimary"/>
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:textColor="@color/colorTextPrimary"
+                        android:layout_marginLeft="@dimen/small_margin" />
 
                 </LinearLayout>
 

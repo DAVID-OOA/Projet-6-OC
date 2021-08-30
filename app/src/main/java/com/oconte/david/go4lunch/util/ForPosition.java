@@ -13,6 +13,4 @@ public class ForPosition {
         }
         return null;
     }
-
-
 }

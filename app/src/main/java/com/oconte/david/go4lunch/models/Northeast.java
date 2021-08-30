@@ -4,7 +4,9 @@ package com.oconte.david.go4lunch.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Northeast {
+import java.io.Serializable;
+
+public class Northeast implements Serializable {
 
     @SerializedName("lat")
     @Expose

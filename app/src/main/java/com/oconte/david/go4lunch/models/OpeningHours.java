@@ -4,10 +4,11 @@ package com.oconte.david.go4lunch.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.time.Period;
 import java.util.List;
 
-public class OpeningHours {
+public class OpeningHours implements Serializable {
 
     @SerializedName("open_now")
     @Expose

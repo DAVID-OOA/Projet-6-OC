@@ -4,7 +4,9 @@ package com.oconte.david.go4lunch.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PlusCode {
+import java.io.Serializable;
+
+public class PlusCode implements Serializable {
 
     @SerializedName("compound_code")
     @Expose

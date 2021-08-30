@@ -1,7 +1,5 @@
 package com.oconte.david.go4lunch.workMates;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;

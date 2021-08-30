@@ -1,12 +1,13 @@
 
 package com.oconte.david.go4lunch.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ApiNearByResponse {
+public class ApiNearByResponse implements Serializable {
 
     @SerializedName("html_attributions")
     @Expose

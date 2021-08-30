@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
-import com.oconte.david.go4lunch.models.DetailsRestaurant;
 import com.oconte.david.go4lunch.models.Result;
 import com.squareup.picasso.Picasso;
 
@@ -21,8 +20,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private DetailViewRestoBinding binding;
 
-    private ListRestaurantViewModel viewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,39 +27,25 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-
-        //this.configureDetailsView();
-
-        this.configureViewModel();
+        this.configureViewDetailsRestaurant();
 
     }
 
-    public void configureDetailsView() {
+    public void configureViewDetailsRestaurant() {
+
         Intent intent = getIntent();
-        DetailsRestaurant detailsRestaurant = (DetailsRestaurant) intent.getSerializableExtra("DetailsRestaurantObject");
-        binding.nameRestaurant.setText(detailsRestaurant.getAdressRestaurant());
-    }
+        Result result = (Result)intent.getSerializableExtra("result");
 
-    public void configureViewModel() {
-        viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
-        viewModel.getSelectedRestaurant().observe(this, new Observer<Result>() {
-            @Override
-            public void onChanged(Result result) {
-                if (result != null) {
+        binding.nameRestaurant.setText(result.getName());
 
-                Picasso.get()
-                        .load(getUrlPhoto(result))
-                        .placeholder(R.drawable.go4lunch_icon)
-                        .resize(60,60)
-                        .into(binding.imageRestaurant);
-                }
+        binding.addressRestaurant.setText(result.getVicinity());
 
-                binding.nameRestaurant.setText(Objects.requireNonNull(result).getName());
+        Picasso.get()
+                .load(getUrlPhoto(result))
+                .placeholder(R.drawable.go4lunch_icon)
+                .into(binding.imageRestaurant);
 
-                binding.addressRestaurant.setText(result.getVicinity());
-            }
-        });
-        viewModel.getRestaurants();
+
     }
 
     public String getUrlPhoto(Result result) {

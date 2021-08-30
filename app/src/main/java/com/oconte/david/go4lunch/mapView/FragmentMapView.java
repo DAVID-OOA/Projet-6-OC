@@ -3,6 +3,7 @@ package com.oconte.david.go4lunch.mapView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.util.ForPosition;
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
 import com.oconte.david.go4lunch.util.PermissionUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -143,16 +144,21 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                     result = r;
                 }
             }
-            viewModel.selectRestaurant(result);
-        });
 
+            /*le passer ds une intent*/
+            Intent intent = new Intent(requireActivity(), DetailsRestaurantActivity.class);
+            intent.putExtra("result", result);
+            startActivity(intent);
+            //viewModel.selectRestaurant(result);
+
+        });
     }
 
     // FOR LOCATION
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            if (googleMap!= null) {
+            if (googleMap != null) {
                 googleMap.setMyLocationEnabled(true);
             }
         } else {
