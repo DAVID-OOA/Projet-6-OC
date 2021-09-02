@@ -5,16 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
-import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
 import com.squareup.picasso.Picasso;
-
-import java.util.Objects;
 
 public class DetailsRestaurantActivity extends AppCompatActivity {
 
@@ -35,17 +30,16 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Result result = (Result)intent.getSerializableExtra("result");
+        if (result != null) {
+            binding.nameRestaurant.setText(result.getName());
 
-        binding.nameRestaurant.setText(result.getName());
+            binding.addressRestaurant.setText(result.getVicinity());
 
-        binding.addressRestaurant.setText(result.getVicinity());
-
-        Picasso.get()
-                .load(getUrlPhoto(result))
-                .placeholder(R.drawable.go4lunch_icon)
-                .into(binding.imageRestaurant);
-
-
+            Picasso.get()
+                    .load(getUrlPhoto(result))
+                    .placeholder(R.drawable.go4lunch_icon)
+                    .into(binding.imageRestaurant);
+        }
     }
 
     public String getUrlPhoto(Result result) {
