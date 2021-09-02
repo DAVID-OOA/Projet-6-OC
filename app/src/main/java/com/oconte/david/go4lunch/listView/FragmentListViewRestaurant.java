@@ -30,9 +30,7 @@ public class FragmentListViewRestaurant extends Fragment {
 
     private GooglePlaceNearByAdapter adapter;
 
-    private ListRestaurantViewModel viewModel1;
-
-    //private DetailsRestaurantViewModel viewModel;
+    List<Result> results;
 
     public static FragmentListViewRestaurant newInstance() {
         return (new FragmentListViewRestaurant());
@@ -61,7 +59,16 @@ public class FragmentListViewRestaurant extends Fragment {
 
     public void configureViewModel() {
         if (!ForNetIsAvailable.isNetworkConnected(requireContext())) {
-            // mettre alerte dialogue no internet
+            /*AlertDialog alertDialog = new AlertDialog.Builder(requireActivity()).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage("There is no internet connection");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.show();*/
             return;
         }
         ListRestaurantViewModel viewModel = new ViewModelProvider(requireActivity()).get(ListRestaurantViewModel.class);
@@ -89,23 +96,26 @@ public class FragmentListViewRestaurant extends Fragment {
         ItemClickSupport.addTo(binding.fragmentMainRecyclerView, R.layout.detail_view_resto)
                 .setOnItemClickListener((recyclerView, position, v) -> {
 
-                    configurationViewModelClickDetails();
+
+                   /**/results.get(position);
+
+                   // recupere le placeId de l'item a cette position
+                    String placeId = results.get(position).getPlaceId();
+
+                    // Initialise result
+                    Result result = null;
+
+                    //compare placeId
+                    for (Result r : FragmentListViewRestaurant.this.results) {
+                        if (r.getPlaceId().equals(placeId))
+                            result = r;
+                    }
+
+                    // recupere et envoie le result
+                    Intent intent = new Intent(requireActivity(), DetailsRestaurantActivity.class);
+                    intent.putExtra("result", result);
+                    startActivity(intent);
 
                 });
-
     }
-
-    public void configurationViewModelClickDetails() {
-        viewModel1 = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
-        viewModel1.getSelectedRestaurant().observe(requireActivity(), new Observer<Result>() {
-            @Override
-            public void onChanged(Result result) {
-                if (result != null) {
-                    Intent intent = new Intent(getContext(), DetailsRestaurantActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
-
 }
