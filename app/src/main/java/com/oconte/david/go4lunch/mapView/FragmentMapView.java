@@ -136,7 +136,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
     public void clickForDisplayRestaurantDetail(){
         googleMap.setOnInfoWindowClickListener(marker -> {
-            //Met a jour le live data
+
             String placeId = (String) marker.getTag();
             Result result = null;
             for (Result r : FragmentMapView.this.results) {
@@ -145,11 +145,9 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                 }
             }
 
-            /*le passer ds une intent*/
             Intent intent = new Intent(requireActivity(), DetailsRestaurantActivity.class);
             intent.putExtra("result", result);
             startActivity(intent);
-            //viewModel.selectRestaurant(result);
 
         });
     }
