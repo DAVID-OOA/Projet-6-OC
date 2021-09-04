@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentListViewBinding;
@@ -43,11 +44,9 @@ public class FragmentListViewRestaurant extends Fragment {
 
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
-        this.configureViewModel();
-
         this.configureRecyclerView();
 
-        this.configureOnClickRecyclerView();
+        this.configureViewModel();
 
         return view;
     }
@@ -76,6 +75,8 @@ public class FragmentListViewRestaurant extends Fragment {
             @Override
             public void onChanged(List<Result> results) {
                 adapter.updateCallRetrofitGoogleNearBy(results);
+                FragmentListViewRestaurant.this.results = results;
+                configureOnClickRecyclerView(results);
             }
         });
         viewModel.getRestaurants();
@@ -92,30 +93,22 @@ public class FragmentListViewRestaurant extends Fragment {
         this.binding.fragmentMainRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void configureOnClickRecyclerView(){
+    private void configureOnClickRecyclerView(List<Result> results){
         ItemClickSupport.addTo(binding.fragmentMainRecyclerView, R.layout.detail_view_resto)
                 .setOnItemClickListener((recyclerView, position, v) -> {
 
+            String placeId = results.get(position).getPlaceId();
 
-                   /**/results.get(position);
+            Result result = null;
 
-                   // recupere le placeId de l'item a cette position
-                    String placeId = results.get(position).getPlaceId();
+            for (Result r : FragmentListViewRestaurant.this.results) {
+                if (r.getPlaceId().equals(placeId))
+                    result = r;
+            }
 
-                    // Initialise result
-                    Result result = null;
-
-                    //compare placeId
-                    for (Result r : FragmentListViewRestaurant.this.results) {
-                        if (r.getPlaceId().equals(placeId))
-                            result = r;
-                    }
-
-                    // recupere et envoie le result
-                    Intent intent = new Intent(requireActivity(), DetailsRestaurantActivity.class);
-                    intent.putExtra("result", result);
-                    startActivity(intent);
-
-                });
+            Intent intent = new Intent(requireActivity(), DetailsRestaurantActivity.class);
+            intent.putExtra("result", result);
+            startActivity(intent);
+        });
     }
 }
