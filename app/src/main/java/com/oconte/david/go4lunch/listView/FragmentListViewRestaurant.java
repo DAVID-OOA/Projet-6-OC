@@ -1,17 +1,18 @@
 package com.oconte.david.go4lunch.listView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentListViewBinding;
@@ -58,7 +59,7 @@ public class FragmentListViewRestaurant extends Fragment {
 
     public void configureViewModel() {
         if (!ForNetIsAvailable.isNetworkConnected(requireContext())) {
-            /*AlertDialog alertDialog = new AlertDialog.Builder(requireActivity()).create();
+            AlertDialog alertDialog = new AlertDialog.Builder(requireActivity()).create();
             alertDialog.setTitle("Error");
             alertDialog.setMessage("There is no internet connection");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
@@ -67,7 +68,7 @@ public class FragmentListViewRestaurant extends Fragment {
                     dialog.dismiss();
                 }
             });
-            alertDialog.show();*/
+            alertDialog.show();
             return;
         }
         ListRestaurantViewModel viewModel = new ViewModelProvider(requireActivity()).get(ListRestaurantViewModel.class);
