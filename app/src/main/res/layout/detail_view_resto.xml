@@ -43,11 +43,14 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorTextPrimary"
                             android:textStyle="bold"/>
+
                         <ImageView
                             android:id="@+id/first_star"
                             android:layout_width="15dip"
                             android:layout_height="15dip"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/small_margin"
+                            android:layout_marginLeft="@dimen/small_margin" />
                         <ImageView
                             android:id="@+id/second_star"
                             android:layout_width="15dip"
@@ -60,6 +63,7 @@
                             android:layout_gravity="center"/>
 
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/addressRestaurant"
                         android:layout_width="wrap_content"
