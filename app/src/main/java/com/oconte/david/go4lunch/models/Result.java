@@ -50,6 +50,12 @@ public class Result implements Serializable {
     @SerializedName("opening_hours")
     @Expose
     private OpeningHours openingHours;
+    @SerializedName("website")
+    @Expose
+    private String website;
+    @SerializedName("international_phone_number")
+    @Expose
+    private String phoneNumber;
 
     public Geometry getGeometry() {
         return geometry;
@@ -77,6 +83,22 @@ public class Result implements Serializable {
 
     public List<Photo> getPhotos() {
         return photos;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setPhotos(List<Photo> photos) {

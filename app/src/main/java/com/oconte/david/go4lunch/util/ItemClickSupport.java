@@ -9,7 +9,6 @@ public class ItemClickSupport {
     /**
      * It's for manage the click on a item of the recyclerview.
      */
-
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;
     private int mItemID;
