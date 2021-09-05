@@ -142,6 +142,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
             for (Result r : FragmentMapView.this.results) {
                 if (r.getPlaceId().equals(placeId)) {
                     result = r;
+                    break;
                 }
             }
 

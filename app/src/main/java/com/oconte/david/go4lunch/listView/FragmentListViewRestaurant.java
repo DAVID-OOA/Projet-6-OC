@@ -103,8 +103,10 @@ public class FragmentListViewRestaurant extends Fragment {
             Result result = null;
 
             for (Result r : FragmentListViewRestaurant.this.results) {
-                if (r.getPlaceId().equals(placeId))
+                if (r.getPlaceId().equals(placeId)){
                     result = r;
+                    break;
+                }
             }
 
             Intent intent = new Intent(requireActivity(), DetailsRestaurantActivity.class);
