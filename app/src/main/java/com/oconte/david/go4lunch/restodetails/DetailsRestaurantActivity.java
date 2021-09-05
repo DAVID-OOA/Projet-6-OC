@@ -3,10 +3,11 @@ package com.oconte.david.go4lunch.restodetails;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.oconte.david.go4lunch.R;
@@ -35,7 +36,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     }
 
     public void configureViewDetailsRestaurant() {
-
         Intent intent = getIntent();
         Result result = (Result)intent.getSerializableExtra("result");
         if (result != null) {
@@ -49,6 +49,11 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     .into(binding.imageRestaurant);
 
             this.displayRating(result);
+
+            this.configureOnClickWebSite(result);
+
+            this.configurationOnClickPhoneButton(result);
+
         }
     }
 
@@ -69,5 +74,35 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         }
     }
 
+    private void configureOnClickWebSite(Result result) {
+        binding.websiteButton.setOnClickListener(v -> {
+            if (result.getWebsite() != null) {
+                Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
+                intent.putExtra("url", result.getWebsite());
+                startActivity(intent);
+            } else {
+                AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("No WebSite are find.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
+            }
+        });
+    }
 
+    private void configurationOnClickPhoneButton(Result result) {
+        binding.phoneButton.setOnClickListener(v -> {
+            if (result.getPhoneNumber() != null) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(result.getPhoneNumber()));
+                startActivity(intent);
+            } else {
+                AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("No Phone Number are find.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
+            }
+        });
+    }
 }
