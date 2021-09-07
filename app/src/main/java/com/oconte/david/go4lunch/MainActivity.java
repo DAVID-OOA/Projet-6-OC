@@ -1,12 +1,10 @@
 package com.oconte.david.go4lunch;
 
-import android.Manifest;
+import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
+
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -18,16 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -52,13 +46,9 @@ import java.util.Objects;
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
-
-    private ListRestaurantViewModel viewModel;
 
     // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
@@ -104,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ///////////////////////////////////////////////////////////
     public void configurationViewModelDetails() {
-        viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
+        ListRestaurantViewModel viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
         viewModel.getSelectedRestaurant().observe(this, new Observer<Result>() {
             @Override
             public void onChanged(Result result) {
@@ -120,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void checkLogOrNotLog() {
         SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED, false);
-        if (!resultLogging) { //siginfie que si ce boolean est faux. equivaux a resultLogging == false
+        if (!resultLogging) {
             this.startAuthActivity();
         }
     }
@@ -168,12 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                         alertDialog.setTitle("Error");
                         alertDialog.setMessage("Your auth is not worked, try again");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
                         alertDialog.show();
                     }
                 });
@@ -312,7 +297,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //Fragment bottom view
     private void showMapViewFragment() {
-        if (this.fragmentMapView == null) this.fragmentMapView = FragmentMapView.newInstance();
+        if (this.fragmentMapView == null)
+            this.fragmentMapView = FragmentMapView.newInstance();
         this.startTransactionFragment(this.fragmentMapView);
     }
 
@@ -332,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onPointerCaptureChanged(boolean hasCapture) {
     }
 
-    //For Data UserCOnnected
+    //For Data UserConnected
     private void updateUIWithUserData() {
         if (userRepository.isCurrentUserLogged()) {
             FirebaseUser currentUser = userRepository.getCurrentUser();

@@ -1,11 +1,11 @@
 package com.oconte.david.go4lunch.restodetails;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.oconte.david.go4lunch.R;
@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 public class WebViewActivity extends AppCompatActivity {
 
     // FOR DESIGN
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.web_view_all_new) WebView webView;
 
@@ -27,7 +26,6 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_view);
         ButterKnife.bind(this);
 
-
         this.configureWebView();
     }
 
@@ -35,7 +33,6 @@ public class WebViewActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
     }
-
 
     /**
      * It's for manage the webView after click on one article for see the details
@@ -50,7 +47,6 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
         mWebView.loadUrl(getUrl());
-
     }
 
     public String getUrl() {

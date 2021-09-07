@@ -1,6 +1,5 @@
 package com.oconte.david.go4lunch.listView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -29,9 +27,7 @@ import java.util.Objects;
 public class FragmentListViewRestaurant extends Fragment {
 
     private FragmentListViewBinding binding;
-
     private GooglePlaceNearByAdapter adapter;
-
     List<Result> results;
 
     public static FragmentListViewRestaurant newInstance() {
@@ -46,7 +42,6 @@ public class FragmentListViewRestaurant extends Fragment {
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
         this.configureRecyclerView();
-
         this.configureViewModel();
 
         return view;
@@ -62,23 +57,15 @@ public class FragmentListViewRestaurant extends Fragment {
             AlertDialog alertDialog = new AlertDialog.Builder(requireActivity()).create();
             alertDialog.setTitle("Error");
             alertDialog.setMessage("There is no internet connection");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
             alertDialog.show();
             return;
         }
         ListRestaurantViewModel viewModel = new ViewModelProvider(requireActivity()).get(ListRestaurantViewModel.class);
-        viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), new Observer<List<Result>>() {
-            @Override
-            public void onChanged(List<Result> results) {
-                adapter.updateCallRetrofitGoogleNearBy(results);
-                FragmentListViewRestaurant.this.results = results;
-                configureOnClickRecyclerView(results);
-            }
+        viewModel.getRestaurantLiveData().observe(getViewLifecycleOwner(), results -> {
+            adapter.updateCallRetrofitGoogleNearBy(results);
+            FragmentListViewRestaurant.this.results = results;
+            configureOnClickRecyclerView(results);
         });
         viewModel.getRestaurants();
     }
