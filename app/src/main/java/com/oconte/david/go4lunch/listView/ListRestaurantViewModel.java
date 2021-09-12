@@ -12,7 +12,9 @@ import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForPosition;
+import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.List;
 
@@ -20,6 +22,11 @@ public class ListRestaurantViewModel extends ViewModel {
 
     private final RestaurantRepository mRestaurantRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> isRestaurantLiked = new MutableLiveData<>();
+
+    UserRepository userRepository;
+    User user;
 
     public ListRestaurantViewModel() {
         mRestaurantRepository =  Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
@@ -89,4 +96,17 @@ public class ListRestaurantViewModel extends ViewModel {
             result.getGeometry().setDistance(distance);
         }
     }
+
+    public void updateRestaurantLiked() {
+        isRestaurantLiked.setValue(true);
+        if (isRestaurantLiked.getValue()) {
+            userRepository.removeLikedRestaurant(user.getRestaurantUid(),user.getUid());
+        } else {
+            userRepository.addLikedRestaurant(user.getRestaurantUid(), user.getUid());
+        }
+
+
+
+    }
+
 }

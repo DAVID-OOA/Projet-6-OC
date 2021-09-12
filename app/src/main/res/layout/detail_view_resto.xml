@@ -104,7 +104,7 @@
                         android:layout_width="@dimen/size_image_button_restaurant"
                         android:layout_height="@dimen/size_image_button_restaurant"
                         android:background="@null"
-                        android:src="@drawable/baseline_star_24"
+                        android:src="@drawable/star"
                         app:layout_column="1"
                         app:layout_columnWeight="1"
                         app:layout_row="0"
@@ -126,7 +126,8 @@
                         app:layout_column="2"
                         app:layout_columnWeight="1"
                         app:layout_row="0"
-                        tools:ignore="TouchTargetSizeCheck" />
+                        tools:ignore="TouchTargetSizeCheck"
+                        android:contentDescription="@string/website_button" />
                     <TextView
                         app:layout_column="2"
                         app:layout_row="1"

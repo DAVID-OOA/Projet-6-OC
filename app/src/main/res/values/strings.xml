@@ -45,5 +45,6 @@
     <string name="phone_button_text">CALL</string>
     <string name="website_button_text">WEBSITE</string>
     <string name="rating_resto">LIKE</string>
+    <string name="website_button">Website button</string>
 
 </resources>

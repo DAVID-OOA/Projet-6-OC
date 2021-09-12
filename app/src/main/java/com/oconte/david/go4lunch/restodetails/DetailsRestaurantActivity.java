@@ -3,24 +3,36 @@ package com.oconte.david.go4lunch.restodetails;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
+import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForRating;
+import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
 
 public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private DetailViewRestoBinding binding;
 
+    ListRestaurantViewModel viewModel;
+
     private Resources res;
+    boolean buttonOn;
+    UserRepository userRepository;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +62,11 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
             this.displayRating(result);
 
-            this.configureOnClickWebSite(result);
+            this.configureOnClickPhoneButton(result);
 
-            this.configurationOnClickPhoneButton(result);
+            this.configureOnClickLikeButton();
+
+            this.configureOnClickWebSite(result);
 
         }
     }
@@ -74,6 +88,43 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void configureOnClickLikeButton(){
+        ImageButton button = binding.likeButton;
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!buttonOn) {
+                    buttonOn = true;
+                    binding.likeButton.setImageResource(R.drawable.star);
+
+                } else {
+                    buttonOn = false;
+                    binding.likeButton.setImageResource(R.drawable.star_yellow);
+                    viewModel.updateRestaurantLiked();
+                }
+
+            }
+        });
+    }
+
+    private void configureOnClickPhoneButton(Result result) {
+        binding.phoneButton.setOnClickListener(v -> {
+            if (result.getPhoneNumber() != null) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(result.getPhoneNumber()));
+                startActivity(intent);
+            } else {
+                AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("No Phone Number are find.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
+            }
+        });
+    }
+
     private void configureOnClickWebSite(Result result) {
         binding.websiteButton.setOnClickListener(v -> {
             if (result.getWebsite() != null) {
@@ -84,22 +135,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                 AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
                 alertDialog.setTitle("Error");
                 alertDialog.setMessage("No WebSite are find.");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
-                alertDialog.show();
-            }
-        });
-    }
-
-    private void configurationOnClickPhoneButton(Result result) {
-        binding.phoneButton.setOnClickListener(v -> {
-            if (result.getPhoneNumber() != null) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(result.getPhoneNumber()));
-                startActivity(intent);
-            } else {
-                AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
-                alertDialog.setTitle("Error");
-                alertDialog.setMessage("No Phone Number are find.");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
                 alertDialog.show();
             }

@@ -13,8 +13,6 @@ import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.Objects;
 
-import butterknife.OnClick;
-
 public class SettingsActivity extends AppCompatActivity {
 
     //For Design
@@ -41,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     *  - Configure the Toolbar
+     *  Configure the Toolbar
      */
     protected void configureToolbar() {
         setSupportActionBar(binding.layoutToolbar.toolbar);

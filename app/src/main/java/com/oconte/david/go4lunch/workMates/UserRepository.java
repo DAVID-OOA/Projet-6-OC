@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
 
+import java.util.List;
 import java.util.Objects;
 
 public final class UserRepository {
@@ -63,6 +64,23 @@ public final class UserRepository {
             this.getUserCollection().document(uid).set(userRepositoryCreate);
 
         }
+    }
+
+    // add Like Restaurant
+    public Task<Void> addLikedRestaurant(String likedRestaurant, String uid) {
+        user.addLikedRestaurant(likedRestaurant);
+        return updateLikedRestaurant(uid);
+    }
+
+    public Task<Void> removeLikedRestaurant(String likedRestaurant, String uid){
+        user.removeLikedRestaurant(likedRestaurant);
+        return updateLikedRestaurant(uid);
+    }
+
+
+    private Task<Void> updateLikedRestaurant(String uid) {
+        List<String> likedRestaurantsList = user.getLikedRestaurants();
+        return getUserCollection().document(uid).update("likedRestaurants", likedRestaurantsList);
     }
 
     public User getUser() {

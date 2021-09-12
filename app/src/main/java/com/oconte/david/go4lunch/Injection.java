@@ -5,7 +5,6 @@ import androidx.test.espresso.idling.CountingIdlingResource;
 import com.oconte.david.go4lunch.api.GooglePlaceFactory;
 import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.listView.RestaurantRepository;
-import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 public class Injection {
@@ -16,11 +15,11 @@ public class Injection {
         return GooglePlaceFactory.getRetrofit().create(GooglePlaceService.class);
     }
 
-    //For Call getRestaurantDetail
+    /*For Call getRestaurantDetail
     public static RestaurantDetailRepository getRestaurantDetail (GooglePlaceService googlePlaceService, CountingIdlingResource resource) {
         RestaurantDetailRepository restaurantDetails = new RestaurantDetailRepository(googlePlaceService, resource);
         return restaurantDetails;
-    }
+    }*/
 
     //For Call getRestaurantNearBy
     public static RestaurantRepository getRestaurantNearBy (GooglePlaceService googlePlaceService, CountingIdlingResource resource) {
