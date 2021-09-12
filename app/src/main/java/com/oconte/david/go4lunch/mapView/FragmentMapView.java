@@ -24,9 +24,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
@@ -111,6 +113,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
 
                     Marker marker = googleMap.addMarker(new MarkerOptions()
                             .position(positionRestaurant)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location_normal))
                             .title(result.getName()));
                     assert marker != null;
                     marker.setTag(result.getPlaceId());
