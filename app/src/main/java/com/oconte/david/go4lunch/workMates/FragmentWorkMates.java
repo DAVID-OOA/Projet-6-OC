@@ -42,7 +42,6 @@ public class FragmentWorkMates extends Fragment {
         return view;
     }
 
-
     public void configureViewModel() {
         ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity(), new ViewModelRestaurantFactory(UserRepository.getInstance()));
         WorkMatesViewModel viewModel = viewModelProvider.get(WorkMatesViewModel.class);
@@ -56,7 +55,6 @@ public class FragmentWorkMates extends Fragment {
 
     }
 
-
     private void configureRecyclerView() {
         // Create adapter passing the list of articles
         this.workMatesAdapter = new WorkMatesAdapter();
@@ -67,6 +65,5 @@ public class FragmentWorkMates extends Fragment {
         // Set layout manager to position the items
         this.binding.fragmentMainRecyclerViewWorkMates.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-
 
 }

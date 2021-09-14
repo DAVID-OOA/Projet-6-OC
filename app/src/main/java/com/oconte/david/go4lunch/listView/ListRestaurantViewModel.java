@@ -99,14 +99,12 @@ public class ListRestaurantViewModel extends ViewModel {
 
     public void updateRestaurantLiked() {
         isRestaurantLiked.setValue(true);
+
         if (isRestaurantLiked.getValue()) {
             userRepository.removeLikedRestaurant(user.getRestaurantUid(),user.getUid());
         } else {
             userRepository.addLikedRestaurant(user.getRestaurantUid(), user.getUid());
         }
-
-
-
     }
 
 }

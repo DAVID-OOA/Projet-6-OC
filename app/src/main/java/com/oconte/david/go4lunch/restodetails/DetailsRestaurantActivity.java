@@ -6,21 +6,19 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForRating;
-import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
 
 public class DetailsRestaurantActivity extends AppCompatActivity {
@@ -31,8 +29,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private Resources res;
     boolean buttonOn;
-    UserRepository userRepository;
-    User user;
+    //UserRepository userRepository;
+    //User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +66,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
             this.configureOnClickWebSite(result);
 
+            this.configureOnClicFloatingButton();
+
         }
     }
 
@@ -88,8 +88,27 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         }
     }
 
+    private void configureOnClicFloatingButton() {
+        FloatingActionButton button = binding.pickRestaurantButton;
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!buttonOn) {
+                    buttonOn = true;
+                    binding.pickRestaurantButton.setBackgroundColor(Color.BLUE);
+                } else {
+                    buttonOn = false;
+                    binding.pickRestaurantButton.setBackgroundColor(Color.GREEN);
+                }
+
+            }
+        });
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void configureOnClickLikeButton(){
+        //Le passer sous un observer ?
         ImageButton button = binding.likeButton;
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +123,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     binding.likeButton.setImageResource(R.drawable.star_yellow);
                     viewModel.updateRestaurantLiked();
                 }
-
             }
         });
     }

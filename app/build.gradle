@@ -88,6 +88,9 @@ dependencies {
 
     //For MVVM
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.3.1'
+    implementation "android.arch.lifecycle:common-java8:1.1.1"
 
     //PICASSO
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -109,7 +112,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
 
-
     //FIREBASE
     implementation platform('com.google.firebase:firebase-bom:26.0.0')
     implementation 'com.google.firebase:firebase-analytics'
@@ -130,8 +132,6 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.google.maps.android:android-maps-utils:0.4+'
 
-
-
     //ESPRESSO
     implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
     implementation 'androidx.test.espresso:espresso-intents:3.4.0'
@@ -147,10 +147,8 @@ dependencies {
     //MULTIDEX"
     implementation 'androidx.multidex:multidex:2.0.1'
 
-
 }
 
 configurations.all {
     resolutionStrategy.force "junit:junit:4.13"
-
 }
