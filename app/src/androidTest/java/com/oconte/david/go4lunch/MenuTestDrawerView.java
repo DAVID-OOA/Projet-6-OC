@@ -1,27 +1,5 @@
 package com.oconte.david.go4lunch;
 
-import android.content.SharedPreferences;
-import android.view.Gravity;
-
-import androidx.test.espresso.ViewAssertion;
-import androidx.test.espresso.contrib.DrawerActions;
-import androidx.test.espresso.contrib.NavigationViewActions;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
-
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.oconte.david.go4lunch.auth.AuthActivity;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.io.IOException;
-
 import static android.content.Context.MODE_PRIVATE;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -29,9 +7,22 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.DrawerMatchers.isClosed;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
+
+import android.content.SharedPreferences;
+import android.view.Gravity;
+
+import androidx.test.espresso.contrib.DrawerActions;
+import androidx.test.espresso.contrib.NavigationViewActions;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
 public class MenuTestDrawerView {

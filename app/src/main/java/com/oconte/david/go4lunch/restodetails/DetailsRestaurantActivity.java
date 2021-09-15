@@ -18,7 +18,9 @@ import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForRating;
+import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
 
 public class DetailsRestaurantActivity extends AppCompatActivity {
@@ -29,8 +31,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private Resources res;
     boolean buttonOn;
-    //UserRepository userRepository;
-    //User user;
+    UserRepository userRepository;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +98,11 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!buttonOn) {
                     buttonOn = true;
-                    binding.pickRestaurantButton.setBackgroundColor(Color.BLUE);
+                    binding.pickRestaurantButton.setImageResource(R.drawable.floatingbuttonoff);
                 } else {
                     buttonOn = false;
-                    binding.pickRestaurantButton.setBackgroundColor(Color.GREEN);
+                    binding.pickRestaurantButton.setImageResource(R.drawable.floatingbutton);
                 }
-
             }
         });
     }
@@ -117,6 +118,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                 if (!buttonOn) {
                     buttonOn = true;
                     binding.likeButton.setImageResource(R.drawable.star);
+                    userRepository.removeLikedRestaurant(user.getRestaurantUid(),user.getUid());
 
                 } else {
                     buttonOn = false;

@@ -46,5 +46,12 @@
     <string name="website_button_text">WEBSITE</string>
     <string name="rating_resto">LIKE</string>
     <string name="website_button">Website button</string>
+    <string name="this_is_the_check_pick_restaurant_button">This is the check pick restaurant button</string>
+    <string name="start_button">Start button</string>
+    <string name="call_button">Call button</string>
+    <string name="first_start">First start</string>
+    <string name="seconde_start">Seconde start</string>
+    <string name="third_start">Third start</string>
+    <string name="photo_restaurant">Photo restaurant</string>
 
 </resources>
