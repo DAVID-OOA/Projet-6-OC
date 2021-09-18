@@ -3,15 +3,15 @@ package com.oconte.david.go4lunch.restodetails;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oconte.david.go4lunch.R;
@@ -23,11 +23,15 @@ import com.oconte.david.go4lunch.util.ForRating;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private DetailViewRestoBinding binding;
 
-    ListRestaurantViewModel viewModel;
+
+
+    Result result;
 
     private Resources res;
     boolean buttonOn;
@@ -43,13 +47,17 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
         res = binding.detailRestaurantRootView.getResources();
 
-        this.configureViewDetailsRestaurant();
+        Intent intent = getIntent();
+
+        result = (Result)intent.getSerializableExtra("result");
+
+        this.configureViewDetailsRestaurant(result);
 
     }
 
-    public void configureViewDetailsRestaurant() {
-        Intent intent = getIntent();
-        Result result = (Result)intent.getSerializableExtra("result");
+    public void configureViewDetailsRestaurant(Result result) {
+
+
         if (result != null) {
             binding.nameRestaurant.setText(result.getName());
 
@@ -109,22 +117,25 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void configureOnClickLikeButton(){
-        //Le passer sous un observer ?
-        ImageButton button = binding.likeButton;
-
-        button.setOnClickListener(new View.OnClickListener() {
+        ListRestaurantViewModel viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
+        viewModel.getSelectedLikedRestaurantLiveData().observe(this, new Observer<List<String>>() {
             @Override
-            public void onClick(View v) {
+            public void onChanged(List<String> strings) {
                 if (!buttonOn) {
                     buttonOn = true;
                     binding.likeButton.setImageResource(R.drawable.star);
-                    userRepository.removeLikedRestaurant(user.getRestaurantUid(),user.getUid());
 
                 } else {
                     buttonOn = false;
                     binding.likeButton.setImageResource(R.drawable.star_yellow);
-                    viewModel.updateRestaurantLiked();
                 }
+            }
+        });
+        ImageButton button = binding.likeButton;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // viewModel.updateRestaurantLiked();
             }
         });
     }

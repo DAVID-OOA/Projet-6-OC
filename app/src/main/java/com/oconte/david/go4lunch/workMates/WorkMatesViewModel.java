@@ -32,7 +32,6 @@ public class WorkMatesViewModel extends ViewModel {
 
 
     public WorkMatesViewModel(UserRepository userRepository) {
-        //this.mUserRepository = userRepository;
         mUserRepository = Injection.getUserRepository();
         User user = userRepository.getUser();
     }

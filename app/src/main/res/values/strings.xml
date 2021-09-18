@@ -27,7 +27,7 @@
     <string name="no_time">No Time</string>
     <string name="closing_soon">Closing soon</string>
     <string name="open_24_7">Open </string>
-    <string name="open_until">open Until</string>
+    <string name="open_until">Open Until</string>
     <string name="format_time_display">hh.mma</string>
 
     <!--    Permissions    -->
@@ -44,7 +44,7 @@
     <!-- For details View -->
     <string name="phone_button_text">CALL</string>
     <string name="website_button_text">WEBSITE</string>
-    <string name="rating_resto">LIKE</string>
+    <string name="rating_resto">LIKED</string>
     <string name="website_button">Website button</string>
     <string name="this_is_the_check_pick_restaurant_button">This is the check pick restaurant button</string>
     <string name="start_button">Start button</string>

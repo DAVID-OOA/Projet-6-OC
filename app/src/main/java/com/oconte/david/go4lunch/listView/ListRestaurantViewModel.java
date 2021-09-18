@@ -17,6 +17,7 @@ import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListRestaurantViewModel extends ViewModel {
 
@@ -97,14 +98,13 @@ public class ListRestaurantViewModel extends ViewModel {
         }
     }
 
-    public void updateRestaurantLiked() {
-        isRestaurantLiked.setValue(true);
+    private final MutableLiveData<List<String>> selectedLikedRestaurant = new MutableLiveData<>();
+    public void  selectedLikedRestaurant(User user) {
+        selectedLikedRestaurant.postValue(user.getLikedRestaurants());
+    }
 
-        if (isRestaurantLiked.getValue()) {
-            userRepository.removeLikedRestaurant(user.getRestaurantUid(),user.getUid());
-        } else {
-            userRepository.addLikedRestaurant(user.getRestaurantUid(), user.getUid());
-        }
+    public  LiveData<List<String>> getSelectedLikedRestaurantLiveData() {
+        return selectedLikedRestaurant;
     }
 
 }

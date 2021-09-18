@@ -18,7 +18,6 @@ public final class UserRepository {
     private static final String COLLECTION_NAME = "users";
     private static final String USERNAME_FIELD = "username";
     private static volatile UserRepository instance;
-    private User user;
 
     public UserRepository(){
     }
@@ -66,7 +65,7 @@ public final class UserRepository {
         }
     }
 
-    // add Like Restaurant
+    /* add Like Restaurant
     public Task<Void> addLikedRestaurant(String likedRestaurant, String uid) {
         user.addLikedRestaurant(likedRestaurant);
         return updateLikedRestaurant(uid);
@@ -85,7 +84,7 @@ public final class UserRepository {
 
     public User getUser() {
         return user;
-    }
+    }*/
 
     // Delete the User from Firestore
     public void deleteUserFromFirestore(String uid) {
