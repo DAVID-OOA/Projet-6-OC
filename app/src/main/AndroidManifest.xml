@@ -26,13 +26,16 @@
         tools:targetApi="m">
         <activity android:name=".restodetails.DetailsRestaurantActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- For google -->
+        </activity>
+
+        <!-- For google -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
@@ -41,7 +44,8 @@
             android:value="@string/facebook_application_id"
             tools:replace="android:value" />
 
-        <activity android:name=".auth.AuthActivity">
+        <activity android:name=".auth.AuthActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
