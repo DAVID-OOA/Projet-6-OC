@@ -17,14 +17,11 @@ import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ListRestaurantViewModel extends ViewModel {
 
     private final RestaurantRepository mRestaurantRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
-
-    public MutableLiveData<Boolean> isRestaurantLiked = new MutableLiveData<>();
 
     UserRepository userRepository;
     User user;
@@ -96,15 +93,6 @@ public class ListRestaurantViewModel extends ViewModel {
             Double distance = SphericalUtil.computeDistanceBetween(myLocation, positionRestaurant);
             result.getGeometry().setDistance(distance);
         }
-    }
-
-    private final MutableLiveData<List<String>> selectedLikedRestaurant = new MutableLiveData<>();
-    public void  selectedLikedRestaurant(User user) {
-        selectedLikedRestaurant.postValue(user.getLikedRestaurants());
-    }
-
-    public  LiveData<List<String>> getSelectedLikedRestaurantLiveData() {
-        return selectedLikedRestaurant;
     }
 
 }

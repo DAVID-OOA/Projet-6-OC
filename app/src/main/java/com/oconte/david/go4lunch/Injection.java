@@ -5,6 +5,7 @@ import androidx.test.espresso.idling.CountingIdlingResource;
 import com.oconte.david.go4lunch.api.GooglePlaceFactory;
 import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.listView.RestaurantRepository;
+import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 public class Injection {

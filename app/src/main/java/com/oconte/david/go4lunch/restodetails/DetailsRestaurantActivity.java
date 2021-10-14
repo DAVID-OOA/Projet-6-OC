@@ -10,20 +10,16 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
-import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForRating;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class DetailsRestaurantActivity extends AppCompatActivity {
 
@@ -117,8 +113,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void configureOnClickLikeButton(){
-        ListRestaurantViewModel viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
-        viewModel.getSelectedLikedRestaurantLiveData().observe(this, new Observer<List<String>>() {
+        //DetailsRestaurantViewModel viewModel = new ViewModelProvider(this).get(DetailsRestaurantViewModel.class);
+        /*viewModel.getSelectedLikedRestaurantLiveData().observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {
                 if (!buttonOn) {
@@ -130,12 +126,13 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     binding.likeButton.setImageResource(R.drawable.star_yellow);
                 }
             }
-        });
+        });*/
         ImageButton button = binding.likeButton;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                // viewModel.updateRestaurantLiked();
+                RestaurantDetailRepository.getInstance().createRestaurantDetail();
             }
         });
     }
