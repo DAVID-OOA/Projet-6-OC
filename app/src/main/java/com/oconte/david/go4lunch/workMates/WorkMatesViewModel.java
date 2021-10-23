@@ -33,7 +33,6 @@ public class WorkMatesViewModel extends ViewModel {
 
     public WorkMatesViewModel(UserRepository userRepository) {
         mUserRepository = Injection.getUserRepository();
-        User user = userRepository.getUser();
     }
 
     // GETTER LIVE DATTA

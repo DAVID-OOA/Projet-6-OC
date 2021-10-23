@@ -16,8 +16,9 @@ import java.util.Objects;
 public final class UserRepository {
 
     private static final String COLLECTION_NAME = "users";
-    private static final String USERNAME_FIELD = "username";
     private static volatile UserRepository instance;
+
+
 
     public UserRepository(){
     }
@@ -35,6 +36,8 @@ public final class UserRepository {
         }
     }
 
+
+    //
     @Nullable
     public FirebaseUser getCurrentUser(){
         return FirebaseAuth.getInstance().getCurrentUser();
@@ -80,11 +83,8 @@ public final class UserRepository {
     private Task<Void> updateLikedRestaurant(String uid) {
         List<String> likedRestaurantsList = user.getLikedRestaurants();
         return getUserCollection().document(uid).update("likedRestaurants", likedRestaurantsList);
-    }
-
-    public User getUser() {
-        return user;
     }*/
+
 
     // Delete the User from Firestore
     public void deleteUserFromFirestore(String uid) {

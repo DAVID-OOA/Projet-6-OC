@@ -1,11 +1,14 @@
 package com.oconte.david.go4lunch.mapView;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.tabs.TabLayout;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
@@ -42,7 +46,7 @@ import java.util.Objects;
 
 public class FragmentMapView extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 12;
     private static final float ZOOM_USER_LOCATION_VALUE = 15;
 
     private GoogleMap googleMap;
@@ -62,13 +66,14 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         binding = FragmentMapViewBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         this.configureMapView(savedInstanceState);
 
-        getLocationPhone();
+        this.getLocationPhone();
 
         return view;
     }
@@ -77,28 +82,37 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         if (ActivityCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+
+                        // Permission to access the location is missing. Show rationale and request permission
+                        PermissionUtils.requestPermission((AppCompatActivity) getActivity(), LOCATION_PERMISSION_REQUEST_CODE,
+                        Manifest.permission.ACCESS_FINE_LOCATION, true);
+
+        } else {
+            // TODO fonctionne mais si premiere utilisation de l'app  il faut redemarrer l'app
+            // TODO demande la permission avant l'auth
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) requireContext(), location -> {
+                if (location != null) {//un element declaré ds une scope n'est accessible que ds cette scope
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+
+                    // recupere la position
+                    LatLng myLocation = new LatLng(latitude, longitude);
+                    viewModel.setMyLocation(myLocation);
+
+                    //enableMyLocation();
+
+                    // For zoom on map
+                    UiSettings uiSettings = googleMap.getUiSettings();
+                    uiSettings.setZoomControlsEnabled(true);
+
+                    viewModel.getRestaurants();
+
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
+                }
+            });
         }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) requireContext(), location -> {
-            if (location != null) {//un element declaré ds une scope n'est accessible que ds cette scope
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
 
-                // recupere la position
-                LatLng myLocation = new LatLng(latitude, longitude);
-                viewModel.setMyLocation(myLocation);
 
-                enableMyLocation();
-
-                // For zoom on map
-                UiSettings uiSettings = googleMap.getUiSettings();
-                uiSettings.setZoomControlsEnabled(true);
-
-                viewModel.getRestaurants();
-
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
-            }
-        });
     }
 
     public void configureMapViewModel() {
@@ -134,7 +148,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap = googleMap;
         configureMapViewModel();
-
+        enableMyLocation();
     }
 
     public void clickForDisplayRestaurantDetail(){

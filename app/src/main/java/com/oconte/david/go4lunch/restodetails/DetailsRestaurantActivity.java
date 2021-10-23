@@ -1,38 +1,67 @@
 package com.oconte.david.go4lunch.restodetails;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.MetadataChanges;
+import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
+import com.oconte.david.go4lunch.models.Restaurant;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForRating;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private DetailViewRestoBinding binding;
 
+    public DetailsRestaurantViewModel viewModel;
 
+
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = db.collection("restaurants");
 
     Result result;
 
+    String idRestaurant;
+
+    Boolean isLiked = false;
+
     private Resources res;
     boolean buttonOn;
-    UserRepository userRepository;
-    User user;
+    private final UserRepository userRepository;
+    FirebaseUser user;
+
+    public DetailsRestaurantActivity() {
+        userRepository = UserRepository.getInstance();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +82,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     public void configureViewDetailsRestaurant(Result result) {
 
-
         if (result != null) {
             binding.nameRestaurant.setText(result.getName());
 
@@ -64,18 +92,24 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     .placeholder(R.drawable.go4lunch_icon)
                     .into(binding.imageRestaurant);
 
+            idRestaurant = Objects.requireNonNull(result).getPlaceId();
+            user = userRepository.getCurrentUser();
+
             this.displayRating(result);
 
             this.configureOnClickPhoneButton(result);
-
-            this.configureOnClickLikeButton();
 
             this.configureOnClickWebSite(result);
 
             this.configureOnClicFloatingButton();
 
+            this.configureOnClickLikeButton();
+
+            this.conditionButtonLikedClick();
         }
     }
+
+
 
     public String getUrlPhoto(Result result) {
         if (result.getPhotos() != null && result.getPhotos().size() > 0) {
@@ -96,16 +130,39 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private void configureOnClicFloatingButton() {
         FloatingActionButton button = binding.pickRestaurantButton;
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!buttonOn) {
                     buttonOn = true;
                     binding.pickRestaurantButton.setImageResource(R.drawable.floatingbuttonoff);
+                    //binding.pickRestaurantButton.setImageResource(R.drawable.star_yellow);
                 } else {
                     buttonOn = false;
                     binding.pickRestaurantButton.setImageResource(R.drawable.floatingbutton);
+                    //binding.pickRestaurantButton.setImageResource(R.drawable.star);
+                }
+            }
+        });
+    }
+
+
+    private void conditionButtonLikedClick() {
+        collectionReference.document(idRestaurant).collection("liked").document(user.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                //si document n'est pas vide le boutton prend la couleur verte.
+                if (Objects.requireNonNull(snapshot).exists()) {
+                    isLiked = true;
+                    binding.likeButton.setImageResource(R.drawable.star_yellow);
+                    Toast.makeText(DetailsRestaurantActivity.this,"switch on yellow", Toast.LENGTH_LONG).show();
+                    Log.d("TAG","switch on yellow");
+
+                } else {
+                    isLiked = false;
+                    binding.likeButton.setImageResource(R.drawable.star);
+                    Toast.makeText(DetailsRestaurantActivity.this,"switch on black", Toast.LENGTH_LONG).show();
+                    Log.d("TAG","switch on black");
                 }
             }
         });
@@ -113,28 +170,36 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void configureOnClickLikeButton(){
-        //DetailsRestaurantViewModel viewModel = new ViewModelProvider(this).get(DetailsRestaurantViewModel.class);
-        /*viewModel.getSelectedLikedRestaurantLiveData().observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> strings) {
-                if (!buttonOn) {
-                    buttonOn = true;
-                    binding.likeButton.setImageResource(R.drawable.star);
-
-                } else {
-                    buttonOn = false;
-                    binding.likeButton.setImageResource(R.drawable.star_yellow);
-                }
-            }
-        });*/
-        ImageButton button = binding.likeButton;
-        button.setOnClickListener(new View.OnClickListener() {
+        binding.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // viewModel.updateRestaurantLiked();
-                RestaurantDetailRepository.getInstance().createRestaurantDetail();
+                if (!buttonOn) {
+                    buttonOn = true;
+                    if (userRepository.isCurrentUserLogged()) {
+
+                        String idUser = Objects.requireNonNull(user).getUid();
+                        String userName = user.getDisplayName();
+                        String urlPhoto = String.valueOf(user.getPhotoUrl());
+
+                        Restaurant restaurant = new Restaurant(urlPhoto,userName,idUser, idRestaurant);
+
+                        collectionReference.document(idRestaurant)
+                                .collection("liked").document(idUser).set(restaurant, SetOptions.merge());
+
+                    }
+                } else {
+                    buttonOn = false;
+                    Log.d("TAG","switch on black!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    collectionReference.document(idRestaurant).collection("liked").document(user.getUid()).delete();
+                    Toast.makeText(getApplicationContext(),"test for deleted",Toast.LENGTH_LONG).show();
+                }
+
+
+                /*binding.likeButton.setImageResource(R.drawable.star);
+                    */
             }
         });
+
     }
 
     private void configureOnClickPhoneButton(Result result) {
