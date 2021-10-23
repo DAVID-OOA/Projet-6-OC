@@ -193,10 +193,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     collectionReference.document(idRestaurant).collection("liked").document(user.getUid()).delete();
                     Toast.makeText(getApplicationContext(),"test for deleted",Toast.LENGTH_LONG).show();
                 }
-
-
-                /*binding.likeButton.setImageResource(R.drawable.star);
-                    */
             }
         });
 
