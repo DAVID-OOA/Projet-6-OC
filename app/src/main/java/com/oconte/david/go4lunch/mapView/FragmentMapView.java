@@ -111,8 +111,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                 }
             });
         }
-
-
     }
 
     public void configureMapViewModel() {
