@@ -20,6 +20,8 @@ public class RestaurantDetailRepository {
 
     private static volatile RestaurantDetailRepository instance;
 
+    String idUser;
+
     public RestaurantDetailRepository() {
     }
 
@@ -47,7 +49,7 @@ public class RestaurantDetailRepository {
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    /*Create RestaurantDetails*/
+    /*Create RestaurantDetails when is liked*/
     public void createRestaurantDetail(String idRestaurant) {
         FirebaseUser currentUser = getCurrentUser();
         if (currentUser != null) {
@@ -60,5 +62,15 @@ public class RestaurantDetailRepository {
 
             getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(idUser).set(restaurant, SetOptions.merge());
         }
+    }
+
+    /*Delete RestaurantDetails when is disliked*/
+    public void deleteRestaurantDetailsDislikedFromFirestore(String idRestaurant) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (idRestaurant != null && currentUser != null) {
+            String idUser = currentUser.getUid();
+            getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(idUser).delete();
+        }
+
     }
 }

@@ -219,7 +219,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                 } else {
                     buttonOn = false;
                     Log.d("TAG","switch on black!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    collectionReference.document(idRestaurant).collection("liked").document(user.getUid()).delete();
+                    //collectionReference.document(idRestaurant).collection("liked").document(user.getUid()).delete();
+                    restaurantDetailRepository.deleteRestaurantDetailsDislikedFromFirestore(idRestaurant);
                 }
             }
         });
