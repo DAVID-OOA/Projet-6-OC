@@ -8,19 +8,13 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.models.Restaurant;
-import com.oconte.david.go4lunch.models.User;
-import com.oconte.david.go4lunch.workMates.UserRepository;
 
-import java.util.List;
 import java.util.Objects;
 
 public class RestaurantDetailRepository {
 
     private static final String COLLECTION_NAME = "restaurants";
-
     private static volatile RestaurantDetailRepository instance;
-
-    String idUser;
 
     public RestaurantDetailRepository() {
     }
