@@ -6,10 +6,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.models.Restaurant;
 import com.oconte.david.go4lunch.models.User;
+import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 public class RestaurantDetailRepository {
 
@@ -38,27 +41,24 @@ public class RestaurantDetailRepository {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    public Boolean isCurrentUserLogged(){
-        return (this.getCurrentUser() != null);
-    }
 
     //Get the Collection Reference
     private CollectionReference getRestaurantDetailsCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    /*Create RestaurantDetails
-    public void createRestaurantDetail() {
-        FirebaseUser currentRestaurantDetail = getCurrentUser();
-        if (currentRestaurantDetail != null) {
-            String idRestaurant = currentRestaurantDetail.getProviderId();
-            List<String> likedRestaurant = currentRestaurantDetail.zzg();
-            String uid = currentRestaurantDetail.getUid();
+    /*Create RestaurantDetails*/
+    public void createRestaurantDetail(String idRestaurant) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
 
+            String idUser = currentUser.getUid();
+            String userName = currentUser.getDisplayName();
+            String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
 
-            Restaurant restaurantRepositoryCreate = new Restaurant(idRestaurant, likedRestaurant);
-            this.getRestaurantDetailsCollection().document(idRestaurant).collection(uid).document().set(restaurantRepositoryCreate);
+            Restaurant restaurant = new Restaurant(urlPhoto,userName,idUser, idRestaurant);
 
+            getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(idUser).set(restaurant, SetOptions.merge());
         }
-    }*/
+    }
 }

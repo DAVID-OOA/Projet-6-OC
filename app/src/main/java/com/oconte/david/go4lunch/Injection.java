@@ -34,4 +34,10 @@ public class Injection {
         return userRepository;
     }
 
+    //For Call getRestaurantDetailsRepository
+    public static RestaurantDetailRepository getRestaurantDetailsRepository() {
+        RestaurantDetailRepository restaurantDetailRepository = new RestaurantDetailRepository();
+        return restaurantDetailRepository;
+    }
+
 }

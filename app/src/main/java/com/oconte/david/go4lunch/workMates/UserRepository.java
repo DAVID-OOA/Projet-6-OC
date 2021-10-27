@@ -68,24 +68,6 @@ public final class UserRepository {
         }
     }
 
-    /* add Like Restaurant
-    public Task<Void> addLikedRestaurant(String likedRestaurant, String uid) {
-        user.addLikedRestaurant(likedRestaurant);
-        return updateLikedRestaurant(uid);
-    }
-
-    public Task<Void> removeLikedRestaurant(String likedRestaurant, String uid){
-        user.removeLikedRestaurant(likedRestaurant);
-        return updateLikedRestaurant(uid);
-    }
-
-
-    private Task<Void> updateLikedRestaurant(String uid) {
-        List<String> likedRestaurantsList = user.getLikedRestaurants();
-        return getUserCollection().document(uid).update("likedRestaurants", likedRestaurantsList);
-    }*/
-
-
     // Delete the User from Firestore
     public void deleteUserFromFirestore(String uid) {
         if(uid != null){

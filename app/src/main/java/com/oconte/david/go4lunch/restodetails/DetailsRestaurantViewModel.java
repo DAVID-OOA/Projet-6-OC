@@ -4,36 +4,36 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.models.Restaurant;
-import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
-import java.util.List;
+import java.util.Objects;
 
 public class DetailsRestaurantViewModel extends ViewModel {
 
-    /*private final UserRepository mUserRepository;
 
-    private final MutableLiveData<User> users = new MutableLiveData<>();
 
-    public DetailsRestaurantViewModel(UserRepository mUserRepository) {
-        this.mUserRepository = Injection.getUserRepository();
+    private final RestaurantDetailRepository restaurantDetailRepository;
+
+    private final MutableLiveData<Restaurant> restaurantMutableLiveData = new MutableLiveData<>();
+
+    public LiveData<Restaurant> getRestaurantsMutableLiveData() {
+        return restaurantMutableLiveData;
     }
 
-    public LiveData<User> getUsers() {
-        return users;
-    }*/
 
-    // contient l'information du restaurant cliqué
-    private String myClickRestaurant = null;
-    public void setMyClickRestaurant(String myClickRestaurant) {
-        this.myClickRestaurant = myClickRestaurant;
+    public DetailsRestaurantViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
+        this.restaurantDetailRepository = restaurantDetailRepository;
+
+
     }
 
-    public String getMyClickRestaurant() {
-        return myClickRestaurant;
-    }
+    public void getDataRestaurantClick() {
 
+    }
 }

@@ -56,11 +56,15 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private Resources res;
     boolean buttonOn;
+
     private final UserRepository userRepository;
+    private final RestaurantDetailRepository restaurantDetailRepository;
+
     FirebaseUser user;
 
     public DetailsRestaurantActivity() {
         userRepository = UserRepository.getInstance();
+        restaurantDetailRepository = RestaurantDetailRepository.getInstance();
     }
 
     @Override
@@ -92,7 +96,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     .placeholder(R.drawable.go4lunch_icon)
                     .into(binding.imageRestaurant);
 
-            idRestaurant = Objects.requireNonNull(result).getPlaceId();
+            //idRestaurant = Objects.requireNonNull(result).getPlaceId();
             user = userRepository.getCurrentUser();
 
             this.displayRating(result);
@@ -103,9 +107,9 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
             this.configureOnClicFloatingButton();
 
-            this.configureOnClickLikeButton();
+            this.configureOnClickLikeButton(result);
 
-            this.conditionButtonLikedClick();
+            //this.conditionButtonLikedClick();
         }
     }
 
@@ -168,7 +172,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    /*@SuppressLint("ClickableViewAccessibility")
     private void configureOnClickLikeButton(){
         binding.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +195,31 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     buttonOn = false;
                     Log.d("TAG","switch on black!!!!!!!!!!!!!!!!!!!!!!!!!");
                     collectionReference.document(idRestaurant).collection("liked").document(user.getUid()).delete();
-                    Toast.makeText(getApplicationContext(),"test for deleted",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }*/
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void configureOnClickLikeButton(Result result){
+        //test MVVM
+        binding.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!buttonOn) {
+                    buttonOn = true;
+                    if (userRepository.isCurrentUserLogged()) {
+                        idRestaurant = Objects.requireNonNull(result).getPlaceId();
+
+                        restaurantDetailRepository.createRestaurantDetail(idRestaurant);
+                        Log.d("TAG","switch on yellow!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                    }
+                } else {
+                    buttonOn = false;
+                    Log.d("TAG","switch on black!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    collectionReference.document(idRestaurant).collection("liked").document(user.getUid()).delete();
                 }
             }
         });

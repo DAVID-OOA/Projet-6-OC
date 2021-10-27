@@ -41,7 +41,7 @@ public class WorkMatesViewModel extends ViewModel {
     }
 
     public void getUserList() {
-        // Check de connection internet
+        // TODO Check de connection internet
         mUserRepository.getAllUserFromFirebase()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -61,7 +61,7 @@ public class WorkMatesViewModel extends ViewModel {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull @NotNull Exception e) {
-                        Log.w(TAG, "Error load document", e);
+                        Log.w("TAG", "Error load document", e);
                     }
                 });
     }
