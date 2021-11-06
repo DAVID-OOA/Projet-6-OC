@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
+import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
+
 import org.jetbrains.annotations.NotNull;
 
 public class ViewModelRestaurantFactory implements ViewModelProvider.Factory {
@@ -23,5 +26,8 @@ public class ViewModelRestaurantFactory implements ViewModelProvider.Factory {
             return (T) new WorkMatesViewModel(userRepository);
         }
         throw new IllegalArgumentException("ViewModel Not Found");
+
     }
+
+
 }
