@@ -66,4 +66,18 @@ public class DetailsRestaurantViewModel extends ViewModel {
     public void deleteRestaurant(String idRestaurant) {
         mRestaurantDetailRepository.deleteRestaurantDetailsDislikedFromFirestore(idRestaurant);
     }
+
+    public void onLikedOnButtonClick(String idRestaurant) {
+        if (!isLiked) {
+            if (userRepository.isCurrentUserLogged()) {
+
+                // TODO mettre viewmodel intermediaire
+                createRestaurant(idRestaurant);
+                Log.d("TAG","switch on YELLOW");
+            }
+        } else {
+            deleteRestaurant(idRestaurant);
+            Log.d("TAG","switch on BLACK");
+        }
+    }
 }
