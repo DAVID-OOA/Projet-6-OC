@@ -73,7 +73,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     .into(binding.imageRestaurant);
 
             idRestaurant = Objects.requireNonNull(result).getPlaceId();
-            //user = userRepository.getCurrentUser();
 
             this.displayRating(result);
 
