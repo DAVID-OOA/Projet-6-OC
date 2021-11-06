@@ -63,5 +63,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
         mRestaurantDetailRepository.createRestaurantDetailsLiked(idRestaurant);
     }
 
+    public void deleteRestaurant(String idRestaurant) {
+        mRestaurantDetailRepository.deleteRestaurantDetailsDislikedFromFirestore(idRestaurant);
     }
 }
