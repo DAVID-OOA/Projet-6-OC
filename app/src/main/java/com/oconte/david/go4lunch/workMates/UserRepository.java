@@ -10,7 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
 
-import java.util.List;
 import java.util.Objects;
 
 public final class UserRepository {
