@@ -8,11 +8,11 @@ public class Restaurant {
     public String idRestaurant;
 
 
-    public Restaurant( String userName, String idUser,String urlPhoto, String idRestaurant) {
-        this.urlPhoto = urlPhoto;
+    public Restaurant( String idRestaurant, String userName, String idUser, String urlPhoto) {
+        this.idRestaurant = idRestaurant;
         this.userName = userName;
         this.idUser = idUser;
-        this.idRestaurant = idRestaurant;
+        this.urlPhoto = urlPhoto;
     }
 
     // GETTERS

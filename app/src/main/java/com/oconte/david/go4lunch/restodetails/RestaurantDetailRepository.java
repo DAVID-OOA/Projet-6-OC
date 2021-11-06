@@ -36,7 +36,7 @@ public class RestaurantDetailRepository {
             String userName = currentUser.getDisplayName();
             String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
 
-            Restaurant restaurant = new Restaurant(idRestaurant, idUser, userName, urlPhoto);
+            Restaurant restaurant = new Restaurant(idRestaurant, userName, idUser, urlPhoto);
 
             getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(idUser).set(restaurant, SetOptions.merge());
         }
