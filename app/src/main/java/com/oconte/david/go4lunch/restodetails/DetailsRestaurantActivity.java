@@ -110,8 +110,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     }
 
     private void configureOnPickedButton() {
-        FloatingActionButton button = binding.pickRestaurantButton;
-        button.setOnClickListener(new View.OnClickListener() {
+        binding.pickRestaurantButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewModel.onPickedOnButtonClick(idRestaurant);
