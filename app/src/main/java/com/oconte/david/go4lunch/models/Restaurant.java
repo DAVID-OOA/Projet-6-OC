@@ -5,20 +5,15 @@ public class Restaurant {
     public String urlPhoto;
     public String userName;
     public String idUser;
-    public String idRestaurantClick;
+    public String idRestaurant;
 
 
-    public Restaurant( String userName, String idUser,String urlPhoto, String idRestaurantClick) {
+    public Restaurant( String userName, String idUser,String urlPhoto, String idRestaurant) {
         this.urlPhoto = urlPhoto;
         this.userName = userName;
         this.idUser = idUser;
-        this.idRestaurantClick = idRestaurantClick;
+        this.idRestaurant = idRestaurant;
     }
-
-    public Restaurant() {
-
-    }
-
 
     // GETTERS
     public String getUrlPhoto() {
@@ -33,8 +28,8 @@ public class Restaurant {
         return idUser;
     }
 
-    public String getIdRestaurantClick() {
-        return idRestaurantClick;
+    public String getIdRestaurant() {
+        return idRestaurant;
     }
 
     //SETTERS
@@ -51,44 +46,6 @@ public class Restaurant {
     }
 
     public void setIdRestaurantClick(String idRestaurantClick) {
-        this.idRestaurantClick = idRestaurantClick;
+        this.idRestaurant = idRestaurantClick;
     }
-
-    /*private String restaurantUid;
-    private List<String> likedRestaurants;
-
-
-    public Restaurant(String restaurantUid, List<String> likedRestaurants) {
-        this.restaurantUid = restaurantUid;
-        this.likedRestaurants = likedRestaurants;
-    }
-
-    public String getRestaurantUid() {
-        return restaurantUid;
-    }
-
-    public List<String> getLikedRestaurants() {
-        return likedRestaurants;
-    }
-
-    public void addLikedRestaurant(String restaurantUid){
-        if(likedRestaurants == null) {
-            this.likedRestaurants = new ArrayList<>();
-        }
-        this.likedRestaurants.add(restaurantUid);
-    }
-
-    public void removeLikedRestaurant(String restaurantUid){
-        if(likedRestaurants != null) {
-            int position = 0;
-            for (String uid : likedRestaurants) {
-                if (uid.equals(restaurantUid)) likedRestaurants.remove(position);
-                position += 1;
-            }
-        }
-    }
-
-    public void setRestaurantUid(String restaurantUid) {
-        this.restaurantUid = restaurantUid;
-    }*/
 }
