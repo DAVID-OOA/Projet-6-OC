@@ -55,4 +55,28 @@ public class RestaurantDetailRepository {
     public Task<DocumentSnapshot> getLikedUsersFromRestaurant(String idRestaurant) {
         return getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).get();
     }
+
+    //Create RestaurantDetails when is picked
+    public void createRestaurantDetailsPicked(String idRestaurant) {
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+
+            String idUser = currentUser.getUid();
+            String userName = currentUser.getDisplayName();
+            String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
+
+            Restaurant restaurant = new Restaurant(idRestaurant, userName, idUser, urlPhoto);
+
+            getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(idUser).set(restaurant, SetOptions.merge());
+        }
+    }
+
+    //Delete RestaurantDetails when is unpicked
+    public void deleteRestaurantDetailsUnPickedFromFirestore(String idRestaurant) {
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (idRestaurant != null && currentUser != null) {
+            String idUser = currentUser.getUid();
+            getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(idUser).delete();
+        }
+    }
 }

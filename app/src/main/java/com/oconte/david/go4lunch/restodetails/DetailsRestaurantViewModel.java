@@ -40,7 +40,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
     public DetailsRestaurantViewModel(RestaurantDetailRepository restaurantDetailRepository,UserRepository userRepository) {
         this.mRestaurantDetailRepository = restaurantDetailRepository;
         this.userRepository = userRepository;
-
     }
 
     public void getDataRestaurantClick(String idRestaurant) {
@@ -55,13 +54,8 @@ public class DetailsRestaurantViewModel extends ViewModel {
                             //si document n'est pas vide le boutton prend la couleur jaune.
                             if (Objects.requireNonNull(snapshot).exists()) {
                                 isLiked = true;
-
-                                Log.d("TAG","switch on yellow !!!!!!!!!!!!!!!!!!");
-
-
                             } else {
                                 isLiked = false;
-                                Log.d("TAG","switch on black!!!!!!!!!!!!!!!!!!");
                             }
                             restaurantMutableLiveData.postValue(isLiked);
                         }
@@ -83,14 +77,14 @@ public class DetailsRestaurantViewModel extends ViewModel {
     public void onLikedOnButtonClick(String idRestaurant) {
         if (!isLiked) {
             if (userRepository.isCurrentUserLogged()) {
-
-                // TODO mettre viewmodel intermediaire
                 createRestaurant(idRestaurant);
-                Log.d("TAG","switch on YELLOW");
             }
         } else {
             deleteRestaurant(idRestaurant);
-            Log.d("TAG","switch on BLACK");
         }
+    }
+
+    public void onPickedOnButtonClick(String idRestaurant) {
+
     }
 }

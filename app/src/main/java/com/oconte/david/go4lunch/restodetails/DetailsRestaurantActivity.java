@@ -86,7 +86,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
             this.configureOnClickWebSite(result);
 
-            this.configureOnClicFloatingButton();
+            this.configureOnPickedButton();
 
             this.conditionButtonLikedClick();
         }
@@ -109,11 +109,12 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         }
     }
 
-    private void configureOnClicFloatingButton() {
+    private void configureOnPickedButton() {
         FloatingActionButton button = binding.pickRestaurantButton;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewModel.onPickedOnButtonClick(idRestaurant);
                 // appel juste le viewModel
                 if (!buttonOn) {
                     buttonOn = true;
@@ -131,7 +132,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         viewModel.getRestaurantsLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-
                     if (aBoolean) {
                         binding.likeButton.setImageResource(R.drawable.star_yellow);
                         Log.d("TAG","switch on yellow");
@@ -152,7 +152,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                 viewModel.onLikedOnButtonClick(idRestaurant);
             }
         });
-
     }
 
     private void configureOnClickPhoneButton(Result result) {
