@@ -35,7 +35,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     String idRestaurant;
 
     private Resources res;
-    boolean buttonOn;
 
 
     @Override
