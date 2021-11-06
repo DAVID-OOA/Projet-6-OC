@@ -43,6 +43,19 @@ public class DetailsRestaurantViewModel extends ViewModel {
                             if (Objects.requireNonNull(snapshot).exists()) {
                                 isLiked = true;
 
+                                Log.d("TAG","switch on yellow !!!!!!!!!!!!!!!!!!");
+
+
+                            } else {
+                                isLiked = false;
+                                Log.d("TAG","switch on black!!!!!!!!!!!!!!!!!!");
+                            }
+                            restaurantMutableLiveData.postValue(isLiked);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void getDataRestaurantClick() {
