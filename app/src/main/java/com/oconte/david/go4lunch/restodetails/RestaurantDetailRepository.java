@@ -79,4 +79,9 @@ public class RestaurantDetailRepository {
             getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(idUser).delete();
         }
     }
+
+    // Get if someone picked this restaurant
+    public Task<DocumentSnapshot> getPickedUsersFromRestaurant(String idRestaurant) {
+        return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).get();
+    }
 }
