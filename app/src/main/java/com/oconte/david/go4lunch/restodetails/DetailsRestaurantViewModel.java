@@ -30,6 +30,18 @@ public class DetailsRestaurantViewModel extends ViewModel {
     public DetailsRestaurantViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
         this.restaurantDetailRepository = restaurantDetailRepository;
 
+    public void getDataRestaurantClick(String idRestaurant) {
+        mRestaurantDetailRepository.getLikedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful() && idRestaurant != null){
+                    FirebaseUser user = UserRepository.getInstance().getCurrentUser();
+                    collectionReference.document(idRestaurant).collection("liked").document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                            //si document n'est pas vide le boutton prend la couleur jaune.
+                            if (Objects.requireNonNull(snapshot).exists()) {
+                                isLiked = true;
 
     }
 
