@@ -58,7 +58,10 @@ public class DetailsRestaurantViewModel extends ViewModel {
         });
     }
 
-    public void getDataRestaurantClick() {
+    // create restaurant
+    public void createRestaurant(String idRestaurant) {
+        mRestaurantDetailRepository.createRestaurantDetailsLiked(idRestaurant);
+    }
 
     }
 }
