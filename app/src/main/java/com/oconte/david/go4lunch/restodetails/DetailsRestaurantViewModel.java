@@ -16,19 +16,26 @@ import java.util.Objects;
 
 public class DetailsRestaurantViewModel extends ViewModel {
 
+    Boolean isLiked;
 
+    private final UserRepository userRepository;
 
-    private final RestaurantDetailRepository restaurantDetailRepository;
+    private final RestaurantDetailRepository mRestaurantDetailRepository;
 
-    private final MutableLiveData<Restaurant> restaurantMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> restaurantMutableLiveData = new MutableLiveData<Boolean>();
 
-    public LiveData<Restaurant> getRestaurantsMutableLiveData() {
+    public LiveData<Boolean> getRestaurantsLiveData() {
         return restaurantMutableLiveData;
     }
 
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = db.collection("restaurants");
 
-    public DetailsRestaurantViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
-        this.restaurantDetailRepository = restaurantDetailRepository;
+    public DetailsRestaurantViewModel(RestaurantDetailRepository restaurantDetailRepository,UserRepository userRepository) {
+        this.mRestaurantDetailRepository = restaurantDetailRepository;
+        this.userRepository = userRepository;
+
+    }
 
     public void getDataRestaurantClick(String idRestaurant) {
         mRestaurantDetailRepository.getLikedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
