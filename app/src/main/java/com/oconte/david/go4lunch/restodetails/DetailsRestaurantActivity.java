@@ -85,6 +85,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             this.configureOnPickedButton();
 
             this.conditionButtonLikedClick();
+
+            this.conditionButtonPickedClick();
         }
     }
 
@@ -110,6 +112,20 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewModel.onPickedOnButtonClick(idRestaurant);
+            }
+        });
+    }
+
+    private void conditionButtonPickedClick() {
+        viewModel.getDataRestaurantPickedClick(idRestaurant);
+        viewModel.getRestaurantsPickedLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    binding.pickRestaurantButton.setImageResource(R.drawable.floatingbuttonoff);
+                } else {
+                    binding.pickRestaurantButton.setImageResource(R.drawable.floatingbutton);
+                }
             }
         });
     }
