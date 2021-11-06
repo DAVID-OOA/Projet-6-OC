@@ -130,29 +130,25 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
-    private void conditionButtonLikedClick() {
-        viewModel.getDataRestaurantClick(idRestaurant);
-        viewModel.getRestaurantsLiveData().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                    if (aBoolean) {
-                        binding.likeButton.setImageResource(R.drawable.star_yellow);
-                        Log.d("TAG","switch on yellow");
-
-                    } else {
-                        binding.likeButton.setImageResource(R.drawable.star);
-                        Log.d("TAG","switch on black");
-                    }
-            }
-        });
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
     private void configureOnClickLikeButton(){
         binding.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewModel.onLikedOnButtonClick(idRestaurant);
+            }
+        });
+    }
+
+    private void conditionButtonLikedClick() {
+        viewModel.getDataRestaurantClick(idRestaurant);
+        viewModel.getRestaurantsLikedLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLiked) {
+                    if (isLiked) {
+                        binding.likeButton.setImageResource(R.drawable.star_yellow);
+                    } else {
+                        binding.likeButton.setImageResource(R.drawable.star);
+                    }
             }
         });
     }
