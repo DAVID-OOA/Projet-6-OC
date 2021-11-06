@@ -110,14 +110,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewModel.onPickedOnButtonClick(idRestaurant);
-                // appel juste le viewModel
-                if (!buttonOn) {
-                    buttonOn = true;
-                    binding.pickRestaurantButton.setImageResource(R.drawable.floatingbuttonoff);
-                } else {
-                    buttonOn = false;
-                    binding.pickRestaurantButton.setImageResource(R.drawable.floatingbutton);
-                }
             }
         });
     }
