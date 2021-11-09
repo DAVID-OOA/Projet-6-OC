@@ -8,11 +8,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
-import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
@@ -21,13 +21,15 @@ import java.util.List;
 public class ListRestaurantViewModel extends ViewModel {
 
     private final RestaurantRepository mRestaurantRepository;
+    private final UserRepository userRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
 
-    UserRepository userRepository;
-    User user;
+    //UserRepository userRepository;
+    //User user;
 
-    public ListRestaurantViewModel() {
+    public ListRestaurantViewModel(UserRepository userRepository) {
         mRestaurantRepository =  Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
+        this.userRepository = userRepository;
     }
 
     public LiveData<List<Result>> getRestaurantLiveData() {
@@ -93,6 +95,20 @@ public class ListRestaurantViewModel extends ViewModel {
             Double distance = SphericalUtil.computeDistanceBetween(myLocation, positionRestaurant);
             result.getGeometry().setDistance(distance);
         }
+    }
+
+    // Delete User
+    public void deleteUser(String uid) {
+        userRepository.deleteUserFromFirestore(uid);
+    }
+
+    // return if log or not
+    public boolean isCurrentUserLogged() {
+        return userRepository.isCurrentUserLogged();
+    }
+
+    public FirebaseUser isForGetCurrentUser() {
+        return userRepository.getCurrentUser();
     }
 
 }
