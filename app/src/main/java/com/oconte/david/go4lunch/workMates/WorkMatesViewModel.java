@@ -30,7 +30,7 @@ public class WorkMatesViewModel extends ViewModel {
 
 
     public WorkMatesViewModel(UserRepository userRepository) {
-        mUserRepository = Injection.getUserRepository();
+        mUserRepository = userRepository;
     }
 
     // GETTER LIVE DATTA
