@@ -53,7 +53,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful() && idRestaurant != null){
-                    FirebaseUser user = UserRepository.getInstance().getCurrentUser();
+                    FirebaseUser user = userRepository.getCurrentUser();
                     collectionReference.document(idRestaurant).collection("liked").document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
@@ -108,7 +108,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful() && idRestaurant != null){
-                    FirebaseUser user = UserRepository.getInstance().getCurrentUser();
+                    FirebaseUser user = userRepository.getCurrentUser();
                     collectionReference.document(idRestaurant).collection("picked").document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
