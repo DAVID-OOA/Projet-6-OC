@@ -15,28 +15,17 @@ import java.util.Objects;
 public final class UserRepository {
 
     private static final String COLLECTION_NAME = "users";
-    private static volatile UserRepository instance;
+
+    private final FirebaseAuth firebaseAuth;
+    private final FirebaseFirestore firebaseFirestore;
 
 
-
-    public UserRepository(){
+    public UserRepository(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore){
+        this.firebaseAuth = firebaseAuth;
+        this.firebaseFirestore = firebaseFirestore;
     }
 
-    public static UserRepository getInstance(){
-        UserRepository result = instance;
-        if(result != null){
-            return result;
-        }
-        synchronized (UserRepository.class) {
-            if (instance == null) {
-                instance = new UserRepository();
-            }
-            return instance;
-        }
-    }
-
-
-    //
+    /**/
     @Nullable
     public FirebaseUser getCurrentUser(){
         return FirebaseAuth.getInstance().getCurrentUser();
@@ -49,12 +38,12 @@ public final class UserRepository {
 
     //Get the Collection Reference
     private CollectionReference getUserCollection(){
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        return firebaseFirestore.collection(COLLECTION_NAME);
     }
 
     //Create User
     public void createUser(){
-        FirebaseUser currentUser = getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
             String email = currentUser.getEmail();
             String uid = currentUser.getUid();
