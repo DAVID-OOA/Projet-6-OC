@@ -8,7 +8,7 @@ import com.oconte.david.go4lunch.api.GooglePlaceFactory;
 import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.listView.RestaurantRepository;
 import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
-import com.oconte.david.go4lunch.restodetails.ViewModelDetailsRestaurantFactory;
+import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 public class Injection {
@@ -21,14 +21,12 @@ public class Injection {
 
     //For Call getRestaurantNearBy
     public static RestaurantRepository getRestaurantNearBy (GooglePlaceService googlePlaceService, CountingIdlingResource resource) {
-        RestaurantRepository restaurantNearBy = new RestaurantRepository(googlePlaceService, resource);
-        return restaurantNearBy;
+        return new RestaurantRepository(googlePlaceService, resource);
     }
 
     //For Call getUserRepository
-    public static UserRepository getUserRepository () {
-        UserRepository userRepository = new UserRepository();
-        return userRepository;
+    public static UserRepository getUserRepository (FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
+        return new UserRepository(firebaseAuth, firebaseFirestore);
     }
 
     public static RestaurantDetailRepository provideRestaurantDetailsRepository(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
@@ -36,10 +34,11 @@ public class Injection {
     }
 
     //For Call ViewModelFactory
-    public static ViewModelDetailsRestaurantFactory provideViewModelFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore){
+    public static ViewModelFactory provideViewModelFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore){
         RestaurantDetailRepository restaurantDetailRepository = provideRestaurantDetailsRepository(firebaseAuth,firebaseFirestore);
+        UserRepository userRepository = getUserRepository(firebaseAuth, firebaseFirestore);
 
-        return  new ViewModelDetailsRestaurantFactory(restaurantDetailRepository, getUserRepository());
+        return  new ViewModelFactory(restaurantDetailRepository, userRepository);
     }
 
 }
