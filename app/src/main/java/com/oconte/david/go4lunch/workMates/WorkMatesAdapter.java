@@ -28,7 +28,6 @@ public class WorkMatesAdapter extends RecyclerView.Adapter<WorkMatesViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull WorkMatesViewHolder viewHolder, int position) {
         viewHolder.updateWithUser(users.get(position));
-
     }
 
     @Override
