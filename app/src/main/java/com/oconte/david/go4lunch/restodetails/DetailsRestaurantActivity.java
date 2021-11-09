@@ -47,7 +47,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         res = binding.detailRestaurantRootView.getResources();
 
         Intent intent = getIntent();
-
         result = (Result)intent.getSerializableExtra("result");
 
         this.configureViewDetailsRestaurant(result);
@@ -55,13 +54,12 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     }
 
     public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
-        ViewModelDetailsRestaurantFactory viewModelDetailsRestaurantFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
-        ViewModelProvider viewModelProvider = new ViewModelProvider(DetailsRestaurantActivity.this, viewModelDetailsRestaurantFactory);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+        ViewModelProvider viewModelProvider = new ViewModelProvider(DetailsRestaurantActivity.this, viewModelFactory);
         viewModel = viewModelProvider.get(DetailsRestaurantViewModel.class);
     }
 
     public void configureViewDetailsRestaurant(Result result) {
-
         if (result != null) {
             binding.nameRestaurant.setText(result.getName());
 
@@ -75,17 +73,11 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             idRestaurant = Objects.requireNonNull(result).getPlaceId();
 
             this.displayRating(result);
-
             this.configureOnClickLikeButton();
-
             this.configureOnClickPhoneButton(result);
-
             this.configureOnClickWebSite(result);
-
             this.configureOnPickedButton();
-
             this.conditionButtonLikedClick();
-
             this.conditionButtonPickedClick();
         }
     }

@@ -11,8 +11,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.oconte.david.go4lunch.Injection;
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.databinding.FragmentWorkmatesBinding;
+import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.User;
+import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +29,10 @@ public class FragmentWorkMates extends Fragment {
 
     private FragmentWorkmatesBinding binding;
 
+    public WorkMatesViewModel viewModel;
     private WorkMatesAdapter workMatesAdapter;
+
+    //UserRepository userRepository;
 
     public static FragmentWorkMates newInstance() {
         return (new FragmentWorkMates());
@@ -34,6 +43,8 @@ public class FragmentWorkMates extends Fragment {
         binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Available workmates");
 
         this.configureViewModel();
@@ -42,9 +53,13 @@ public class FragmentWorkMates extends Fragment {
         return view;
     }
 
+    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+        ViewModelProvider viewModelProvider = new ViewModelProvider(FragmentWorkMates.this, viewModelFactory);
+        viewModel = viewModelProvider.get(WorkMatesViewModel.class);
+    }
+
     public void configureViewModel() {
-        ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity(), new ViewModelRestaurantFactory(UserRepository.getInstance()));
-        WorkMatesViewModel viewModel = viewModelProvider.get(WorkMatesViewModel.class);
         viewModel.getUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
@@ -52,7 +67,6 @@ public class FragmentWorkMates extends Fragment {
             }
         });
         viewModel.getUserList();
-
     }
 
     private void configureRecyclerView() {

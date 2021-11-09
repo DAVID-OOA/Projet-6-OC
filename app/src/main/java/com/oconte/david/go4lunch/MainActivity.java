@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
@@ -35,6 +36,8 @@ import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
+import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
@@ -59,10 +62,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentWorkMates;
 
     // For firebase
-    private final UserRepository userRepository;
+    //private final UserRepository userRepository;
+
+    public ListRestaurantViewModel viewModel;
 
     public MainActivity() {
-        userRepository = UserRepository.getInstance();
+        //userRepository = UserRepository.getInstance();
     }
 
     @Override
@@ -72,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View view = binding.getRoot();
         setContentView(view);
         ButterKnife.bind(this);
+
+        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
 
         // For UI
         this.configureToolbar();
@@ -90,11 +97,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+        ViewModelProvider viewModelProvider = new ViewModelProvider(MainActivity.this, viewModelFactory);
+        viewModel = viewModelProvider.get(ListRestaurantViewModel.class);
+    }
 
 
     ///////////////////////////////////////////////////////////
     public void configurationViewModelDetails() {
-        ListRestaurantViewModel viewModel = new ViewModelProvider(this).get(ListRestaurantViewModel.class);
         viewModel.getSelectedRestaurant().observe(this, new Observer<Result>() {
             @Override
             public void onChanged(Result result) {
@@ -164,12 +175,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
     }
 
-    /*For delete User*/
+    //For delete User
     public void deleteUser(String uid) {
         if (uid == null) {
             return;
         }
-        userRepository.deleteUserFromFirestore(uid);
+        viewModel.deleteUser(uid);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -320,8 +331,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //For Data UserConnected
     private void updateUIWithUserData() {
-        if (userRepository.isCurrentUserLogged()) {
-            FirebaseUser currentUser = userRepository.getCurrentUser();
+        if (viewModel.isCurrentUserLogged()) {
+            FirebaseUser currentUser = viewModel.isForGetCurrentUser();//userRepository.getCurrentUser();
 
             NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
             @SuppressLint("ResourceType")
