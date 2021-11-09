@@ -9,9 +9,9 @@ import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ViewModelRestaurantFactory implements ViewModelProvider.Factory {
+public class ViewModelRestaurantFactory {
 
-    private final UserRepository userRepository;
+    /*private final UserRepository userRepository;
 
     public ViewModelRestaurantFactory(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -27,7 +27,7 @@ public class ViewModelRestaurantFactory implements ViewModelProvider.Factory {
         }
         throw new IllegalArgumentException("ViewModel Not Found");
 
-    }
+    }*/
 
 
 }
