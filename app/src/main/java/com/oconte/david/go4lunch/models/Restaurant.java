@@ -2,26 +2,26 @@ package com.oconte.david.go4lunch.models;
 
 public class Restaurant {
 
-    public String urlPhoto;
-    public String userName;
+    public String urlPicture;
+    public String username;
     public String idUser;
     public String idRestaurant;
 
 
-    public Restaurant( String idRestaurant, String userName, String idUser, String urlPhoto) {
+    public Restaurant( String idRestaurant, String username, String idUser, String urlPicture) {
         this.idRestaurant = idRestaurant;
-        this.userName = userName;
+        this.username = username;
         this.idUser = idUser;
-        this.urlPhoto = urlPhoto;
+        this.urlPicture = urlPicture;
     }
 
     // GETTERS
-    public String getUrlPhoto() {
-        return urlPhoto;
+    public String getUrlPicture() {
+        return urlPicture;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getIdUser() {
@@ -32,20 +32,20 @@ public class Restaurant {
         return idRestaurant;
     }
 
-    //SETTERS
-    public void setUrlPhoto(String urlPhoto) {
-        this.urlPhoto = urlPhoto;
+    // SETTERS
+    public void setUrlPicture(String urlPicture) {
+        this.urlPicture = urlPicture;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
-    public void setIdRestaurantClick(String idRestaurantClick) {
-        this.idRestaurant = idRestaurantClick;
+    public void setIdRestaurant(String idRestaurant) {
+        this.idRestaurant = idRestaurant;
     }
 }

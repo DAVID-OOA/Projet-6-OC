@@ -2,7 +2,7 @@ package com.oconte.david.go4lunch.models;
 
 public class User {
 
-    private String uid;
+    private String idUser;
     private String username;
     private String email;
     private String urlPicture;
@@ -10,8 +10,8 @@ public class User {
     public User() {
     }
 
-    public User(String uid, String username, String email, String urlPicture) {
-        this.uid = uid;
+    public User(String idUser, String username, String email, String urlPicture) {
+        this.idUser = idUser;
         this.username = username;
         this.email = email;
         this.urlPicture = urlPicture;
@@ -19,8 +19,8 @@ public class User {
 
 
     // GETTERS
-    public String getUid() {
-        return uid;
+    public String getIdUser() {
+        return idUser;
     }
 
     public String getUsername() {
@@ -36,8 +36,8 @@ public class User {
     }
 
     // SETTERS
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public void setUsername(String username) {
