@@ -62,10 +62,10 @@ public class RestaurantDetailRepository {
         if (currentUser != null) {
 
             String idUser = currentUser.getUid();
-            String userName = currentUser.getDisplayName();
+            String username = currentUser.getDisplayName();
             String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
 
-            Restaurant restaurant = new Restaurant(idRestaurant, userName, idUser, urlPhoto);
+            Restaurant restaurant = new Restaurant(idRestaurant, username, idUser, urlPhoto);
 
             getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(idUser).set(restaurant, SetOptions.merge());
         }
