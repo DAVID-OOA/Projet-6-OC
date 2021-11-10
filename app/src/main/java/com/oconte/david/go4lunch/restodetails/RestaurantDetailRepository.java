@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.models.Restaurant;
 
@@ -83,5 +84,10 @@ public class RestaurantDetailRepository {
     // Get if someone picked this restaurant
     public Task<DocumentSnapshot> getPickedUsersFromRestaurant(String idRestaurant) {
         return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).get();
+    }
+
+    // Get all Users Picked
+    public Task<QuerySnapshot> getAllUserPickedFromFirebase(String idRestaurant) {
+        return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").orderBy("username").get();
     }
 }
