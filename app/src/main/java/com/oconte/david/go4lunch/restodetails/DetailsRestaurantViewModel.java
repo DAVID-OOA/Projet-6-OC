@@ -61,6 +61,17 @@ public class DetailsRestaurantViewModel extends ViewModel {
         this.userRepository = userRepository;
     }
 
+    // When click on liked button restaurant
+    public void onLikedOnButtonClick(String idRestaurant) {
+        if (!isLiked) {
+            if (userRepository.isCurrentUserLogged()) {
+                createRestaurant(idRestaurant);
+            }
+        } else {
+            deleteRestaurant(idRestaurant);
+        }
+    }
+
     public void getDataRestaurantClick(String idRestaurant) {
         mRestaurantDetailRepository.getLikedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
