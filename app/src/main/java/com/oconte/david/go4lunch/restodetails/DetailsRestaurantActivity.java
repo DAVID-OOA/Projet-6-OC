@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,15 +19,20 @@ import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForRating;
+import com.oconte.david.go4lunch.workMates.WorkMatesAdapter;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
 import java.util.Objects;
 
 public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private DetailViewRestoBinding binding;
     public DetailsRestaurantViewModel viewModel;
+
+    private DetailsRestaurantPickedByUserAdapter detailsRestaurantPickedByUserAdapter;
 
     Result result;
 
@@ -79,6 +85,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             this.configureOnPickedButton();
             this.conditionButtonLikedClick();
             this.conditionButtonPickedClick();
+            this.configureViewModelForRecyclerViewUserPickedRestaurant();
+            this.configureRecyclerView();
         }
     }
 
@@ -175,5 +183,27 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }
+
+    // For the recyclerView and ViewModel for the list of user picked a restaurant
+    public void configureViewModelForRecyclerViewUserPickedRestaurant() {
+        viewModel.getUsersPicked().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                detailsRestaurantPickedByUserAdapter.updateCallUserListPicked(users);
+            }
+        });
+        viewModel.getUserListPicked(idRestaurant);
+    }
+
+    private void configureRecyclerView() {
+        // Create adapter passing the list of articles
+        this.detailsRestaurantPickedByUserAdapter = new DetailsRestaurantPickedByUserAdapter();
+
+        // Attach the adapter to the recyclerView to populate items
+        this.binding.recyclerViewDetailResto.setAdapter(this.detailsRestaurantPickedByUserAdapter);
+
+        // Set layout manager to position the items
+        this.binding.recyclerViewDetailResto.setLayoutManager(new LinearLayoutManager(this));
     }
 }
