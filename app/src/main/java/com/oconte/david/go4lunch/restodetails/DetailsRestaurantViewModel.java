@@ -95,27 +95,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
         });
     }
 
-    // create restaurant
-    public void createRestaurant(String idRestaurant) {
-        mRestaurantDetailRepository.createRestaurantDetailsLiked(idRestaurant);
-    }
-
-    // Delete restaurant
-    public void deleteRestaurant(String idRestaurant) {
-        mRestaurantDetailRepository.deleteRestaurantDetailsDislikedFromFirestore(idRestaurant);
-    }
-
-    // When click on liked button restaurant
-    public void onLikedOnButtonClick(String idRestaurant) {
-        if (!isLiked) {
-            if (userRepository.isCurrentUserLogged()) {
-                createRestaurant(idRestaurant);
-            }
-        } else {
-            deleteRestaurant(idRestaurant);
-        }
-    }
-
     // When click on picked button restaurant
     public void onPickedOnButtonClick(String idRestaurant) {
         if (!isPicked) {
@@ -148,5 +127,42 @@ public class DetailsRestaurantViewModel extends ViewModel {
                 }
             }
         });
+    }
+
+    // create restaurant
+    public void createRestaurant(String idRestaurant) {
+        mRestaurantDetailRepository.createRestaurantDetailsLiked(idRestaurant);
+    }
+
+    // Delete restaurant
+    public void deleteRestaurant(String idRestaurant) {
+        mRestaurantDetailRepository.deleteRestaurantDetailsDislikedFromFirestore(idRestaurant);
+    }
+
+    // For the List of UserPicked this Restaurant
+    public void getUserListPicked(String idRestaurant) {
+        mRestaurantDetailRepository.getAllUserPickedFromFirebase(idRestaurant)
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<User> userAdd = new ArrayList<>();
+
+                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                User user = documentSnapshot.toObject(User.class);
+                                if(Objects.requireNonNull(user).getIdUser() != null) {
+                                    userAdd.add(user);
+                                }
+                            }
+                            usersPicked.postValue(userAdd);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error load document", e);
+                    }
+                });
     }
 }
