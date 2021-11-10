@@ -1,5 +1,7 @@
 package com.oconte.david.go4lunch.restodetails;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -7,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -14,34 +17,44 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DetailsRestaurantViewModel extends ViewModel {
 
     Boolean isLiked;
-
     Boolean isPicked;
 
+    // Repository
     private final UserRepository userRepository;
-
     private final RestaurantDetailRepository mRestaurantDetailRepository;
 
+    // For Licked Restaurant
     private final MutableLiveData<Boolean> restaurantLikedMutableLiveData = new MutableLiveData<Boolean>();
-
     public LiveData<Boolean> getRestaurantsLikedLiveData() {
         return restaurantLikedMutableLiveData;
     }
 
+    // For Picked Restaurant
     private final MutableLiveData<Boolean> restaurantPickedMutableLiveData = new MutableLiveData<Boolean>();
-
     public LiveData<Boolean> getRestaurantsPickedLiveData() {
         return restaurantPickedMutableLiveData;
     }
 
+    private final MutableLiveData<List<User>> usersPicked = new MutableLiveData<>();
+    public  LiveData<List<User>> getUsersPicked() {
+        return usersPicked;
+    }
+
+    // For Firestore
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference collectionReference = db.collection("restaurants");
+
 
     public DetailsRestaurantViewModel(RestaurantDetailRepository restaurantDetailRepository,UserRepository userRepository) {
         this.mRestaurantDetailRepository = restaurantDetailRepository;
