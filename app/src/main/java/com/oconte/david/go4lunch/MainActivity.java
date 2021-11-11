@@ -61,14 +61,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Fragment fragmentListView;
     private Fragment fragmentWorkMates;
 
-    // For firebase
-    //private final UserRepository userRepository;
-
     public ListRestaurantViewModel viewModel;
 
-    public MainActivity() {
-        //userRepository = UserRepository.getInstance();
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -332,7 +327,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //For Data UserConnected
     private void updateUIWithUserData() {
         if (viewModel.isCurrentUserLogged()) {
-            FirebaseUser currentUser = viewModel.isForGetCurrentUser();//userRepository.getCurrentUser();
+
+            FirebaseUser currentUser = viewModel.isForGetCurrentUser();
 
             NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
             @SuppressLint("ResourceType")
