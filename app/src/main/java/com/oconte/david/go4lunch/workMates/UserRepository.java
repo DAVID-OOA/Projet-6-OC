@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.models.User;
 
 import java.util.Objects;
@@ -27,7 +28,7 @@ public final class UserRepository {
 
     @Nullable
     public FirebaseUser getCurrentUser(){
-        return FirebaseAuth.getInstance().getCurrentUser();
+        return firebaseAuth.getCurrentUser();
     }
 
     public Boolean isCurrentUserLogged(){

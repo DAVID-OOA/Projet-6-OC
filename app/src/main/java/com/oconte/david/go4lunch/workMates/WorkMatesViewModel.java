@@ -47,7 +47,7 @@ public class WorkMatesViewModel extends ViewModel {
                             List<User> fetcheUsers = new ArrayList<>();
                             for (DocumentSnapshot documentSnapshot : task.getResult()) {
                                 User userFetched = documentSnapshot.toObject(User.class);
-                                if (Objects.requireNonNull(userFetched).getIdUser() != null) {
+                                if (Objects.requireNonNull(userFetched).getUid() != null) {
                                     fetcheUsers.add(userFetched);
                                 }
                             }

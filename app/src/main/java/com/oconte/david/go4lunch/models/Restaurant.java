@@ -4,14 +4,14 @@ public class Restaurant {
 
     public String urlPicture;
     public String username;
-    public String idUser;
+    public String uid;
     public String idRestaurant;
 
 
-    public Restaurant( String idRestaurant, String username, String idUser, String urlPicture) {
+    public Restaurant(String idRestaurant, String username, String uid, String urlPicture) {
         this.idRestaurant = idRestaurant;
         this.username = username;
-        this.idUser = idUser;
+        this.uid = uid;
         this.urlPicture = urlPicture;
     }
 
@@ -24,8 +24,8 @@ public class Restaurant {
         return username;
     }
 
-    public String getIdUser() {
-        return idUser;
+    public String getUid() {
+        return uid;
     }
 
     public String getIdRestaurant() {
@@ -41,8 +41,8 @@ public class Restaurant {
         this.username = username;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setIdRestaurant(String idRestaurant) {

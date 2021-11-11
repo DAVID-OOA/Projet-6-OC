@@ -33,13 +33,13 @@ public class RestaurantDetailRepository {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
 
-            String idUser = currentUser.getUid();
+            String uid = currentUser.getUid();
             String userName = currentUser.getDisplayName();
             String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
 
-            Restaurant restaurant = new Restaurant(idRestaurant, userName, idUser, urlPhoto);
+            Restaurant restaurant = new Restaurant(idRestaurant, userName, uid, urlPhoto);
 
-            getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(idUser).set(restaurant, SetOptions.merge());
+            getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(uid).set(restaurant, SetOptions.merge());
         }
     }
 
@@ -47,8 +47,8 @@ public class RestaurantDetailRepository {
     public void deleteRestaurantDetailsDislikedFromFirestore(String idRestaurant) {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (idRestaurant != null && currentUser != null) {
-            String idUser = currentUser.getUid();
-            getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(idUser).delete();
+            String uid = currentUser.getUid();
+            getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(uid).delete();
         }
     }
 
@@ -62,13 +62,13 @@ public class RestaurantDetailRepository {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
 
-            String idUser = currentUser.getUid();
+            String uid = currentUser.getUid();
             String username = currentUser.getDisplayName();
             String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
 
-            Restaurant restaurant = new Restaurant(idRestaurant, username, idUser, urlPhoto);
+            Restaurant restaurant = new Restaurant(idRestaurant, username, uid, urlPhoto);
 
-            getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(idUser).set(restaurant, SetOptions.merge());
+            getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(uid).set(restaurant, SetOptions.merge());
         }
     }
 
@@ -76,8 +76,8 @@ public class RestaurantDetailRepository {
     public void deleteRestaurantDetailsUnPickedFromFirestore(String idRestaurant) {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (idRestaurant != null && currentUser != null) {
-            String idUser = currentUser.getUid();
-            getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(idUser).delete();
+            String uid = currentUser.getUid();
+            getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(uid).delete();
         }
     }
 

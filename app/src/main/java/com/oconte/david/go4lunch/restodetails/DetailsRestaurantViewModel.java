@@ -150,7 +150,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
 
                             for (DocumentSnapshot documentSnapshot : task.getResult()) {
                                 User user = documentSnapshot.toObject(User.class);
-                                if(Objects.requireNonNull(user).getIdUser() != null) {
+                                if(Objects.requireNonNull(user).getUid() != null) {
                                     userAdd.add(user);
                                 }
                             }
