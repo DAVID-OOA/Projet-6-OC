@@ -12,10 +12,17 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
+import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.Arrays;
@@ -35,10 +42,12 @@ public class AuthActivity extends AppCompatActivity {
 
     public static final String EXTRA_IS_CONNECTED = "extra_is_connected";
 
+    private AuthViewModel viewModel;
+
     // For firebase
     @SuppressLint("StaticFieldLeak")
     private static volatile AuthActivity instance;
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     public AuthActivity() {
         //userRepository = UserRepository.getInstance();
@@ -55,6 +64,15 @@ public class AuthActivity extends AppCompatActivity {
 
         this.startSignInActivity();
 
+        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+
+    }
+
+
+    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+        ViewModelProvider viewModelProvider = new ViewModelProvider(AuthActivity.this, viewModelFactory);
+        viewModel = viewModelProvider.get(AuthViewModel.class);
     }
 
     // For Signing
@@ -113,7 +131,7 @@ public class AuthActivity extends AppCompatActivity {
     //For Info about connected user
 
     public void createUser(){
-        userRepository.createUser();
+        viewModel.createUser();
     }
 
     private void setIsConnected() {
