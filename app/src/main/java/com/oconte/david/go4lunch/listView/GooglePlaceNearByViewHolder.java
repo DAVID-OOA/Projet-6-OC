@@ -48,6 +48,10 @@ public class GooglePlaceNearByViewHolder extends RecyclerView.ViewHolder {
         String writeDistance = df.format(distance) + " m";
         binding.distanceResto.setText(writeDistance);
 
+
+       int numberPeoplePicked = result.getNumberPeoplePicked();
+       binding.numberPplResto.setText(String.valueOf(numberPeoplePicked));
+
     }
 
     public String getUrlPhoto(Result result) {
