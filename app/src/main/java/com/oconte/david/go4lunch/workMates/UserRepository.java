@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.models.User;
 
 import java.util.Objects;
@@ -19,7 +18,6 @@ public final class UserRepository {
 
     private final FirebaseAuth firebaseAuth;
     private final FirebaseFirestore firebaseFirestore;
-
 
     public UserRepository(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore){
         this.firebaseAuth = firebaseAuth;
@@ -34,7 +32,6 @@ public final class UserRepository {
     public Boolean isCurrentUserLogged(){
         return (this.getCurrentUser() != null);
     }
-
 
     //Get the Collection Reference
     private CollectionReference getUserCollection(){
@@ -52,7 +49,6 @@ public final class UserRepository {
 
             User userRepositoryCreate = new User(uid,displayName,email,photoUrl);
             this.getUserCollection().document(uid).set(userRepositoryCreate);
-
         }
     }
 
