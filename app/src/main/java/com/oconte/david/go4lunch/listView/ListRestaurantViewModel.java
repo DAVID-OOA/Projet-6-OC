@@ -2,34 +2,45 @@ package com.oconte.david.go4lunch.listView;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ListRestaurantViewModel extends ViewModel {
 
+    private final RestaurantDetailRepository restaurantDetailRepository;
     private final RestaurantRepository mRestaurantRepository;
     private final UserRepository userRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
 
-    //UserRepository userRepository;
-    //User user;
-
-    public ListRestaurantViewModel(UserRepository userRepository) {
+    public ListRestaurantViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
         mRestaurantRepository =  Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
         this.userRepository = userRepository;
+        this.restaurantDetailRepository = restaurantDetailRepository;
     }
 
     public LiveData<List<Result>> getRestaurantLiveData() {
@@ -38,14 +49,25 @@ public class ListRestaurantViewModel extends ViewModel {
 
     // contient l'info de la list des restaurants
     public void getRestaurants() {
-        //Classe Anonyme
         mRestaurantRepository.getRestaurantNearBy(new RestaurantRepository.Callbacks() {
             @Override
             public void onResponse(@Nullable ApiNearByResponse apiNearByResponse) {
-                if (apiNearByResponse != null) {
-                    List<Result> restaurants = calculateDistances(myLocation, apiNearByResponse.results);
-                    apiNearByResponseMutableLiveData.postValue(restaurants);
-                }
+                ExecutorService executorService = Executors.newCachedThreadPool();
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (apiNearByResponse != null) {
+                            List<Result> restaurants = calculateDistances(myLocation, apiNearByResponse.results);
+
+                            for (Result restaurant : restaurants) {
+                                restaurant.setNumberPeoplePicked(getNumberPeople(restaurant.getPlaceId()));
+                            }
+                            apiNearByResponseMutableLiveData.postValue(restaurants);
+
+                        }
+                    }
+                });
+
             }
 
             @Override
@@ -53,6 +75,27 @@ public class ListRestaurantViewModel extends ViewModel {
 
             }
         }, ForPosition.convertLocationForApi(myLocation));
+    }
+
+    private int getNumberPeople(String placeId) {
+        int i;
+        Task<QuerySnapshot> querySnapshotTask = restaurantDetailRepository.getAllUserPickedFromFirebase(placeId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+            }
+
+        });
+        try {
+            QuerySnapshot await = Tasks.await(querySnapshotTask);
+            i = await.size();
+        } catch (ExecutionException e) {
+            return 0;
+        } catch (InterruptedException e) {
+            return 0;
+        }
+
+        return i;
     }
 
     // contient l'information du restaurant selectionné
