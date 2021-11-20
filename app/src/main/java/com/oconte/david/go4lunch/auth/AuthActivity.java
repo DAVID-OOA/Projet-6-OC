@@ -44,23 +44,12 @@ public class AuthActivity extends AppCompatActivity {
 
     private AuthViewModel viewModel;
 
-    // For firebase
-    @SuppressLint("StaticFieldLeak")
-    private static volatile AuthActivity instance;
-    UserRepository userRepository;
-
-    public AuthActivity() {
-        //userRepository = UserRepository.getInstance();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAuthBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-
 
         this.startSignInActivity();
 
