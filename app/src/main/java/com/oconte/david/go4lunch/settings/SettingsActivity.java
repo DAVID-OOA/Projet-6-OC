@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.settings;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Task;
+import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivitySettingsBinding;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
