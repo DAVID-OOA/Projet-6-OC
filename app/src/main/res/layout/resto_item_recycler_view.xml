@@ -63,6 +63,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:src="@drawable/baseline_person_outline_24"
                     android:layout_width="20dip"
                     android:layout_height="20dip"/>
                 <TextView
