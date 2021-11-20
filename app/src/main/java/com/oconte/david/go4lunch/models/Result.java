@@ -57,6 +57,18 @@ public class Result implements Serializable {
     @Expose
     private String phoneNumber;
 
+
+    private int numberPeoplePicked;
+
+    public int getNumberPoeplePicked() {
+        return numberPeoplePicked;
+    }
+
+    public void setNumberPeoplePicked(int numberPeoplePicked) {
+        this.numberPeoplePicked = numberPeoplePicked;
+    }
+
+
     public Geometry getGeometry() {
         return geometry;
     }
