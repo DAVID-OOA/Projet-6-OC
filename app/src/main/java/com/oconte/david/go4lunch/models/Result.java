@@ -60,7 +60,7 @@ public class Result implements Serializable {
 
     private int numberPeoplePicked;
 
-    public int getNumberPoeplePicked() {
+    public int getNumberPeoplePicked() {
         return numberPeoplePicked;
     }
 
