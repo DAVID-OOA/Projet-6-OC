@@ -35,7 +35,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     private DetailsRestaurantPickedByUserAdapter detailsRestaurantPickedByUserAdapter;
 
     Result result;
-
     String idRestaurant;
 
     private Resources res;
