@@ -36,10 +36,9 @@ import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
-import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
 import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
+import com.oconte.david.go4lunch.settings.SettingsActivity;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
-import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
