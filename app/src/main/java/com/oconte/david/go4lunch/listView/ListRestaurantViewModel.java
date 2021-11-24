@@ -10,11 +10,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
@@ -24,7 +22,6 @@ import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -63,13 +60,10 @@ public class ListRestaurantViewModel extends ViewModel {
                                 restaurant.setNumberPeoplePicked(getNumberPeople(restaurant.getPlaceId()));
                             }
                             apiNearByResponseMutableLiveData.postValue(restaurants);
-
                         }
                     }
                 });
-
             }
-
             @Override
             public void onFailure() {
 
@@ -82,9 +76,7 @@ public class ListRestaurantViewModel extends ViewModel {
         Task<QuerySnapshot> querySnapshotTask = restaurantDetailRepository.getAllUserPickedFromFirebase(placeId).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
             }
-
         });
         try {
             QuerySnapshot await = Tasks.await(querySnapshotTask);

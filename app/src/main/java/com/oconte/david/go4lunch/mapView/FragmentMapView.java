@@ -1,14 +1,11 @@
 package com.oconte.david.go4lunch.mapView;
 
-import static android.content.ContentValues.TAG;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,16 +28,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseUser;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
-import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
 import com.oconte.david.go4lunch.util.PermissionUtils;
-import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import org.jetbrains.annotations.NotNull;
 
