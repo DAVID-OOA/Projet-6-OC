@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -119,13 +121,21 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                     Double longitude = result.getGeometry().getLocation().getLng();
                     LatLng positionRestaurant = new LatLng(latitude, longitude);
 
-                    Marker marker = googleMap.addMarker(new MarkerOptions()
-                            .position(positionRestaurant)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location_normal))
-                            .title(result.getName()));
-                    assert marker != null;
-                    marker.setTag(result.getPlaceId());
-
+                    if (result.getNumberPeoplePicked() > 0) {
+                        Marker marker = googleMap.addMarker(new MarkerOptions()
+                                .position(positionRestaurant)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location_selected))
+                                .title(result.getName()));
+                        assert marker != null;
+                        marker.setTag(result.getPlaceId());
+                    } else {
+                        Marker marker = googleMap.addMarker(new MarkerOptions()
+                                .position(positionRestaurant)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_location_normal))
+                                .title(result.getName()));
+                        assert marker != null;
+                        marker.setTag(result.getPlaceId());
+                    }
                 }
                 this.clickForDisplayRestaurantDetail();
             }

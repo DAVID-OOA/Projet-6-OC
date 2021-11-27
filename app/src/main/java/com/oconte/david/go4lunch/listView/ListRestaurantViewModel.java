@@ -13,6 +13,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
@@ -23,16 +28,29 @@ import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ListRestaurantViewModel extends ViewModel {
 
+    Boolean isPicked;
+
     private final RestaurantDetailRepository restaurantDetailRepository;
     private final RestaurantRepository mRestaurantRepository;
     private final UserRepository userRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
+
+    // For Picked Restaurant marker
+    private final MutableLiveData<Boolean> restaurantMarkerPickedMutableLiveData = new MutableLiveData<Boolean>();
+    public LiveData<Boolean> getRestaurantsMarkerPickedLiveData() {
+        return restaurantMarkerPickedMutableLiveData;
+    }
+
+    // For Firestore
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference collectionReference = db.collection("restaurants");
 
     public ListRestaurantViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
         mRestaurantRepository =  Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
@@ -89,6 +107,30 @@ public class ListRestaurantViewModel extends ViewModel {
 
         return i;
     }
+
+    /*
+    public void getDataRestaurantMarkerPicked(String idRestaurant) {
+        restaurantDetailRepository.getPickedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful() && idRestaurant != null){
+                    FirebaseUser user = userRepository.getCurrentUser();
+                    collectionReference.document(idRestaurant).collection("picked").document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                            //si document n'est pas vide le boutton prend la couleur jaune.
+                            if (Objects.requireNonNull(snapshot).exists()) {
+                                isPicked = true;
+                            } else {
+                                isPicked = false;
+                            }
+                            restaurantMarkerPickedMutableLiveData.postValue(isPicked);
+                        }
+                    });
+                }
+            }
+        });
+    }*/
 
     // contient l'information du restaurant selectionné
     private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<>();
