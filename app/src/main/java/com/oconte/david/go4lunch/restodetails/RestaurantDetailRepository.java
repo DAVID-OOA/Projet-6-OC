@@ -90,4 +90,6 @@ public class RestaurantDetailRepository {
     public Task<QuerySnapshot> getAllUserPickedFromFirebase(String idRestaurant) {
         return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").orderBy("username").get();
     }
+
+
 }

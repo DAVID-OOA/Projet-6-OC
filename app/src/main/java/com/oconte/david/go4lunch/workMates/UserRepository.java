@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
@@ -46,8 +47,9 @@ public final class UserRepository {
             String uid = currentUser.getUid();
             String photoUrl = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
             String displayName = currentUser.getDisplayName();
+            String idRestaurantPicked = "";
 
-            User userRepositoryCreate = new User(uid,displayName,email,photoUrl);
+            User userRepositoryCreate = new User(uid,displayName,email,photoUrl,idRestaurantPicked);
             this.getUserCollection().document(uid).set(userRepositoryCreate);
         }
     }
@@ -72,5 +74,18 @@ public final class UserRepository {
     // Get all Users
     public Task<QuerySnapshot> getAllUserFromFirebase() {
         return getUserCollection().orderBy("username").get();
+    }
+
+    public void addRestaurantPicked(String idRestaurant) {
+        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", idRestaurant);
+    }
+
+    public void deleteRestaurantPicked() {
+        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", "");
+    }
+
+    // Get User restaurant picked
+    public Task<DocumentSnapshot> getUserRestaurantPicked(String uid) {
+        return getUserCollection().document(uid).get();
     }
 }

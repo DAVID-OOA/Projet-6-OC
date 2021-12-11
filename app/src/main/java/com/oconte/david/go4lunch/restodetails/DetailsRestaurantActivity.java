@@ -37,6 +37,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     Result result;
     String idRestaurant;
 
+    String uid;
+
     private Resources res;
 
 
@@ -59,6 +61,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     }
 
     public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
+        uid = FirebaseAuth.getInstance().getUid();
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
         ViewModelProvider viewModelProvider = new ViewModelProvider(DetailsRestaurantActivity.this, viewModelFactory);
         viewModel = viewModelProvider.get(DetailsRestaurantViewModel.class);
@@ -86,6 +89,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             this.conditionButtonPickedClick();
             this.configureViewModelForRecyclerViewUserPickedRestaurant();
             this.configureRecyclerView();
+
         }
     }
 
@@ -110,13 +114,13 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         binding.pickRestaurantButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.onPickedOnButtonClick(idRestaurant);
+                viewModel.onPickedOnButtonClick(idRestaurant, uid);
             }
         });
     }
 
     private void conditionButtonPickedClick() {
-        viewModel.getDataRestaurantPickedClick(idRestaurant);
+        //viewModel.getDataRestaurantPickedClick(idRestaurant);
         viewModel.getRestaurantsPickedLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

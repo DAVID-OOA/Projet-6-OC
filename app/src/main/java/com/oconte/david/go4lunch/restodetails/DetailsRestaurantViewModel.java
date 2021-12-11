@@ -1,6 +1,7 @@
 package com.oconte.david.go4lunch.restodetails;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +29,6 @@ import java.util.Objects;
 public class DetailsRestaurantViewModel extends ViewModel {
 
     Boolean isLiked;
-    Boolean isPicked;
 
     // Repository
     private final UserRepository userRepository;
@@ -96,14 +96,36 @@ public class DetailsRestaurantViewModel extends ViewModel {
     }
 
     // When click on picked button restaurant
-    public void onPickedOnButtonClick(String idRestaurant) {
-        if (!isPicked) {
+    public void onPickedOnButtonClick(String idRestaurant, String uid) {
+        //if (!isPicked) {
             if (userRepository.isCurrentUserLogged()) {
-                mRestaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
+                userRepository.getUserRestaurantPicked(uid).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.getResult() != null) {
+                            User user = task.getResult().toObject(User.class);
+
+                            if(Objects.requireNonNull(user).getIdRestaurantPicked().equals("")) {
+                                userRepository.addRestaurantPicked(idRestaurant);
+                                mRestaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
+                            } else if (user.getIdRestaurantPicked().equals(idRestaurant)) {
+                                userRepository.deleteRestaurantPicked();
+                                mRestaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(idRestaurant);
+                            } else if (!user.getIdRestaurantPicked().equals(idRestaurant)) {
+                                userRepository.addRestaurantPicked(idRestaurant);
+                                mRestaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(user.getIdRestaurantPicked());
+                                mRestaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("TAG", "C'est pas bon");
+                    }
+                });
             }
-        } else {
-            mRestaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(idRestaurant);
-        }
+       // }
     }
 
     public void getDataRestaurantPickedClick(String idRestaurant) {
@@ -115,13 +137,8 @@ public class DetailsRestaurantViewModel extends ViewModel {
                     collectionReference.document(idRestaurant).collection("picked").document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
-                            //si document n'est pas vide le boutton prend la couleur jaune.
-                            if (Objects.requireNonNull(snapshot).exists()) {
-                                isPicked = true;
-                            } else {
-                                isPicked = false;
-                            }
-                            restaurantPickedMutableLiveData.postValue(isPicked);
+
+                            restaurantPickedMutableLiveData.postValue(Objects.requireNonNull(snapshot).exists());
                         }
                     });
                 }

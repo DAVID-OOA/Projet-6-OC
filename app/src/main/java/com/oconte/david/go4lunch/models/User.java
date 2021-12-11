@@ -6,15 +6,17 @@ public class User {
     private String username;
     private String email;
     private String urlPicture;
+    private String idRestaurantPicked;
 
     public User() {
     }
 
-    public User(String uid, String username, String email, String urlPicture) {
+    public User(String uid, String username, String email, String urlPicture, String idRestaurantPicked) {
         this.uid = uid;
         this.username = username;
         this.email = email;
         this.urlPicture = urlPicture;
+        this.idRestaurantPicked = idRestaurantPicked;
     }
 
 
@@ -35,6 +37,10 @@ public class User {
         return urlPicture;
     }
 
+    public String getIdRestaurantPicked() {
+        return idRestaurantPicked;
+    }
+
     // SETTERS
     public void setUid(String uid) {
         this.uid = uid;
@@ -52,5 +58,7 @@ public class User {
         this.urlPicture = urlPicture;
     }
 
-
+    public void setIdRestaurantPicked(String idRestaurantPicked) {
+        this.idRestaurantPicked = idRestaurantPicked;
+    }
 }
