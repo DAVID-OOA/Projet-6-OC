@@ -36,11 +36,9 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     Result result;
     String idRestaurant;
-
     String uid;
 
     private Resources res;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +118,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     }
 
     private void conditionButtonPickedClick() {
-        //viewModel.getDataRestaurantPickedClick(idRestaurant);
+        viewModel.getDataRestaurantPickedClick(idRestaurant);
         viewModel.getRestaurantsPickedLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
