@@ -34,7 +34,6 @@ public class MenuTestDrawerView {
 
     @Test
     public void testClickActionBarItemMenuDrawerLunch() throws IOException, InterruptedException {
-
         SharedPreferences preferences = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(EXTRA_IS_CONNECTED, true);
@@ -57,12 +56,10 @@ public class MenuTestDrawerView {
         onView(withId(R.id.activity_main_nav_view))
                 .perform(NavigationViewActions.navigateTo(R.id.activity_main_drawer_lunch));
         Thread.sleep(1000);
-
     }
 
     @Test
     public void testClickActionBarItemMenuDrawerSettings() throws IOException, InterruptedException {
-
         SharedPreferences preferences = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(EXTRA_IS_CONNECTED, true);
@@ -83,12 +80,10 @@ public class MenuTestDrawerView {
         // Select the drawer menu for settings button
         onView(withId(R.id.activity_main_nav_view))
                 .perform(NavigationViewActions.navigateTo(R.id.activity_main_drawer_settings));
-
     }
 
     @Test
     public void testClickActionBarItemMenuDrawerLogOut() throws IOException, InterruptedException {
-
         SharedPreferences preferences = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(EXTRA_IS_CONNECTED, true);
@@ -109,12 +104,10 @@ public class MenuTestDrawerView {
         // Select the drawer menu for logout button
         onView(withId(R.id.activity_main_nav_view))
                 .perform(NavigationViewActions.navigateTo(R.id.activity_main_drawer_logout));
-
     }
 
     @Test
     public void testClickBottomNavigationView() throws IOException, InterruptedException {
-
         SharedPreferences preferences = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(EXTRA_IS_CONNECTED, true);
@@ -135,7 +128,6 @@ public class MenuTestDrawerView {
 
         onView(withId(R.id.action_workmates))
                 .check(matches(isDisplayed())).perform(click());
-
     }
 
     @Test
@@ -146,7 +138,6 @@ public class MenuTestDrawerView {
 
         //Select the toolbar
         onView(withId(R.id.toolbar)).perform(click());
-
     }
 
 }

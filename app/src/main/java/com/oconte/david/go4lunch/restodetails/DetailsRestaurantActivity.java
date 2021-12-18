@@ -113,6 +113,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewModel.onPickedOnButtonClick(idRestaurant, uid);
+                //configureViewModelForRecyclerViewUserPickedRestaurant();
             }
         });
     }
@@ -127,6 +128,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                 } else {
                     binding.pickRestaurantButton.setImageResource(R.drawable.floatingbutton);
                 }
+                configureViewModelForRecyclerViewUserPickedRestaurant();
             }
         });
     }
