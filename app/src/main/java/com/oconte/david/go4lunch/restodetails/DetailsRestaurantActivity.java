@@ -113,7 +113,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewModel.onPickedOnButtonClick(idRestaurant, uid);
-                //configureViewModelForRecyclerViewUserPickedRestaurant();
             }
         });
     }
