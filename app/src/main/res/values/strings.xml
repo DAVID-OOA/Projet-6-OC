@@ -53,5 +53,10 @@
     <string name="seconde_start">Seconde start</string>
     <string name="third_start">Third start</string>
     <string name="photo_restaurant">Photo restaurant</string>
+    <string name="settings_username">Change Username</string>
+    <string name="settings_email_address">Change email address</string>
+    <string name="settings_update_user_information">Update user information</string>
+    <string name="settings_delete_account">Delete account</string>
+    <string name="settings_enable_notifications">Enable notifications</string>
 
 </resources>

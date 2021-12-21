@@ -188,4 +188,8 @@ public class ListRestaurantViewModel extends ViewModel {
         return userRepository.getCurrentUser();
     }
 
+    public void updateUserName(String username) {
+        userRepository.updateUsername(username);
+    }
+
 }

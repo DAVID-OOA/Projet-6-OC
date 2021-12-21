@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.oconte.david.go4lunch.auth.AuthViewModel;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
+import com.oconte.david.go4lunch.settings.SettingsViewModel;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 import com.oconte.david.go4lunch.workMates.WorkMatesViewModel;
 
@@ -36,6 +37,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         if (modelClass.isAssignableFrom(AuthViewModel.class)) {
             return (T) new AuthViewModel(userRepository);
+        }
+        if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
+            return (T) new SettingsViewModel(userRepository);
         }
         throw new IllegalArgumentException("ViewModel Not Found");
     }

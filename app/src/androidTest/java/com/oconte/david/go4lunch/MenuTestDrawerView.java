@@ -45,12 +45,10 @@ public class MenuTestDrawerView {
         //Select the toolbar
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
 
-
         // Open Drawer to click on navigation.
         onView(withId(R.id.activity_main_drawerLayout))
                 .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
                 .perform(DrawerActions.open());
-
 
         // Select the drawer menu for lunch button
         onView(withId(R.id.activity_main_nav_view))
@@ -94,7 +92,6 @@ public class MenuTestDrawerView {
 
         //Select the toolbar
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-
 
         // Open Drawer to click on navigation.
         onView(withId(R.id.activity_main_drawerLayout))

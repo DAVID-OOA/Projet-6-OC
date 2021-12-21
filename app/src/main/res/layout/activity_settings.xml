@@ -59,7 +59,7 @@
                         android:id="@+id/username_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="settings_username"/>
+                        android:hint="@string/settings_username"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -73,7 +73,7 @@
                         android:id="@+id/email_field"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="settings_email_address"/>
+                        android:hint="@string/settings_email_address"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -87,7 +87,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="settings_enable_notifications"
+                        android:text="@string/settings_enable_notifications"
                         android:textSize="@dimen/settings_notification_text_size"/>
 
                     <androidx.appcompat.widget.SwitchCompat
@@ -110,7 +110,7 @@
                     android:id="@+id/update_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="settings_update_user_information"
+                    android:text="@string/settings_update_user_information"
                     app:layout_constraintTop_toBottomOf="@id/progress_bar"
                     android:layout_margin="@dimen/small_margin"/>
 
@@ -118,7 +118,7 @@
                     android:id="@+id/delete_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="settings_delete_account"
+                    android:text="@string/settings_delete_account"
                     app:layout_constraintTop_toBottomOf="@id/update_button"
                     android:layout_margin="@dimen/small_margin"/>
 

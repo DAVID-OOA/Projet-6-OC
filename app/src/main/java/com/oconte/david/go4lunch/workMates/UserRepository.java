@@ -63,10 +63,10 @@ public final class UserRepository {
 
     // Update User Username
     public Task<Void> updateUsername(String username) {
-        /*String uid = this.getCurrentUser();
+        String uid = Objects.requireNonNull(this.getCurrentUser()).getUid();
         if(uid != null){
-            return this.getUserCollection().document(uid).update(USERNAME_FIELD, username);
-        }else*/{
+            return this.getUserCollection().document(uid).update("username", username);
+        }else{
             return null;
         }
     }

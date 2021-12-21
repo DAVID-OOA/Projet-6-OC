@@ -6,10 +6,18 @@ import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.oconte.david.go4lunch.Injection;
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivitySettingsBinding;
+import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
+import com.oconte.david.go4lunch.models.User;
+import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
 import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.Objects;
@@ -19,7 +27,10 @@ public class SettingsActivity extends AppCompatActivity {
     //For Design
     private ActivitySettingsBinding binding;
 
-    private UserRepository userRepository;
+    private SettingsViewModel viewModel;
+
+    //String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +39,20 @@ public class SettingsActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+
         this.configureToolbar();
 
-        this.updateInfoOfUser();
+        String username = String.valueOf(binding.usernameField.getText());
 
+        this.updateInfoOfUser(username);
+
+    }
+
+    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+        ViewModelProvider viewModelProvider = new ViewModelProvider(SettingsActivity.this, viewModelFactory);
+        viewModel = viewModelProvider.get(SettingsViewModel.class);
     }
 
     @Override
@@ -45,22 +66,19 @@ public class SettingsActivity extends AppCompatActivity {
     protected void configureToolbar() {
         setSupportActionBar(binding.layoutToolbar.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
-
     }
 
 
-    public void updateInfoOfUser() {
+    public void updateInfoOfUser(String username) {
         binding.updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updateUsername();
+                viewModel.updateUserName(username);
             }
         });
     }
 
-    public Task<Void> updateUsername(String username){
-        return userRepository.updateUsername(username);
-    }
+
 
     //@OnClick(R.id.profile_activity_button_delete)
     public void onClickDeleteButton() {
@@ -69,8 +87,8 @@ public class SettingsActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.popup_message_choice_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String uid = Objects.requireNonNull(userRepository.getCurrentUser()).getUid();
-                        userRepository.deleteUserFromFirestore(uid);
+                        //String uid = Objects.requireNonNull(userRepository.getCurrentUser()).getUid();
+                        //userRepository.deleteUserFromFirestore(uid);
                     }
                 })
                 .setNegativeButton(R.string.popup_message_choice_no, null)
