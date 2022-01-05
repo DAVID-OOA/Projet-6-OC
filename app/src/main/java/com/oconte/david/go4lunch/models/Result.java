@@ -14,7 +14,7 @@ public class Result implements Serializable {
     @SerializedName("icon")
     @Expose
     private String icon;
-    @SerializedName("name")
+    @SerializedName(value = "name")
     @Expose
     private String name;
     @SerializedName("photos")
@@ -59,6 +59,7 @@ public class Result implements Serializable {
 
 
     private int numberPeoplePicked;
+
 
     public int getNumberPeoplePicked() {
         return numberPeoplePicked;
