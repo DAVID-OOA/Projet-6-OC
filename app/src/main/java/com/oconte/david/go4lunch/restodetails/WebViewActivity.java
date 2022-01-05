@@ -29,14 +29,10 @@ public class WebViewActivity extends AppCompatActivity {
         this.configureWebView();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+
 
     /**
      * It's for manage the webView after click on one article for see the details
-     * and save that it has been read.
      */
     protected void configureWebView() {
         WebView mWebView = (WebView) findViewById(R.id.web_view_all_new);
@@ -50,6 +46,11 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     public String getUrl() {
-        return getIntent().getStringExtra("url");
+        return getIntent().getStringExtra("url2");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
