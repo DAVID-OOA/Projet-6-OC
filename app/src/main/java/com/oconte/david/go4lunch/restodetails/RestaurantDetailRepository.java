@@ -91,5 +91,4 @@ public class RestaurantDetailRepository {
         return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").orderBy("username").get();
     }
 
-
 }
