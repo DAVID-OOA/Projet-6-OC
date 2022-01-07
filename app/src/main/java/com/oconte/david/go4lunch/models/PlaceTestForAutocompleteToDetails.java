@@ -12,16 +12,15 @@ public class PlaceTestForAutocompleteToDetails implements Serializable {
     String idRestaurant;
     String name;
     String adress;
-    //String iconUrl;
     Double rating;
     String webSite;
     String phoneNumber;
-    List<PhotoMetadata> metadata;
+    transient List<PhotoMetadata> metadata;
 
-    public PlaceTestForAutocompleteToDetails(String name, String adress, Double rating, String webSite, String idRestaurant, String phoneNumber) {
+    public PlaceTestForAutocompleteToDetails(String name, String adress, Double rating, String webSite, String idRestaurant, String phoneNumber, List<PhotoMetadata> metadata) {
         this.name = name;
         this.adress = adress;
-        //this.metadata = metadata;
+        this.metadata = metadata;
         this.rating = rating;
         this.webSite = webSite;
         this.idRestaurant = idRestaurant;

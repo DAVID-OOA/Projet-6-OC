@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //String iconUrl = String.valueOf(place.getPhotoMetadatas());
                     List<PhotoMetadata> metadata = place.getPhotoMetadatas();
 
-                    PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails = new PlaceTestForAutocompleteToDetails(name, address, rating, webSite, idRestaurant, phoneNumber);
+                    PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails = new PlaceTestForAutocompleteToDetails(name, address, rating, webSite, idRestaurant, phoneNumber, metadata);
 
                     Intent intent = new Intent(this, DetailsRestaurantActivity.class);
                     intent.putExtra("placeTestForAutocompleteToDetails", placeTestForAutocompleteToDetails);
