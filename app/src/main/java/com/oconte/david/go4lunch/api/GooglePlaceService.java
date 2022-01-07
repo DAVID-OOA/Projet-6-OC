@@ -18,5 +18,4 @@ public interface GooglePlaceService {
     @GET("place/nearbysearch/json?radius=3000&type=restaurant&key=" + myApiKey)
     Call<ApiNearByResponse> getRestaurantNearBy(@Query("location") String location);
 
-    //location=44.5327,0.7677&
 }
