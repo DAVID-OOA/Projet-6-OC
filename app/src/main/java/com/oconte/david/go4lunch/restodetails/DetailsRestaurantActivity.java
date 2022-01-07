@@ -97,17 +97,9 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
             binding.addressRestaurant.setText(placeTestForAutocompleteToDetails.getAdress());
 
-           /*Picasso.get()
-                    .load(getUrlPhotoForPlace(placeTestForAutocompleteToDetails))
-                    .placeholder(R.drawable.go4lunch_icon)
-                    .into(binding.imageRestaurant);*/
-
-           //this.getUrlPhotoForPlace(placeTestForAutocompleteToDetails);
-
             idRestaurant = placeTestForAutocompleteToDetails.getIdRestaurant();
 
             this.getPlacePhoto();
-
             this.displayRatingForPlace(placeTestForAutocompleteToDetails);
             this.configureOnClickLikeButton();
             this.configureOnClickPhoneButtonForPlace(placeTestForAutocompleteToDetails);
