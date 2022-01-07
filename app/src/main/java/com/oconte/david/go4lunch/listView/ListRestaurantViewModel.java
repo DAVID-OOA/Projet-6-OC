@@ -8,16 +8,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+
+import com.google.android.datatransport.Event;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.Injection;
@@ -26,6 +25,7 @@ import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.UserRepository;
+
 
 import java.util.List;
 import java.util.Objects;
@@ -47,6 +47,7 @@ public class ListRestaurantViewModel extends ViewModel {
     public LiveData<Boolean> getRestaurantsMarkerPickedLiveData() {
         return restaurantMarkerPickedMutableLiveData;
     }
+
 
     // For Firestore
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
