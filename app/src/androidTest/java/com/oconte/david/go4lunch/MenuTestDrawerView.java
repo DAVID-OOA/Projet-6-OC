@@ -69,7 +69,6 @@ public class MenuTestDrawerView {
         //Select the toolbar
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
 
-
         // Open Drawer to click on navigation.
         onView(withId(R.id.activity_main_drawerLayout))
                 .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
@@ -129,7 +128,6 @@ public class MenuTestDrawerView {
 
     @Test
     public void testClickActionBar() throws IOException, InterruptedException {
-
         //Start the MainActivity
         mActivityRule.launchActivity(null);
 
