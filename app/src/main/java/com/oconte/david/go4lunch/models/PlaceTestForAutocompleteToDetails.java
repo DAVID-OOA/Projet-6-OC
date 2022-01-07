@@ -9,18 +9,23 @@ import java.util.List;
 
 public class PlaceTestForAutocompleteToDetails implements Serializable {
 
+    String idRestaurant;
     String name;
     String adress;
-    String iconUrl;
+    //String iconUrl;
     Double rating;
     String webSite;
+    String phoneNumber;
+    List<PhotoMetadata> metadata;
 
-    public PlaceTestForAutocompleteToDetails(String name, String adress, Double rating, String webSite) {
+    public PlaceTestForAutocompleteToDetails(String name, String adress, Double rating, String webSite, String idRestaurant, String phoneNumber) {
         this.name = name;
         this.adress = adress;
-        //this.iconUrl = iconUrl;
+        //this.metadata = metadata;
         this.rating = rating;
         this.webSite = webSite;
+        this.idRestaurant = idRestaurant;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {
@@ -48,12 +53,12 @@ public class PlaceTestForAutocompleteToDetails implements Serializable {
         this.rating = rating;
     }
 
-    public String getIconUrl() {
-        return iconUrl;
+    public List<PhotoMetadata> getMetadata() {
+        return metadata;
     }
 
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
+    public void setMetadata(List<PhotoMetadata> metadata) {
+        this.metadata = metadata;
     }
 
     public String getWebSite() {
@@ -62,6 +67,22 @@ public class PlaceTestForAutocompleteToDetails implements Serializable {
 
     public void setWebSite(String webSite) {
         this.webSite = webSite;
+    }
+
+    public String getIdRestaurant() {
+        return idRestaurant;
+    }
+
+    public void setIdRestaurant(String idRestaurant) {
+        this.idRestaurant = idRestaurant;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }
