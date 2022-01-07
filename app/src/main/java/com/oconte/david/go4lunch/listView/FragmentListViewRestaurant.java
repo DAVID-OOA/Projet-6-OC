@@ -1,5 +1,6 @@
 package com.oconte.david.go4lunch.listView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class FragmentListViewRestaurant extends Fragment {
         return (new FragmentListViewRestaurant());
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentListViewBinding.inflate(inflater, container, false);
@@ -46,6 +48,7 @@ public class FragmentListViewRestaurant extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onDestroy() {
