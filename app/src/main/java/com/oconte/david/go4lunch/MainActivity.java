@@ -1,18 +1,26 @@
 package com.oconte.david.go4lunch;
 
+import static android.content.ContentValues.TAG;
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,10 +30,23 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.navigation.NavigationView;
+import com.google.common.collect.ImmutableList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,15 +55,20 @@ import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
+import com.oconte.david.go4lunch.models.PlaceTestForAutocompleteToDetails;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
 import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
 import com.oconte.david.go4lunch.settings.SettingsActivity;
+import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
@@ -54,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
+
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 123456;
+    String myApiKey = BuildConfig.MAPS_API_KEY;
 
     //FOR FRAGMENTS
     private Fragment fragmentMapView;
@@ -71,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
         this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), myApiKey);
+        }
 
         // For UI
         this.configureToolbar();
@@ -95,6 +128,75 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewModel = viewModelProvider.get(ListRestaurantViewModel.class);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                boolean isRestaurant = false;
+                Place place = Autocomplete.getPlaceFromIntent(Objects.requireNonNull(data));
+                if(place.getTypes() != null) {
+
+                    for (Place.Type type : place.getTypes()) {
+                        if (type == Place.Type.RESTAURANT) {
+                            isRestaurant = true;
+                            break;
+                        }
+                    }
+                }
+                if(isRestaurant || place.getTypes() == null) {
+
+                    String name = place.getName();
+                    String address = place.getAddress();
+                    Double rating = place.getRating();
+                    String webSite = String.valueOf(place.getWebsiteUri());
+                    String idRestaurant = place.getId();
+                    String phoneNumber = place.getPhoneNumber();
+
+
+                    //String iconUrl = String.valueOf(place.getPhotoMetadatas());
+                    List<PhotoMetadata> metadata = place.getPhotoMetadatas();
+
+                    PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails = new PlaceTestForAutocompleteToDetails(name, address, rating, webSite, idRestaurant, phoneNumber);
+
+                    Intent intent = new Intent(this, DetailsRestaurantActivity.class);
+                    intent.putExtra("placeTestForAutocompleteToDetails", placeTestForAutocompleteToDetails);
+                    startActivity(intent);
+                }
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(Objects.requireNonNull(data));
+                Toast.makeText(this, "Error: " + status.getStatusMessage(), Toast.LENGTH_LONG).show();
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
+    public void onSearchCalled() {
+        LatLng position = viewModel.getMyLocation();
+        LatLngBounds bounds = ForPosition.convertToBounds(position, 2500);
+
+        // Set the fields to specify which types of place data to return.
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID,
+                Place.Field.NAME,
+                Place.Field.ADDRESS,
+                Place.Field.LAT_LNG,
+                Place.Field.PHOTO_METADATAS,
+                Place.Field.PHONE_NUMBER,
+                Place.Field.WEBSITE_URI,
+                Place.Field.RATING);
+
+        // Start the autocomplete intent.
+        Intent intent = new Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.OVERLAY, fields)
+                .setTypeFilter(TypeFilter.ESTABLISHMENT)
+                .setLocationRestriction(RectangularBounds.newInstance(bounds.southwest, bounds.northeast))
+                .build(this);
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+    }
 
     ///////////////////////////////////////////////////////////
     public void configurationViewModelDetails() {
@@ -189,6 +291,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void configureToolbar() {
         setSupportActionBar(binding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        /*if (item.getItemId() == R.id.menu_main_activity_search && autoCompleteIntent != null) {
+            startActivityForResult(autoCompleteIntent, AUTOCOMPLETE_REQUEST_CODE);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);*/
+        switch (item.getItemId()) {
+            case R.id.menu_main_activity_search:
+                onSearchCalled();
+                return true;
+            default:
+                return false;
+        }
     }
 
     // NAVIGATION DRAWER
