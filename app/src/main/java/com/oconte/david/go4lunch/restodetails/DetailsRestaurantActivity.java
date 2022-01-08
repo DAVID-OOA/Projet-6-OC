@@ -154,24 +154,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
-    public String getUrlPhotoForPlace(PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails) {
-
-        if (placeTestForAutocompleteToDetails.getMetadata() != null && placeTestForAutocompleteToDetails.getMetadata().size() > 0) {
-
-            PhotoMetadata photoMetadata = placeTestForAutocompleteToDetails.getMetadata().get(0);
-
-            FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(photoMetadata).build();
-
-            Objects.requireNonNull(placesClient).fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
-                Bitmap bitmap = fetchPhotoResponse.getBitmap();
-                binding.imageRestaurant.setImageBitmap(bitmap);
-            });
-
-
-        }
-        return null;
-    }
-
     private void configureOnClickPhoneButtonForPlace(PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails) {
         binding.phoneButton.setOnClickListener(v -> {
             if (placeTestForAutocompleteToDetails.getPhoneNumber() != null) {
