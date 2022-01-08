@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,7 +65,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         setContentView(view);
 
         placesClient = Places.createClient(this);
-
 
         this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(),FirebaseFirestore.getInstance());
 
@@ -176,8 +176,14 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         binding.phoneButton.setOnClickListener(v -> {
             if (placeTestForAutocompleteToDetails.getPhoneNumber() != null) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(placeTestForAutocompleteToDetails.getPhoneNumber()));
-                startActivity(intent);
+                intent.setData(Uri.parse("tel:" + placeTestForAutocompleteToDetails.getPhoneNumber()));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this,"ca ne marche pas", Toast.LENGTH_LONG).show();
+                }
+
+
             } else {
                 AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
                 alertDialog.setTitle("Error");
@@ -311,7 +317,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         binding.phoneButton.setOnClickListener(v -> {
             if (result.getPhoneNumber() != null) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(result.getPhoneNumber()));
+                intent.setData(Uri.parse("tel:" + result.getPhoneNumber()));
                 startActivity(intent);
             } else {
                 AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
