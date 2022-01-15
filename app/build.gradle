@@ -5,6 +5,8 @@ plugins {
     id 'com.google.secrets_gradle_plugin' version '0.6'
 }
 
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -43,6 +45,7 @@ android {
             minifyEnabled false
             shrinkResources false
             signingConfig signingConfigs.debug
+            testCoverageEnabled true
 
             buildConfigField("String", "API_SERVER", "\"https://maps.googleapis.com/maps/api/\"")
         }
@@ -67,7 +70,16 @@ android {
     }
 
     testOptions {
-        unitTests.returnDefaultValues = true
+        animationsDisabled true
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
 }
 
@@ -81,6 +93,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    testImplementation "org.jacoco:org.jacoco.agent:0.8.3"
 
     // DESIGN
     implementation 'com.google.android.material:material:1.4.0'
