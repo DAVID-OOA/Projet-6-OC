@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
-import com.google.android.datatransport.Event;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,7 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
-import com.oconte.david.go4lunch.Injection;
+import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
@@ -28,7 +27,6 @@ import com.oconte.david.go4lunch.workMates.UserRepository;
 
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

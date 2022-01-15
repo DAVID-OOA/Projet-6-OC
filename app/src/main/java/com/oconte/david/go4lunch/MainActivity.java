@@ -1,16 +1,12 @@
 package com.oconte.david.go4lunch;
 
-import static android.content.ContentValues.TAG;
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,17 +37,16 @@ import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.navigation.NavigationView;
-import com.google.common.collect.ImmutableList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
+import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.listView.FragmentListViewRestaurant;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
@@ -67,7 +62,6 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -111,14 +105,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureNavigationView();
         this.configureBottomView();
 
+        this.checkLogOrNotLog();
+
         // For Fragment
         this.showFirstFragment();
 
-        this.checkLogOrNotLog();
+        this.updateUIWithUserData();
 
         this.configurationViewModelDetails();
 
-        this.updateUIWithUserData();
+
 
     }
 

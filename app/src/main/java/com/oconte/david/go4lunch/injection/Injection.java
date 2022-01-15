@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.injection;
 
 import androidx.test.espresso.idling.CountingIdlingResource;
 

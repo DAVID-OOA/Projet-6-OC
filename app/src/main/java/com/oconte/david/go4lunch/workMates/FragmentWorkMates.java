@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.oconte.david.go4lunch.Injection;
-import com.oconte.david.go4lunch.MainActivity;
+import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.databinding.FragmentWorkmatesBinding;
-import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
 

@@ -1,6 +1,5 @@
 package com.oconte.david.go4lunch.auth;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,13 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.oconte.david.go4lunch.Injection;
+import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
-import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
-import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
 import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
-import com.oconte.david.go4lunch.workMates.UserRepository;
 
 import java.util.Arrays;
 

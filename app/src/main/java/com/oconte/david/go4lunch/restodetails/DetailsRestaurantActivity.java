@@ -25,15 +25,13 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.oconte.david.go4lunch.Injection;
+import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
 import com.oconte.david.go4lunch.models.PlaceTestForAutocompleteToDetails;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.util.ForRating;
-import com.oconte.david.go4lunch.util.TextUtil;
-import com.oconte.david.go4lunch.workMates.WorkMatesAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
