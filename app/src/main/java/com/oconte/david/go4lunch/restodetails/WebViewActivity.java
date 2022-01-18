@@ -29,8 +29,6 @@ public class WebViewActivity extends AppCompatActivity {
         this.configureWebView();
     }
 
-
-
     /**
      * It's for manage the webView after click on one article for see the details
      */
