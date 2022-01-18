@@ -114,8 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configurationViewModelDetails();
 
-
-
     }
 
     public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
@@ -149,8 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String idRestaurant = place.getId();
                     String phoneNumber = place.getPhoneNumber();
 
-
-                    //String iconUrl = String.valueOf(place.getPhotoMetadatas());
                     List<PhotoMetadata> metadata = place.getPhotoMetadatas();
 
                     PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails = new PlaceTestForAutocompleteToDetails(name, address, rating, webSite, idRestaurant, phoneNumber, metadata);
