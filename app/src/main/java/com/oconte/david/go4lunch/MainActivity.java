@@ -3,6 +3,7 @@ package com.oconte.david.go4lunch;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -122,7 +127,53 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewModel = viewModelProvider.get(ListRestaurantViewModel.class);
     }
 
-    @Override
+    ActivityResultLauncher<Intent> someActivityResultLuncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode()== RESULT_OK) {
+
+                    boolean isRestaurant = false;
+                    Place place = Autocomplete.getPlaceFromIntent(Objects.requireNonNull(result.getData()));
+                    if(place.getTypes() != null) {
+
+                        for (Place.Type type : place.getTypes()) {
+                            if (type == Place.Type.RESTAURANT) {
+                                isRestaurant = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(isRestaurant || place.getTypes() == null) {
+
+                        String name = place.getName();
+                        String address = place.getAddress();
+                        Double rating = place.getRating();
+                        String webSite = String.valueOf(place.getWebsiteUri());
+                        String idRestaurant = place.getId();
+                        String phoneNumber = place.getPhoneNumber();
+
+                        List<PhotoMetadata> metadata = place.getPhotoMetadatas();
+
+                        PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails = new PlaceTestForAutocompleteToDetails(name, address, rating, webSite, idRestaurant, phoneNumber, metadata);
+
+                        Intent intent = new Intent(getApplicationContext(), DetailsRestaurantActivity.class);
+                        intent.putExtra("placeTestForAutocompleteToDetails", placeTestForAutocompleteToDetails);
+                        startActivity(intent);
+                    }
+
+                } else if (result.getResultCode() == AutocompleteActivity.RESULT_ERROR) {
+                    // TODO: Handle the error.
+                    Status status = Autocomplete.getStatusFromIntent(Objects.requireNonNull(result.getData()));
+                    Toast.makeText(getApplicationContext(), "Error: " + status.getStatusMessage(), Toast.LENGTH_LONG).show();
+
+                } else if (result.getResultCode() == RESULT_CANCELED) {
+                    // The user canceled the operation.
+                }
+            }
+    });
+
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
@@ -165,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // The user canceled the operation.
             }
         }
-    }
+    }*/
 
     public void onSearchCalled() {
         LatLng position = viewModel.getMyLocation();
@@ -187,7 +238,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setTypeFilter(TypeFilter.ESTABLISHMENT)
                 .setLocationRestriction(RectangularBounds.newInstance(bounds.southwest, bounds.northeast))
                 .build(this);
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+        someActivityResultLuncher.launch(intent);
+
     }
 
     ///////////////////////////////////////////////////////////
