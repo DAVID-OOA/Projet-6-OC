@@ -66,7 +66,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
         this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(),FirebaseFirestore.getInstance());
 
-        res = binding.detailRestaurantRootView.getResources();
+        res = binding.detailRestaurant.getResources();
 
         Intent intent = getIntent();
 
