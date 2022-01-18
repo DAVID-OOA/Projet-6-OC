@@ -390,7 +390,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureBottomView() {
-        binding.bottomNav.setOnNavigationItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
+        //binding.bottomNav.setOnNavigationItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
+        binding.bottomNav.setOnItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
     }
 
 
