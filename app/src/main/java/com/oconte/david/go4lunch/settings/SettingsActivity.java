@@ -21,11 +21,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     //For Design
     private ActivitySettingsBinding binding;
-
     private SettingsViewModel viewModel;
 
     //String username;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
     }
 
-
     public void updateInfoOfUser(String username) {
         binding.updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +69,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     //@OnClick(R.id.profile_activity_button_delete)
     public void onClickDeleteButton() {
