@@ -1,27 +1,23 @@
 package com.oconte.david.go4lunch;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import android.content.Context;
-
 import androidx.test.espresso.IdlingRegistry;
-import androidx.test.espresso.IdlingResource;
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.gms.maps.MapView;
 import com.oconte.david.go4lunch.injection.Injection;
-import com.oconte.david.go4lunch.models.User;
 
 import org.jetbrains.annotations.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runner.manipulation.Ordering;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -31,9 +27,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
-@RunWith(AndroidJUnit4ClassRunner.class)
-public class MapViewTest {
-
+public class ListViewTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<MainActivity>(MainActivity.class, false, false);
@@ -72,6 +66,11 @@ public class MapViewTest {
         mActivityRule.launchActivity(null);
 
         //Test recyclerview in map is good
-        onView(withId(R.id.mapView)).perform();
+        onView(withId(R.id.fragment_main_recycler_view)).check(matches(isDisplayed()));
+        //onView(withId(R.id.fragment_main_recycler_view)).perform();
+
+
+        // Check one item of the recyclerview for see it here.
+        //onView(withId(R.id.fragment_main_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
     }
 }

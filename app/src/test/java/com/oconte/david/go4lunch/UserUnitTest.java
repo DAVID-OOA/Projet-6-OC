@@ -21,6 +21,7 @@ public class UserUnitTest {
 
     @Before
     public void setup() {
+        //C'est cette partie qui fait planter le test
         username = "Android Studio";
         uid = "01012022";
         email = "androidstudio@email.com";
