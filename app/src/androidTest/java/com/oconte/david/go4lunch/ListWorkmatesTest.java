@@ -7,6 +7,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
@@ -68,11 +69,9 @@ public class ListWorkmatesTest {
 
         onView(withId(R.id.action_workmates)).check(matches(isDisplayed())).perform(click());
 
-        //onView(withId(R.id.fragment_main_recycler_view)).perform();
-
-        //onView(withId(R.id.fragment_main_recycler_view_workMates).check(matches(isDisplayed()));
-
+        onView(withId(R.id.fragment_main_recycler_view)).perform();
+        //Thread.sleep(10000);
         // Check one item of the recyclerview for see it here.
-        //onView(withId(R.id.fragment_main_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        onView(withId(R.id.fragment_main_recycler_view_workMates)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
     }
 }

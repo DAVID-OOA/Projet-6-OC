@@ -66,11 +66,11 @@ public class ListViewTest {
         mActivityRule.launchActivity(null);
 
         //Test recyclerview in map is good
-        onView(withId(R.id.fragment_main_recycler_view)).check(matches(isDisplayed()));
-        //onView(withId(R.id.fragment_main_recycler_view)).perform();
-
+        onView(withId(R.id.action_list)).check(matches(isDisplayed())).perform(click());
 
         // Check one item of the recyclerview for see it here.
-        //onView(withId(R.id.fragment_main_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        onView(withId(R.id.fragment_main_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
+
+        Thread.sleep(10000);
     }
 }
