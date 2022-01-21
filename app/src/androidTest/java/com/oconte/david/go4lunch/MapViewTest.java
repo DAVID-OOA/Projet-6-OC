@@ -31,7 +31,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
-@RunWith(AndroidJUnit4ClassRunner.class)
+
 public class MapViewTest {
 
 

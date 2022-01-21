@@ -41,7 +41,7 @@ android {
             minifyEnabled false
             shrinkResources false
             signingConfig signingConfigs.debug
-            //testCoverageEnabled true
+            testCoverageEnabled true
 
             buildConfigField("String", "API_SERVER", "\"https://maps.googleapis.com/maps/api/\"")
         }
