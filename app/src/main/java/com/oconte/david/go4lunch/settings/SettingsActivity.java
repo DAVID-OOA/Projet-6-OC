@@ -61,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
     }
 
+    // FOR UPDATE INFO USER
     public void updateInfoOfUser(String username) {
         binding.updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    // FOR DELETE ACCOUNT
     //@OnClick(R.id.profile_activity_button_delete)
     public void onClickDeleteButton() {
         new AlertDialog.Builder(this)
@@ -84,4 +86,6 @@ public class SettingsActivity extends AppCompatActivity {
                 .setNegativeButton(R.string.popup_message_choice_no, null)
                 .show();
     }
+
+    // FOR ADD PHOTO
 }
