@@ -1,12 +1,14 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.utils;
 
 import static com.oconte.david.go4lunch.util.ForRating.firstStar;
 import static com.oconte.david.go4lunch.util.ForRating.secondStar;
 import static com.oconte.david.go4lunch.util.ForRating.thirdStar;
 import static org.junit.Assert.assertEquals;
 
+import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.util.ForRating;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -28,7 +30,7 @@ public class ForRatingUnitTest {
     @Test
     public void valueRatingAndReturnRightValueStar() throws Exception {
         int rating = 0;
-        assertEquals(R.drawable.star_border, firstStar(rating));
+        Assert.assertEquals(R.drawable.star_border, firstStar(rating));
         assertEquals(R.drawable.star_border, secondStar(rating));
         assertEquals(R.drawable.star_border, thirdStar(rating));
 

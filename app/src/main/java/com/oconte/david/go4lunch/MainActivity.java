@@ -98,26 +98,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(view);
         ButterKnife.bind(this);
 
+        this.checkLogOrNotLog();
+
         this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
 
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), myApiKey);
         }
 
+
+        // For Fragment
+
+        this.configurationViewModelDetails();
+        this.updateUIWithUserData();
+        this.showFirstFragment();
+
         // For UI
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.configureBottomView();
-
-        this.checkLogOrNotLog();
-
-        // For Fragment
-        this.showFirstFragment();
-
-        this.updateUIWithUserData();
-
-        this.configurationViewModelDetails();
 
     }
 
@@ -173,51 +173,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
     });
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                boolean isRestaurant = false;
-                Place place = Autocomplete.getPlaceFromIntent(Objects.requireNonNull(data));
-                if(place.getTypes() != null) {
-
-                    for (Place.Type type : place.getTypes()) {
-                        if (type == Place.Type.RESTAURANT) {
-                            isRestaurant = true;
-                            break;
-                        }
-                    }
-                }
-                if(isRestaurant || place.getTypes() == null) {
-
-                    String name = place.getName();
-                    String address = place.getAddress();
-                    Double rating = place.getRating();
-                    String webSite = String.valueOf(place.getWebsiteUri());
-                    String idRestaurant = place.getId();
-                    String phoneNumber = place.getPhoneNumber();
-
-                    List<PhotoMetadata> metadata = place.getPhotoMetadatas();
-
-                    PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails = new PlaceTestForAutocompleteToDetails(name, address, rating, webSite, idRestaurant, phoneNumber, metadata);
-
-                    Intent intent = new Intent(this, DetailsRestaurantActivity.class);
-                    intent.putExtra("placeTestForAutocompleteToDetails", placeTestForAutocompleteToDetails);
-                    startActivity(intent);
-                }
-
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(Objects.requireNonNull(data));
-                Toast.makeText(this, "Error: " + status.getStatusMessage(), Toast.LENGTH_LONG).show();
-
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
-    }*/
-
     public void onSearchCalled() {
         LatLng position = viewModel.getMyLocation();
         LatLngBounds bounds = ForPosition.convertToBounds(position, 2500);
@@ -269,8 +224,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
-    //For SIGN OUT
 
+    //FOR SIGN OUT
     // It's for sign out and restart AuthActivity
     private void resultSignOut() {
         this.signOutUserFromFirebase();
@@ -347,18 +302,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*if (item.getItemId() == R.id.menu_main_activity_search && autoCompleteIntent != null) {
-            startActivityForResult(autoCompleteIntent, AUTOCOMPLETE_REQUEST_CODE);
+        if (item.getItemId() == R.id.menu_main_activity_search) {
+            onSearchCalled();
             return true;
         }
-        return super.onOptionsItemSelected(item);*/
-        switch (item.getItemId()) {
-            case R.id.menu_main_activity_search:
-                onSearchCalled();
-                return true;
-            default:
-                return false;
-        }
+        return false;
     }
 
     // NAVIGATION DRAWER
@@ -376,6 +324,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Configure Drawer Layout
      */
     private void configureDrawerLayout() {
+        this.updateUIWithUserData();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.activityMainDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();

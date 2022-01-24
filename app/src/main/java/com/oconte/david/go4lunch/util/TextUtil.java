@@ -8,7 +8,6 @@ public abstract class TextUtil {
 
     public static boolean isEmailCorrect(String email){
         return isTextContainsAt(email) && isTextContainsDomainExtension(email);
-
     }
 
     public static boolean isTextLongEnough(String text, int minSize){

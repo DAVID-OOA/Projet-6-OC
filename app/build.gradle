@@ -162,6 +162,10 @@ dependencies {
     androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.4.0'
 
+    //TESTING
+    //androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
     //MULTIDEX"
     implementation 'androidx.multidex:multidex:2.0.1'
 
