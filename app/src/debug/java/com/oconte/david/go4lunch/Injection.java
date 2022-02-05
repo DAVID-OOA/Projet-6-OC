@@ -6,10 +6,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.api.GooglePlaceFactory;
 import com.oconte.david.go4lunch.api.GooglePlaceService;
-import com.oconte.david.go4lunch.listView.RestaurantRepository;
+import com.oconte.david.go4lunch.repositories.RestaurantRepository;
 import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
-import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
-import com.oconte.david.go4lunch.workMates.UserRepository;
+import com.oconte.david.go4lunch.repositories.ViewModelFactory;
+import com.oconte.david.go4lunch.repositories.UserRepository;
 
 public class Injection {
 

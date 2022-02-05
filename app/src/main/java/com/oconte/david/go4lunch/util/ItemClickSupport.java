@@ -52,7 +52,6 @@ public class ItemClickSupport {
         return support;
     }
 
-
     public ItemClickSupport setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
         return this;
