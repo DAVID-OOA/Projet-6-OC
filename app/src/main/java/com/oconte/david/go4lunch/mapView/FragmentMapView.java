@@ -3,19 +3,23 @@ package com.oconte.david.go4lunch.mapView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -25,11 +29,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.FragmentMapViewBinding;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
@@ -44,7 +48,6 @@ import java.util.Objects;
 
 public class FragmentMapView extends Fragment implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 12;
     private static final float ZOOM_USER_LOCATION_VALUE = 15;
 
     private GoogleMap googleMap;
@@ -64,51 +67,13 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
         binding = FragmentMapViewBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("I'm Hungry !");
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         this.configureMapView(savedInstanceState);
 
-        this.getLocationPhone();
-
         return view;
-    }
-
-    public void getLocationPhone() {
-        if (ActivityCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                        // Permission to access the location is missing. Show rationale and request permission
-                        PermissionUtils.requestPermission((AppCompatActivity) getActivity(), LOCATION_PERMISSION_REQUEST_CODE,
-                        Manifest.permission.ACCESS_FINE_LOCATION, true);
-
-        } else {
-            // TODO fonctionne mais si premiere utilisation de l'app  il faut redemarrer l'app
-            // TODO demande la permission avant l'auth
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) requireContext(), location -> {
-                if (location != null) {//un element declaré ds une scope n'est accessible que ds cette scope
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
-
-                    // recupere la position
-                    LatLng myLocation = new LatLng(latitude, longitude);
-                    viewModel.setMyLocation(myLocation);
-
-                    //enableMyLocation();
-
-                    // For zoom on map
-                    UiSettings uiSettings = googleMap.getUiSettings();
-                    uiSettings.setZoomControlsEnabled(true);
-
-                    viewModel.getRestaurants();
-
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
-                }
-            });
-        }
     }
 
     public void configureMapViewModel() {
@@ -151,13 +116,12 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap = googleMap;
+        location();
         configureMapViewModel();
-        enableMyLocation();
     }
 
     public void clickForDisplayRestaurantDetail(){
         googleMap.setOnInfoWindowClickListener(marker -> {
-
             String placeId = (String) marker.getTag();
             Result result = null;
             for (Result r : FragmentMapView.this.results) {
@@ -166,26 +130,73 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                     break;
                 }
             }
-
             Intent intent = new Intent(requireActivity(), DetailsRestaurantActivity.class);
             intent.putExtra("result", result);
             startActivity(intent);
-
         });
     }
 
     // FOR LOCATION
-    private void enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+    public void location() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (googleMap != null) {
                 googleMap.setMyLocationEnabled(true);
             }
-        } else {
-            // Permission to access the location is missing. Show rationale and request permission
-            PermissionUtils.requestPermission((AppCompatActivity) getActivity(), LOCATION_PERMISSION_REQUEST_CODE,
-                   Manifest.permission.ACCESS_FINE_LOCATION, true);
+            fetchRestaurants();
+        }  else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    if (googleMap != null) {
+                        googleMap.setMyLocationEnabled(true);
+                    }
+                    fetchRestaurants();
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(requireActivity()).create();
+                    alertDialog.setTitle("Need Permission");
+                    alertDialog.setMessage("To be able to use your location to improve your experience and display restaurants.");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            location();
+                        }
+                    });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alertDialog.show();
+                }
+            });
+
+
+    @SuppressLint("MissingPermission")
+    private void fetchRestaurants() {
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) requireContext(), location -> {
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+
+                // recupere la position
+                LatLng myLocation = new LatLng(latitude, longitude);
+                viewModel.setMyLocation(myLocation);
+
+                // For zoom on map
+                UiSettings uiSettings = googleMap.getUiSettings();
+                uiSettings.setZoomControlsEnabled(true);
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), ZOOM_USER_LOCATION_VALUE));
+
+                viewModel.getRestaurants();
+            }
+        });
     }
 
     @Override
@@ -203,7 +214,6 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //mapView.onDestroy();
     }
 
     @Override
