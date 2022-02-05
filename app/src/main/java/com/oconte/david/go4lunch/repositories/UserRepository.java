@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch.workMates;
+package com.oconte.david.go4lunch.repositories;
 
 import androidx.annotation.Nullable;
 
@@ -19,6 +19,8 @@ public final class UserRepository {
 
     private final FirebaseAuth firebaseAuth;
     private final FirebaseFirestore firebaseFirestore;
+
+    private User user;
 
     public UserRepository(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore){
         this.firebaseAuth = firebaseAuth;
@@ -69,6 +71,12 @@ public final class UserRepository {
         }else{
             return null;
         }
+    }
+
+    // Update UrlPhoto
+    public Task<Void> updateUrlPicture(String urlPicture, String uid){
+        user.setUrlPicture(urlPicture);
+        return getUserCollection().document(uid).update("urlPicture", urlPicture);
     }
 
     // Get all Users
