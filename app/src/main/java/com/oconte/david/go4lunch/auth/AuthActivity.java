@@ -16,10 +16,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
-import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
+import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 
 import java.util.Arrays;
 
@@ -28,10 +29,7 @@ public class AuthActivity extends AppCompatActivity {
 
     //FOR DATA
     // Identifier for Sign-In Activity
-    private static final int RC_SIGN_IN = 123;
-
-    // Identify each Http Request
-    //private static final int SIGN_OUT_TASK = 10;
+    //private static final int RC_SIGN_IN = 123;
 
     //FOR DESIGN;
     private ActivityAuthBinding binding;
@@ -50,9 +48,7 @@ public class AuthActivity extends AppCompatActivity {
         this.startSignInActivity();
 
         this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
-
     }
-
 
     public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
@@ -62,8 +58,8 @@ public class AuthActivity extends AppCompatActivity {
 
     // For Signing
     public void setUpSignActivity(){
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_OK, returnIntent);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
