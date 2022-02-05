@@ -1,7 +1,6 @@
 package com.oconte.david.go4lunch.restodetails;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
-import com.oconte.david.go4lunch.workMates.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
