@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
+import com.oconte.david.go4lunch.repositories.UserRepository;
 
 import org.jetbrains.annotations.NotNull;
 
