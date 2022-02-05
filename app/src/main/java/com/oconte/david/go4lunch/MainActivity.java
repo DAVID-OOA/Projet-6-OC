@@ -3,7 +3,6 @@ package com.oconte.david.go4lunch;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,7 +56,7 @@ import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.PlaceTestForAutocompleteToDetails;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
-import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
+import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 import com.oconte.david.go4lunch.settings.SettingsActivity;
 import com.oconte.david.go4lunch.util.ForPosition;
 import com.oconte.david.go4lunch.workMates.FragmentWorkMates;
@@ -102,22 +100,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
 
+        this.configurationViewModelDetails();
+
+        this.updateUIWithUserData();
+
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), myApiKey);
         }
 
 
         // For Fragment
-
-        this.configurationViewModelDetails();
-        this.updateUIWithUserData();
         this.showFirstFragment();
+
 
         // For UI
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.configureBottomView();
+
 
     }
 
@@ -222,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void startAuthActivity() {
         Intent intent = new Intent(this, AuthActivity.class);
         startActivity(intent);
+        finish();
     }
 
 
@@ -324,7 +326,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Configure Drawer Layout
      */
     private void configureDrawerLayout() {
-        this.updateUIWithUserData();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.activityMainDrawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.activityMainDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -335,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void configureNavigationView() {
         binding.activityMainNavView.setNavigationItemSelectedListener(this);
-
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -373,7 +373,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @SuppressLint("NonConstantResourceId")
     public boolean onNavigationItemSelected(Integer integer) {
-
         switch (integer) {
             case R.id.action_map:
                 this.showMapViewFragment();
@@ -391,7 +390,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureBottomView() {
-        //binding.bottomNav.setOnNavigationItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
         binding.bottomNav.setOnItemSelectedListener(item -> onNavigationItemSelected(item.getItemId()));
     }
 
