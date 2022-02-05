@@ -141,6 +141,10 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
     implementation 'com.facebook.android:facebook-login:[8.1)'
 
+    // TWITTER LOGIN SUPPORT
+    //implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
+    //implementation 'com.twitter.sdk.android:twitter:3.0.0'
+
     //GOOGLE MAP
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
@@ -162,12 +166,11 @@ dependencies {
     androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.4.0'
 
-    //TESTING
-    //androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
-
     //MULTIDEX"
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    //EASYPERMISSIONS
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
 }
 
