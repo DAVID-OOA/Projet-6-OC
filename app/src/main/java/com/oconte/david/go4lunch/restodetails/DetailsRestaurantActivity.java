@@ -31,6 +31,7 @@ import com.oconte.david.go4lunch.databinding.DetailViewRestoBinding;
 import com.oconte.david.go4lunch.models.PlaceTestForAutocompleteToDetails;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.models.User;
+import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 import com.oconte.david.go4lunch.util.ForRating;
 import com.squareup.picasso.Picasso;
 
