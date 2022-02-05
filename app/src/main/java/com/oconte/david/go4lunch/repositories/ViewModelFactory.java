@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch.restodetails;
+package com.oconte.david.go4lunch.repositories;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.oconte.david.go4lunch.auth.AuthViewModel;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
+import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
+import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.settings.SettingsViewModel;
-import com.oconte.david.go4lunch.workMates.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepository;
 import com.oconte.david.go4lunch.workMates.WorkMatesViewModel;
 
 import org.jetbrains.annotations.NotNull;
