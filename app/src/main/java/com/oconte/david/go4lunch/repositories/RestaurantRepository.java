@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch.listView;
+package com.oconte.david.go4lunch.repositories;
 
 import androidx.annotation.Nullable;
 import androidx.test.espresso.idling.CountingIdlingResource;
