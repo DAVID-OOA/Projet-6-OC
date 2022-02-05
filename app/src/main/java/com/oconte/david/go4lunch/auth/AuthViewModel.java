@@ -2,7 +2,7 @@ package com.oconte.david.go4lunch.auth;
 
 import androidx.lifecycle.ViewModel;
 
-import com.oconte.david.go4lunch.workMates.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepository;
 
 public class AuthViewModel extends ViewModel {
 
