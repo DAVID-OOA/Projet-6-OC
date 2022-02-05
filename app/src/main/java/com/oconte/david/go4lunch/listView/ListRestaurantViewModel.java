@@ -21,9 +21,10 @@ import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.repositories.RestaurantRepository;
 import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.util.ForPosition;
-import com.oconte.david.go4lunch.workMates.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepository;
 
 
 import java.util.List;

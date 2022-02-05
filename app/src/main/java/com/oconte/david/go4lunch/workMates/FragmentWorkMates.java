@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.databinding.FragmentWorkmatesBinding;
 import com.oconte.david.go4lunch.models.User;
-import com.oconte.david.go4lunch.restodetails.ViewModelFactory;
+import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 
 import org.jetbrains.annotations.NotNull;
 
