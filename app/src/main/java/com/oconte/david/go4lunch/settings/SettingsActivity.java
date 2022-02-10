@@ -126,6 +126,8 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+
+
     /*private ButtonActionListener getButtonActionListener(){
         return view -> {
             int id = view.getId();

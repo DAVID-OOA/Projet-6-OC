@@ -142,8 +142,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:[8.1)'
 
     // TWITTER LOGIN SUPPORT
-    //implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
-    //implementation 'com.twitter.sdk.android:twitter:3.0.0'
+    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
+    implementation 'com.twitter.sdk.android:twitter:3.0.0'
 
     //GOOGLE MAP
     implementation 'com.google.android.gms:play-services-maps:17.0.1'

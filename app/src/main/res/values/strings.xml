@@ -22,6 +22,10 @@
     <string name="facebook_application_id" translatable="false">1326892067693127</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1326892067693127</string>
 
+    <!-- For Twitter -->
+    <string name="twitter_consumer_key" translatable="false">eDFjM081OFcwLXBuUUNfWmtXbHA6MTpjaQ</string>
+    <string name="twitter_consumer_secret" translatable="false">nbpgWgAH8Rhn84r9V6kiIHC5V9__CxqzE17rWXx3D86BCGf90X</string>
+
     <!-- For Opening Hours -->
     <string name="closed">Closed</string>
     <string name="no_time">No Time</string>

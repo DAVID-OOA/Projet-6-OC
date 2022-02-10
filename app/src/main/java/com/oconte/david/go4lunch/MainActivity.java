@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             TextView useremail = headerView.findViewById(R.id.nav_header_email);
-            useremail.setText(TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_username_found) : currentUser.getEmail());
+            useremail.setText(TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_email_found) : currentUser.getEmail());
         }
     }
 
