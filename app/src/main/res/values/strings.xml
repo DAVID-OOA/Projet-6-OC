@@ -39,7 +39,6 @@
     <string name="location_permission_denied">This sample requires location permission to enable the \\\'my location\' layer. Please try again and grant access to use the location. If the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
     <string name="need_permission_message">This application needs permission to run</string>
 
-
     <string name="incorrect_email">Incorrect Email</string>
     <string name="incorrect_username">Username not long enough</string>
 
