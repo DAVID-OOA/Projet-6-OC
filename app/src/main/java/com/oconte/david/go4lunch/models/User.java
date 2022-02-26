@@ -7,16 +7,20 @@ public class User {
     private String email;
     private String urlPicture;
     private String idRestaurantPicked;
+    private String nameRestaurantPicked;
+    private String adressRestaurantPicked;
 
     public User() {
     }
 
-    public User(String uid, String username, String email, String urlPicture, String idRestaurantPicked) {
+    public User(String uid, String username, String email, String urlPicture, String idRestaurantPicked, String nameRestaurantPicked, String adressRestaurantPicked) {
         this.uid = uid;
         this.username = username;
         this.email = email;
         this.urlPicture = urlPicture;
         this.idRestaurantPicked = idRestaurantPicked;
+        this.nameRestaurantPicked = nameRestaurantPicked;
+        this.adressRestaurantPicked = adressRestaurantPicked;
     }
 
 
@@ -41,6 +45,16 @@ public class User {
         return idRestaurantPicked;
     }
 
+    public String getNameRestaurantPicked() {
+        return nameRestaurantPicked;
+    }
+
+    public String getAdressRestaurantPicked() {
+        return adressRestaurantPicked;
+    }
+
+
+
     // SETTERS
     public void setUid(String uid) {
         this.uid = uid;
@@ -60,5 +74,13 @@ public class User {
 
     public void setIdRestaurantPicked(String idRestaurantPicked) {
         this.idRestaurantPicked = idRestaurantPicked;
+    }
+
+    public void setNameRestaurantPicked(String nameRestaurantPicked) {
+        this.nameRestaurantPicked = nameRestaurantPicked;
+    }
+
+    public void setAdressRestaurantPicked(String adressRestaurantPicked) {
+        this.adressRestaurantPicked = adressRestaurantPicked;
     }
 }

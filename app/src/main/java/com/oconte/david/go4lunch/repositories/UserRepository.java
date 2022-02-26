@@ -50,8 +50,10 @@ public final class UserRepository {
             String photoUrl = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
             String displayName = currentUser.getDisplayName();
             String idRestaurantPicked = "";
+            String nameRestaurantPicked = "";
+            String adressRestaurantPicked = "";
 
-            User userRepositoryCreate = new User(uid,displayName,email,photoUrl,idRestaurantPicked);
+            User userRepositoryCreate = new User(uid,displayName,email,photoUrl,idRestaurantPicked, nameRestaurantPicked, adressRestaurantPicked);
             this.getUserCollection().document(uid).set(userRepositoryCreate);
         }
     }
@@ -84,12 +86,12 @@ public final class UserRepository {
         return getUserCollection().orderBy("username").get();
     }
 
-    public void addRestaurantPicked(String idRestaurant) {
-        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", idRestaurant);
+    public void addRestaurantPicked(String idRestaurant, String nameRestaurantPicked, String adressRestaurantPicked) {
+        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", idRestaurant, "nameRestaurantPicked", nameRestaurantPicked, "adressRestaurantPicked", adressRestaurantPicked);
     }
 
     public void deleteRestaurantPicked() {
-        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", "");
+        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", "", "nameRestaurantPicked", "", "adressRestaurantPicked", "");
     }
 
     // Get User restaurant picked
