@@ -63,6 +63,7 @@ public class AuthActivity extends AppCompatActivity {
         finish();
     }
 
+
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -104,10 +105,6 @@ public class AuthActivity extends AppCompatActivity {
     // UI
     ///////////////////////////////////////////////////////
 
-    /* Show Snack Bar with a message
-    private void showSnackBar(CoordinatorLayout coordinatorLayout, String message){
-        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
-    }*/
 
     /////////////////////////////////////////////////////
     //For Info about connected user
