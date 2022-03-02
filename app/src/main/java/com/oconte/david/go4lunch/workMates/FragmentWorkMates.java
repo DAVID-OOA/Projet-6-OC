@@ -41,7 +41,7 @@ public class FragmentWorkMates extends Fragment {
         binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+        this.configureViewDetailsRestaurantFactory();
 
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Available workmates");
 
@@ -51,8 +51,8 @@ public class FragmentWorkMates extends Fragment {
         return view;
     }
 
-    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+    public void configureViewDetailsRestaurantFactory() {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         ViewModelProvider viewModelProvider = new ViewModelProvider(FragmentWorkMates.this, viewModelFactory);
         viewModel = viewModelProvider.get(WorkMatesViewModel.class);
     }
