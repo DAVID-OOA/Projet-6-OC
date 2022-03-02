@@ -126,6 +126,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
 
+    //WORKMANAGER
+    implementation 'androidx.work:work-runtime:2.4.0'
+
     //FIREBASE
     implementation platform('com.google.firebase:firebase-bom:26.0.0')
     implementation 'com.google.firebase:firebase-analytics'

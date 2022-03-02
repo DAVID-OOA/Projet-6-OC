@@ -1,7 +1,5 @@
 package com.oconte.david.go4lunch.models;
 
-import android.net.Uri;
-
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 
 import java.io.Serializable;

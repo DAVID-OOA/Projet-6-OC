@@ -1,6 +1,5 @@
 package com.oconte.david.go4lunch.settings;
 
-import static com.oconte.david.go4lunch.util.RetryAction.UPDATE_PHOTO_DB;
 import static com.oconte.david.go4lunch.util.SuccessOrigin.UPDATE_PHOTO;
 import static com.oconte.david.go4lunch.util.TextUtil.isEmailCorrect;
 import static com.oconte.david.go4lunch.util.TextUtil.isTextLongEnough;
@@ -12,12 +11,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.events.Event;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.oconte.david.go4lunch.R;
-import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.repositories.UserRepository;
 import com.oconte.david.go4lunch.util.SuccessOrigin;
 
@@ -34,6 +31,7 @@ public class SettingsViewModel extends ViewModel {
     public MutableLiveData<Integer> errorMessageUsername = new MutableLiveData<>();
 
     private final UserRepository userRepository;
+    //private final RestaurantFirebaseRepository restaurantFirebaseRepository;
 
     private FirebaseUser user;
 
@@ -41,6 +39,7 @@ public class SettingsViewModel extends ViewModel {
 
     public SettingsViewModel(UserRepository userRepository) {
         this.userRepository = userRepository;
+        //this.restaurantFirebaseRepository = restaurantFirebaseRepository;
         user = userRepository.getCurrentUser();
     }
 
@@ -121,4 +120,10 @@ public class SettingsViewModel extends ViewModel {
         };
 
     }
+
+    // Delete User
+    public void deleteUser(String uid) {
+        userRepository.deleteUserFromFirestore(uid);
+    }
+
 }

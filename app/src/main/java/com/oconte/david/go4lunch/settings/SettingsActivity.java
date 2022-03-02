@@ -1,13 +1,24 @@
 package com.oconte.david.go4lunch.settings;
 
+import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,13 +26,24 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.oconte.david.go4lunch.AlarmReceiver;
+import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
+import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivitySettingsBinding;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Calendar;
 import java.util.Objects;
 
 import butterknife.OnClick;
@@ -34,7 +56,6 @@ public class SettingsActivity extends AppCompatActivity {
     private ActivitySettingsBinding binding;
     private SettingsViewModel viewModel;
 
-    //String username;
     // DATA FOR PICTURE
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS = 100;
@@ -47,9 +68,20 @@ public class SettingsActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+        this.configureViewDetailsRestaurantFactory();
 
         this.configureToolbar();
+
+        binding.notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                        startAlarmForWorkManager();
+                        toast();
+                        //startMainActivity();
+                }
+            }
+        });
 
         String username = String.valueOf(binding.usernameField.getText());
 
@@ -59,8 +91,47 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+    private void startMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * This is for said at WorkManager you start at 12 h and for all Day you work at this time.
+     */
+    @SuppressLint("NewApi")
+    private void startAlarmForWorkManager() {
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 15);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+    }
+
+    /**
+     * It's for custom Toast.
+     */
+    private void toast() {
+
+        Toast toast = Toast.makeText(getBaseContext(), "The notification is ready", Toast.LENGTH_LONG);
+        View view = toast.getView();
+        TextView text = (TextView) view.findViewById(android.R.id.message);
+        text.setTextSize(16);
+        view.setBackgroundColor(Color.RED);
+        toast.show();
+    }
+
+    public void configureViewDetailsRestaurantFactory() {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         ViewModelProvider viewModelProvider = new ViewModelProvider(SettingsActivity.this, viewModelFactory);
         viewModel = viewModelProvider.get(SettingsViewModel.class);
     }
@@ -69,7 +140,6 @@ public class SettingsActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-
     }
 
     @Override
@@ -102,6 +172,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     // FOR DELETE ACCOUNT
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.delete_button)
     public void onClickDeleteButton() {
         new AlertDialog.Builder(this)
@@ -109,8 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.popup_message_choice_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //String uid = Objects.requireNonNull(userRepository.getCurrentUser()).getUid();
-                        //userRepository.deleteUserFromFirestore(uid);
+                        resultDeletedAccount();
                     }
                 })
                 .setNegativeButton(R.string.popup_message_choice_no, null)
@@ -126,28 +196,62 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    //FOR DELETED ACCOUNT
+    // It's for sign out and restart AuthActivity
+    private void resultDeletedAccount() {
+        this.deletedAccountUserFromFirebase();
+    }
 
+    // When you log out save the state for the next launch application.
+    private void setIsDeconnected() {
+        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(EXTRA_IS_CONNECTED, false);
+        editor.apply();
+    }
 
-    /*private ButtonActionListener getButtonActionListener(){
-        return view -> {
-            int id = view.getId();
-            switch (id){
-                case R.id.notification_switch:
-                    //viewModel.notificationStateChanged(((SwitchCompat) view).isChecked());
-                    break;
-                case R.id.update_button:
-                    //viewModel.updateUserInfo();
-                    break;
-                case R.id.delete_button:
-                    //viewModel.deleteUserFromDBRequest();
-                    break;
-                case R.id.photo_user:
-                    chooseImageFromPhone();
-                    break;
-            }
+    // It's for sign Out
+    private void deletedAccountUserFromFirebase() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        String uid = user.getUid();
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                        setIsDeconnected();
+                        deleteUserAccount(uid);
+                        startAuthActivity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create();
+                        alertDialog.setTitle("Error");
+                        alertDialog.setMessage("Your auth is not worked, try again");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
+                        alertDialog.show();
+                    }
+                });
+    }
 
-        };
-    }*/
+    //For delete User
+    public void deleteUserAccount(String uid) {
+        if (uid == null) {
+            return;
+        }
+        viewModel.deleteUser(uid);
+    }
+
+    private void startAuthActivity() {
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     // --------------------
     // FOR ADD PHOTO
@@ -174,6 +278,5 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
 }
