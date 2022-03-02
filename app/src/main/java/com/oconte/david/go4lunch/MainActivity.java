@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActivityMainBinding binding;
 
-    // Identifier for Sign-In Activity
-    private static final int RC_SIGN_IN = 123;
-
-    private static final int AUTOCOMPLETE_REQUEST_CODE = 123456;
     String myApiKey = BuildConfig.MAPS_API_KEY;
 
     //FOR FRAGMENTS
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.checkLogOrNotLog();
 
-        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+        this.configureViewDetailsRestaurantFactory();
 
         this.configurationViewModelDetails();
 
@@ -122,8 +118,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+    public void configureViewDetailsRestaurantFactory() {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         ViewModelProvider viewModelProvider = new ViewModelProvider(MainActivity.this, viewModelFactory);
         viewModel = viewModelProvider.get(ListRestaurantViewModel.class);
     }
