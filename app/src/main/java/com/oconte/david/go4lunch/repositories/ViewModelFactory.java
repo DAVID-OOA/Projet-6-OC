@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.oconte.david.go4lunch.auth.AuthViewModel;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
-import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.settings.SettingsViewModel;
-import com.oconte.david.go4lunch.repositories.UserRepository;
 import com.oconte.david.go4lunch.workMates.WorkMatesViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,10 +16,12 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final RestaurantDetailRepository restaurantDetailRepository;
     private final UserRepository userRepository;
+    //private final RestaurantFirebaseRepository restaurantFirebaseRepository;
 
     public ViewModelFactory(RestaurantDetailRepository restaurantDetailRepository, UserRepository userRepository) {
         this.restaurantDetailRepository = restaurantDetailRepository;
         this.userRepository = userRepository;
+        //this.restaurantFirebaseRepository = restaurantFirebaseRepository;
     }
 
     @NonNull

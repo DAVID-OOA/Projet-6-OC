@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch.restodetails;
+package com.oconte.david.go4lunch.repositories;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
