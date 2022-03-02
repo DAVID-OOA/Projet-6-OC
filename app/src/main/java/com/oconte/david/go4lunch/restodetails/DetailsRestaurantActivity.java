@@ -67,7 +67,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
         placesClient = Places.createClient(this);
 
-        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(),FirebaseFirestore.getInstance());
+        this.configureViewDetailsRestaurantFactory();
 
         res = binding.detailRestaurant.getResources();
 
@@ -82,9 +82,9 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         }
     }
 
-    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
+    public void configureViewDetailsRestaurantFactory() {
         uid = FirebaseAuth.getInstance().getUid();
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         ViewModelProvider viewModelProvider = new ViewModelProvider(DetailsRestaurantActivity.this, viewModelFactory);
         viewModel = viewModelProvider.get(DetailsRestaurantViewModel.class);
     }
