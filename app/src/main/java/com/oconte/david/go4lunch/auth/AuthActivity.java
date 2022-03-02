@@ -47,11 +47,11 @@ public class AuthActivity extends AppCompatActivity {
 
         this.startSignInActivity();
 
-        this.configureViewDetailsRestaurantFactory(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+        this.configureViewDetailsRestaurantFactory();
     }
 
-    public void configureViewDetailsRestaurantFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
-        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(firebaseAuth,firebaseFirestore);
+    public void configureViewDetailsRestaurantFactory() {
+        ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         ViewModelProvider viewModelProvider = new ViewModelProvider(AuthActivity.this, viewModelFactory);
         viewModel = viewModelProvider.get(AuthViewModel.class);
     }
