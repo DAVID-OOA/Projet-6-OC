@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.api.GooglePlaceFactory;
 import com.oconte.david.go4lunch.api.GooglePlaceService;
 import com.oconte.david.go4lunch.repositories.RestaurantRepository;
-import com.oconte.david.go4lunch.restodetails.RestaurantDetailRepository;
+import com.oconte.david.go4lunch.repositories.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 import com.oconte.david.go4lunch.repositories.UserRepository;
 
@@ -29,16 +29,27 @@ public class Injection {
         return new UserRepository(firebaseAuth, firebaseFirestore);
     }
 
+    //For Call provideRestaurantDetailsRepository
     public static RestaurantDetailRepository provideRestaurantDetailsRepository(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore) {
         return new RestaurantDetailRepository(firebaseAuth, firebaseFirestore);
     }
 
     //For Call ViewModelFactory
-    public static ViewModelFactory provideViewModelFactory(FirebaseAuth firebaseAuth, FirebaseFirestore firebaseFirestore){
+    public static ViewModelFactory provideViewModelFactory(){
+        FirebaseAuth firebaseAuth = provideFireBaseAuth();
+        FirebaseFirestore firebaseFirestore = provideFireStore();
         RestaurantDetailRepository restaurantDetailRepository = provideRestaurantDetailsRepository(firebaseAuth,firebaseFirestore);
         UserRepository userRepository = getUserRepository(firebaseAuth, firebaseFirestore);
 
         return  new ViewModelFactory(restaurantDetailRepository, userRepository);
+    }
+
+    public static FirebaseFirestore provideFireStore() {
+        return FirebaseFirestore.getInstance();
+    }
+
+    public static FirebaseAuth provideFireBaseAuth() {
+        return FirebaseAuth.getInstance();
     }
 
 }
