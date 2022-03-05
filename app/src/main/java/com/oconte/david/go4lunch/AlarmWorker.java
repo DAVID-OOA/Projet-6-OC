@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,24 +32,20 @@ import java.util.List;
 
 public class AlarmWorker extends Worker {
 
-    SharedPreferences preferences;
-    String nameRestaurantSelected;
-    String adressRestaurant;
-    String listOfWorkmates;
+    public String nameRestaurantSelected;
+    public String adressRestaurant;
+    public String listOfWorkmates;
 
     public FirebaseAuth firebaseAuth;
     public FirebaseFirestore firebaseFirestore;
 
     private Context context;
 
-    Restaurant restaurant;
-    UserRepository userRepository;
-    RestaurantDetailRepository restaurantDetailRepository;
-    User currentUser;
-    List<User> users;
+    public UserRepository userRepository;
+    public User currentUser;
+    public List<User> users;
 
     public static final String CHANNEL_ID = "channel";
-    //private User result;
 
     public AlarmWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -64,15 +61,11 @@ public class AlarmWorker extends Worker {
     @Override
     public Worker.Result doWork() {
 
-        restaurantDetailRepository = Injection.provideRestaurantDetailsRepository(Injection.provideFireBaseAuth(), Injection.provideFireStore());
-
         userRepository = Injection.getUserRepository(Injection.provideFireBaseAuth(), Injection.provideFireStore());
 
         executeFirebaseRequest();
 
-
         return Worker.Result.success();
-
     }
 
     /**
@@ -104,13 +97,10 @@ public class AlarmWorker extends Worker {
         notificationManager.notify(1, notification.build());
     }
 
-
-    /**
-     * It's the Http request for notification.
+    /**                         
+     * It's the firebase request for notification.
      */
     private void executeFirebaseRequest() {
-
-        //String userIdRestaurantPicked = String.valueOf(restaurantDetailRepository.getPickedUsersFromRestaurant(Objects.requireNonNull(user).getIdRestaurantPicked()));
 
         users = new ArrayList<>();
 
@@ -122,7 +112,7 @@ public class AlarmWorker extends Worker {
                     User user = documentSnapshot.toObject(User.class);
 
                     if (user != null && user.getIdRestaurantPicked() != null) {
-                        if (user.getUid().equals("FheiJWiHyMX7wRcc9wvPTgBQ7FH3")) {
+                        if (user.getUid() != null) {
                             currentUser = user;
                         } else {
                             users.add(user);
@@ -149,11 +139,6 @@ public class AlarmWorker extends Worker {
         } else {
             noRestaurantPicked();
         }
-    }
-
-    @Nullable
-    private FirebaseUser getCurrentUser(){
-        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
     /**

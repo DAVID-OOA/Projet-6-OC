@@ -27,6 +27,11 @@ public final class UserRepository {
         this.firebaseFirestore = firebaseFirestore;
     }
 
+    //---- GET ----
+    public User getUser(){
+        return user;
+    }
+
     @Nullable
     public FirebaseUser getCurrentUser(){
         return firebaseAuth.getCurrentUser();

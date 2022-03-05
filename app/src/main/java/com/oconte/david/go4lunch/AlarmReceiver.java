@@ -22,11 +22,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private void getWorkManager(){
         Data data = new Data.Builder()
-                .putString(AlarmWorker.CHANNEL_ID, "There are number of page for the result searchNotification.")
+                .putString(AlarmWorker.CHANNEL_ID, "Notification.")
                 .build();
 
         //This is the subclass of periodicWorkRequest
-        final PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(AlarmWorker.class,1, TimeUnit.HOURS)
+        final PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(AlarmWorker.class,1, TimeUnit.DAYS)
                 .setInputData(data)
                 .build();
 

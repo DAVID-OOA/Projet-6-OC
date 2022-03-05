@@ -47,7 +47,6 @@ public class ListRestaurantViewModel extends ViewModel {
         return restaurantMarkerPickedMutableLiveData;
     }
 
-
     // For Firestore
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference collectionReference = db.collection("restaurants");
@@ -135,12 +134,10 @@ public class ListRestaurantViewModel extends ViewModel {
     // contient l'information du restaurant selectionné
     private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<>();
     public void selectRestaurant(Result result) {
-        //mettre a jour l'info
         selectedRestaurant.postValue(result);
     }
 
     public LiveData<Result> getSelectedRestaurant() {
-        //recuperer l'information pour l'utiliser
         return selectedRestaurant;
     }
 
@@ -190,6 +187,13 @@ public class ListRestaurantViewModel extends ViewModel {
 
     public void updateUserName(String username) {
         userRepository.updateUsername(username);
+    }
+
+    public void showRestaurantSelected() {
+        String uidRestaurantPicked = userRepository.getUser().getIdRestaurantPicked();
+        if (uidRestaurantPicked != null) {
+            restaurantDetailRepository.getPickedUsersFromRestaurant(uidRestaurantPicked);
+        }
     }
 
 }

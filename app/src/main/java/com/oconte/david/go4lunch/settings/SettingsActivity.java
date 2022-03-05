@@ -78,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (isChecked){
                         startAlarmForWorkManager();
                         toast();
-                        //startMainActivity();
+                        startMainActivity();
                 }
             }
         });
@@ -105,8 +105,8 @@ public class SettingsActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 15);
-        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -114,7 +114,6 @@ public class SettingsActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
     }
 
     /**
@@ -171,6 +170,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    // --------------------
+    // FOR DELETED ACCOUNT
+    // --------------------
+
     // FOR DELETE ACCOUNT
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.delete_button)
@@ -187,16 +190,6 @@ public class SettingsActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void addPhotoUser() {
-        binding.photoUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImageFromPhone();
-            }
-        });
-    }
-
-    //FOR DELETED ACCOUNT
     // It's for sign out and restart AuthActivity
     private void resultDeletedAccount() {
         this.deletedAccountUserFromFirebase();
@@ -256,6 +249,15 @@ public class SettingsActivity extends AppCompatActivity {
     // --------------------
     // FOR ADD PHOTO
     // --------------------
+
+    public void addPhotoUser() {
+        binding.photoUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImageFromPhone();
+            }
+        });
+    }
 
     @AfterPermissionGranted(RC_IMAGE_PERMS)
     private void chooseImageFromPhone() {

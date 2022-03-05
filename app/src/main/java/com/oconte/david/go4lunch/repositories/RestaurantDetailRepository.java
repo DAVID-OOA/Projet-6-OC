@@ -91,4 +91,9 @@ public class RestaurantDetailRepository {
         return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").orderBy("username").get();
     }
 
+    // Get all Users
+    public Task<QuerySnapshot> getAllUserPickedFromFirebase() {
+        return getRestaurantDetailsCollection().document().collection("picked").orderBy("username").get();
+    }
+
 }
