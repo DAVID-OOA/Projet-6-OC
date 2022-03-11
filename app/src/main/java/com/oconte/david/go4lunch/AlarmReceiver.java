@@ -17,19 +17,19 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        getWorkManager();
+        getWorkManager(context);
     }
 
-    private void getWorkManager(){
+    private void getWorkManager(Context context){
         Data data = new Data.Builder()
                 .putString(AlarmWorker.CHANNEL_ID, "Notification.")
                 .build();
 
         //This is the subclass of periodicWorkRequest
-        final PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(AlarmWorker.class,1, TimeUnit.DAYS)
+        final PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(AlarmWorker.class,24, TimeUnit.HOURS)
                 .setInputData(data)
                 .build();
 
-        WorkManager.getInstance().enqueue(periodicWorkRequest);
+        WorkManager.getInstance(context).enqueue(periodicWorkRequest);
     }
 }

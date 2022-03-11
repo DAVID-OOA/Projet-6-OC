@@ -3,6 +3,7 @@ package com.oconte.david.go4lunch;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.api.Status;
@@ -46,7 +49,6 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivityMainBinding;
 import com.oconte.david.go4lunch.injection.Injection;
@@ -67,6 +69,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -104,17 +107,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Places.initialize(getApplicationContext(), myApiKey);
         }
 
-
         // For Fragment
         this.showFirstFragment();
-
 
         // For UI
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.configureBottomView();
-
 
     }
 
@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setLocationRestriction(RectangularBounds.newInstance(bounds.southwest, bounds.northeast))
                 .build(this);
         someActivityResultLuncher.launch(intent);
-
     }
 
     ///////////////////////////////////////////////////////////
@@ -221,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
-
 
     //FOR SIGN OUT
     // It's for sign out and restart AuthActivity
@@ -342,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.activity_main_drawer_lunch:
-                //this.showFragment(FRAGMENT_LUNCH);
+                this.startLunchActivity();
                 break;
             case R.id.activity_main_drawer_settings:
                 this.startSettingsActivity();
@@ -357,6 +355,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.activityMainDrawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    private void startLunchActivity() {
+        Intent intent = new Intent(this, LunchActivity.class);
+        startActivity(intent);
     }
 
 

@@ -25,6 +25,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".LunchActivity" />
         <activity android:name=".restodetails.WebViewActivity" />
         <activity android:name=".restodetails.DetailsRestaurantActivity" />
         <activity android:name=".settings.SettingsActivity" />

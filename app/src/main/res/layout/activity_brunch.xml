@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/detail_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/image_restaurant"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dip"
+                    android:src="@drawable/go4lunch_icon"
+                    android:contentDescription="@string/photo_restaurant" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dip"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/really_small_margin"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginLeft="@dimen/small_margin">
+                        <TextView
+                            android:id="@+id/nameRestaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textStyle="bold"/>
+
+                        <ImageView
+                            android:id="@+id/first_star"
+                            android:layout_width="15dip"
+                            android:layout_height="15dip"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/small_margin"
+                            android:layout_marginLeft="@dimen/small_margin"
+                            android:contentDescription="@string/first_start" />
+                        <ImageView
+                            android:id="@+id/second_star"
+                            android:layout_width="15dip"
+                            android:layout_height="15dip"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/seconde_start" />
+                        <ImageView
+                            android:id="@+id/third_star"
+                            android:layout_width="15dip"
+                            android:layout_height="15dip"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/third_start" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/addressRestaurant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:textColor="@color/colorTextPrimary"
+                        android:layout_marginLeft="@dimen/small_margin" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </ScrollView>
+
+</LinearLayout>

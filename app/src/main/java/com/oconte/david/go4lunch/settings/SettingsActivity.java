@@ -68,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        this.configureViewDetailsRestaurantFactory();
+        this.configureSettingsFactory();
 
         this.configureToolbar();
 
@@ -129,7 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void configureViewDetailsRestaurantFactory() {
+    public void configureSettingsFactory() {
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory();
         ViewModelProvider viewModelProvider = new ViewModelProvider(SettingsActivity.this, viewModelFactory);
         viewModel = viewModelProvider.get(SettingsViewModel.class);
