@@ -1,29 +1,24 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.settings;
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.injection.Injection;
-import com.oconte.david.go4lunch.models.Restaurant;
 import com.oconte.david.go4lunch.models.User;
-import com.oconte.david.go4lunch.repositories.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.repositories.UserRepository;
 import com.oconte.david.go4lunch.util.TextUtil;
 
@@ -51,7 +46,6 @@ public class AlarmWorker extends Worker {
         super(context, workerParams);
         this.context = context;
     }
-
 
     /**
      * It's the action do by the Worker when notification is check.
@@ -101,7 +95,6 @@ public class AlarmWorker extends Worker {
      * It's the firebase request for notification.
      */
     private void executeFirebaseRequest() {
-
         users = new ArrayList<>();
 
         userRepository.getAllUserFromFirebase().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

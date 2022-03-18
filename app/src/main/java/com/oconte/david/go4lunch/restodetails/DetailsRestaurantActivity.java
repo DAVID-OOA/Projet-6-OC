@@ -51,6 +51,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
     String uid;
     String nameRestaurantPicked;
     String adressRestaurantPicked;
+    String photoUrlRestaurantpicked;
 
     PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails;
 
@@ -220,6 +221,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             idRestaurant = Objects.requireNonNull(result).getPlaceId();
             nameRestaurantPicked = result.getName();
             adressRestaurantPicked = result.getVicinity();
+            photoUrlRestaurantpicked = String.valueOf(result.getPhotos());
 
             this.displayRating(result);
             this.configureOnClickLikeButton();
@@ -255,7 +257,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         binding.pickRestaurantButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.onPickedOnButtonClick(idRestaurant, uid, nameRestaurantPicked, adressRestaurantPicked);
+                viewModel.onPickedOnButtonClick(idRestaurant, uid, nameRestaurantPicked, adressRestaurantPicked, photoUrlRestaurantpicked);
             }
         });
     }

@@ -57,8 +57,9 @@ public final class UserRepository {
             String idRestaurantPicked = "";
             String nameRestaurantPicked = "";
             String adressRestaurantPicked = "";
+            String photoUrlRestaurantpicked = "";
 
-            User userRepositoryCreate = new User(uid,displayName,email,photoUrl,idRestaurantPicked, nameRestaurantPicked, adressRestaurantPicked);
+            User userRepositoryCreate = new User(uid,displayName,email,photoUrl,idRestaurantPicked, nameRestaurantPicked, adressRestaurantPicked, photoUrlRestaurantpicked);
             this.getUserCollection().document(uid).set(userRepositoryCreate);
         }
     }
@@ -91,12 +92,12 @@ public final class UserRepository {
         return getUserCollection().orderBy("username").get();
     }
 
-    public void addRestaurantPicked(String idRestaurant, String nameRestaurantPicked, String adressRestaurantPicked) {
-        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", idRestaurant, "nameRestaurantPicked", nameRestaurantPicked, "adressRestaurantPicked", adressRestaurantPicked);
+    public void addRestaurantPicked(String idRestaurant, String nameRestaurantPicked, String adressRestaurantPicked, String photoUrlRestaurantpicked) {
+        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", idRestaurant, "nameRestaurantPicked", nameRestaurantPicked, "adressRestaurantPicked", adressRestaurantPicked, "photoUrlRestaurantpicked", photoUrlRestaurantpicked);
     }
 
     public void deleteRestaurantPicked() {
-        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", "", "nameRestaurantPicked", "", "adressRestaurantPicked", "");
+        this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", "", "nameRestaurantPicked", "", "adressRestaurantPicked", "", "photoUrlRestaurantpicked", "");
     }
 
     // Get User restaurant picked

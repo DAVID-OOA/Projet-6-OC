@@ -3,7 +3,6 @@ package com.oconte.david.go4lunch;
 import static com.oconte.david.go4lunch.auth.AuthActivity.EXTRA_IS_CONNECTED;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,8 +27,6 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.api.Status;
@@ -69,7 +66,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -115,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.configureBottomView();
-
     }
 
     public void configureViewDetailsRestaurantFactory() {
@@ -124,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewModel = viewModelProvider.get(ListRestaurantViewModel.class);
     }
 
-    ActivityResultLauncher<Intent> someActivityResultLuncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    ActivityResultLauncher<Intent> searchResultLuncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -190,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setTypeFilter(TypeFilter.ESTABLISHMENT)
                 .setLocationRestriction(RectangularBounds.newInstance(bounds.southwest, bounds.northeast))
                 .build(this);
-        someActivityResultLuncher.launch(intent);
+        searchResultLuncher.launch(intent);
     }
 
     ///////////////////////////////////////////////////////////
@@ -286,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void configureToolbar() {
         setSupportActionBar(binding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("I'm Hungry !");
-
     }
 
     @Override

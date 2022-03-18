@@ -31,7 +31,6 @@ public class SettingsViewModel extends ViewModel {
     public MutableLiveData<Integer> errorMessageUsername = new MutableLiveData<>();
 
     private final UserRepository userRepository;
-    //private final RestaurantFirebaseRepository restaurantFirebaseRepository;
 
     private FirebaseUser user;
 

@@ -32,8 +32,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.oconte.david.go4lunch.AlarmReceiver;
 import com.oconte.david.go4lunch.MainActivity;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.auth.AuthActivity;
@@ -101,7 +99,6 @@ public class SettingsActivity extends AppCompatActivity {
      */
     @SuppressLint("NewApi")
     private void startAlarmForWorkManager() {
-
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Calendar calendar = Calendar.getInstance();
@@ -120,7 +117,6 @@ public class SettingsActivity extends AppCompatActivity {
      * It's for custom Toast.
      */
     private void toast() {
-
         Toast toast = Toast.makeText(getBaseContext(), "The notification is ready", Toast.LENGTH_LONG);
         View view = toast.getView();
         TextView text = (TextView) view.findViewById(android.R.id.message);

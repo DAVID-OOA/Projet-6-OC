@@ -36,8 +36,9 @@ public class RestaurantDetailRepository {
             String uid = currentUser.getUid();
             String userName = currentUser.getDisplayName();
             String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
+            String addressRestaurant = "";
 
-            Restaurant restaurant = new Restaurant(idRestaurant, userName, uid, urlPhoto);
+            Restaurant restaurant = new Restaurant(idRestaurant, userName, uid, urlPhoto, addressRestaurant);
 
             getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(uid).set(restaurant, SetOptions.merge());
         }
@@ -65,8 +66,9 @@ public class RestaurantDetailRepository {
             String uid = currentUser.getUid();
             String username = currentUser.getDisplayName();
             String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
+            String addressRestaurant = "";
 
-            Restaurant restaurant = new Restaurant(idRestaurant, username, uid, urlPhoto);
+            Restaurant restaurant = new Restaurant(idRestaurant, username, uid, urlPhoto, addressRestaurant);
 
             getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(uid).set(restaurant, SetOptions.merge());
         }

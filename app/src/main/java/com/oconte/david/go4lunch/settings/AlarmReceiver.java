@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.settings;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import androidx.work.Data;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+
 import java.util.concurrent.TimeUnit;
 
 public class AlarmReceiver extends BroadcastReceiver {

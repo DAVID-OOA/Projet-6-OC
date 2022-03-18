@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.oconte.david.go4lunch.LunchViewModel;
 import com.oconte.david.go4lunch.auth.AuthViewModel;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;
@@ -16,12 +17,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final RestaurantDetailRepository restaurantDetailRepository;
     private final UserRepository userRepository;
-    //private final RestaurantFirebaseRepository restaurantFirebaseRepository;
 
     public ViewModelFactory(RestaurantDetailRepository restaurantDetailRepository, UserRepository userRepository) {
         this.restaurantDetailRepository = restaurantDetailRepository;
         this.userRepository = userRepository;
-        //this.restaurantFirebaseRepository = restaurantFirebaseRepository;
     }
 
     @NonNull
@@ -42,6 +41,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
             return (T) new SettingsViewModel(userRepository);
+        }
+        if (modelClass.isAssignableFrom(LunchViewModel.class)) {
+            return (T) new LunchViewModel(userRepository);
         }
         throw new IllegalArgumentException("ViewModel Not Found");
     }

@@ -96,7 +96,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
     }
 
     // When click on picked button restaurant
-    public void onPickedOnButtonClick(String idRestaurant, String uid, String nameRestaurantPicked, String adressRestaurantPicked) {
+    public void onPickedOnButtonClick(String idRestaurant, String uid, String nameRestaurantPicked, String adressRestaurantPicked, String photoUrlRestaurantpicked) {
         //if (!isPicked) {
             if (userRepository.isCurrentUserLogged()) {
                 userRepository.getUserRestaurantPicked(uid).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -106,13 +106,13 @@ public class DetailsRestaurantViewModel extends ViewModel {
                             User user = task.getResult().toObject(User.class);
 
                             if(Objects.requireNonNull(user).getIdRestaurantPicked().equals("")) {
-                                userRepository.addRestaurantPicked(idRestaurant, nameRestaurantPicked, adressRestaurantPicked);
+                                userRepository.addRestaurantPicked(idRestaurant, nameRestaurantPicked, adressRestaurantPicked, photoUrlRestaurantpicked);
                                 mRestaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
                             } else if (user.getIdRestaurantPicked().equals(idRestaurant)) {
                                 userRepository.deleteRestaurantPicked();
                                 mRestaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(idRestaurant);
                             } else if (!user.getIdRestaurantPicked().equals(idRestaurant)) {
-                                userRepository.addRestaurantPicked(idRestaurant, nameRestaurantPicked, adressRestaurantPicked);
+                                userRepository.addRestaurantPicked(idRestaurant, nameRestaurantPicked, adressRestaurantPicked, photoUrlRestaurantpicked);
                                 mRestaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(user.getIdRestaurantPicked());
                                 mRestaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
                             }

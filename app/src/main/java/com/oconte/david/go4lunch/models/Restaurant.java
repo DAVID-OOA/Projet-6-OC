@@ -6,13 +6,15 @@ public class Restaurant {
     public String username;
     public String uid;
     public String idRestaurant;
+    public String addressRestaurant;
 
 
-    public Restaurant(String idRestaurant, String username, String uid, String urlPicture) {
+    public Restaurant(String idRestaurant, String username, String uid, String urlPicture, String addressRestaurant) {
         this.idRestaurant = idRestaurant;
         this.username = username;
         this.uid = uid;
         this.urlPicture = urlPicture;
+        this.addressRestaurant = addressRestaurant;
     }
 
     // GETTERS
@@ -32,6 +34,10 @@ public class Restaurant {
         return idRestaurant;
     }
 
+    public String getAddressRestaurant() {
+        return addressRestaurant;
+    }
+
     // SETTERS
     public void setUrlPicture(String urlPicture) {
         this.urlPicture = urlPicture;
@@ -47,5 +53,9 @@ public class Restaurant {
 
     public void setIdRestaurant(String idRestaurant) {
         this.idRestaurant = idRestaurant;
+    }
+
+    public void setAddressRestaurant(String addressRestaurant) {
+        this.addressRestaurant = addressRestaurant;
     }
 }

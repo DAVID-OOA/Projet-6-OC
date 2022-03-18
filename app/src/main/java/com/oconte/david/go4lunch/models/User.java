@@ -9,11 +9,12 @@ public class User {
     private String idRestaurantPicked;
     private String nameRestaurantPicked;
     private String adressRestaurantPicked;
+    private String photoUrlRestaurantpicked;
 
     public User() {
     }
 
-    public User(String uid, String username, String email, String urlPicture, String idRestaurantPicked, String nameRestaurantPicked, String adressRestaurantPicked) {
+    public User(String uid, String username, String email, String urlPicture, String idRestaurantPicked, String nameRestaurantPicked, String adressRestaurantPicked, String photoUrlRestaurantpicked) {
         this.uid = uid;
         this.username = username;
         this.email = email;
@@ -21,6 +22,7 @@ public class User {
         this.idRestaurantPicked = idRestaurantPicked;
         this.nameRestaurantPicked = nameRestaurantPicked;
         this.adressRestaurantPicked = adressRestaurantPicked;
+        this.photoUrlRestaurantpicked = photoUrlRestaurantpicked;
     }
 
 
@@ -53,6 +55,9 @@ public class User {
         return adressRestaurantPicked;
     }
 
+    public String getPhotoUrlRestaurantpicked() {
+        return photoUrlRestaurantpicked;
+    }
 
 
     // SETTERS
@@ -82,5 +87,9 @@ public class User {
 
     public void setAdressRestaurantPicked(String adressRestaurantPicked) {
         this.adressRestaurantPicked = adressRestaurantPicked;
+    }
+
+    public void setPhotoUrlRestaurantpicked(String photoUrlRestaurantpicked) {
+        this.photoUrlRestaurantpicked = photoUrlRestaurantpicked;
     }
 }
