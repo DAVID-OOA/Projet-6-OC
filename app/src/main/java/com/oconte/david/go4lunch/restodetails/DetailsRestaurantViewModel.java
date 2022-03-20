@@ -21,6 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.repositories.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.repositories.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +31,11 @@ public class DetailsRestaurantViewModel extends ViewModel {
 
     Boolean isLiked;
 
+    private RestaurantDetailRepository restaurantDetailRepository;
+
     // Repository
     private final UserRepository userRepository;
-    private final RestaurantDetailRepository mRestaurantDetailRepository;
+    //private final RestaurantDetailRepository mRestaurantDetailRepository;
 
     // For Licked Restaurant
     private final MutableLiveData<Boolean> restaurantLikedMutableLiveData = new MutableLiveData<Boolean>();
@@ -56,9 +59,10 @@ public class DetailsRestaurantViewModel extends ViewModel {
     private final CollectionReference collectionReference = db.collection("restaurants");
 
 
-    public DetailsRestaurantViewModel(RestaurantDetailRepository restaurantDetailRepository,UserRepository userRepository) {
-        this.mRestaurantDetailRepository = restaurantDetailRepository;
+    public DetailsRestaurantViewModel(RestaurantDetailRepository restaurantDetailRepository, UserRepository userRepository) {
+        //this.mRestaurantDetailRepository = restaurantDetailRepository;
         this.userRepository = userRepository;
+        this.restaurantDetailRepository = restaurantDetailRepository;
     }
 
     // When click on liked button restaurant
@@ -73,7 +77,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
     }
 
     public void getDataRestaurantClick(String idRestaurant) {
-        mRestaurantDetailRepository.getLikedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        restaurantDetailRepository.getLikedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful() && idRestaurant != null){
@@ -107,14 +111,14 @@ public class DetailsRestaurantViewModel extends ViewModel {
 
                             if(Objects.requireNonNull(user).getIdRestaurantPicked().equals("")) {
                                 userRepository.addRestaurantPicked(idRestaurant, nameRestaurantPicked, adressRestaurantPicked, photoUrlRestaurantpicked);
-                                mRestaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
+                                restaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
                             } else if (user.getIdRestaurantPicked().equals(idRestaurant)) {
                                 userRepository.deleteRestaurantPicked();
-                                mRestaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(idRestaurant);
+                                restaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(idRestaurant);
                             } else if (!user.getIdRestaurantPicked().equals(idRestaurant)) {
                                 userRepository.addRestaurantPicked(idRestaurant, nameRestaurantPicked, adressRestaurantPicked, photoUrlRestaurantpicked);
-                                mRestaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(user.getIdRestaurantPicked());
-                                mRestaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
+                                restaurantDetailRepository.deleteRestaurantDetailsUnPickedFromFirestore(user.getIdRestaurantPicked());
+                                restaurantDetailRepository.createRestaurantDetailsPicked(idRestaurant);
                             }
                         }
                     }
@@ -129,7 +133,7 @@ public class DetailsRestaurantViewModel extends ViewModel {
     }
 
     public void getDataRestaurantPickedClick(String idRestaurant) {
-        mRestaurantDetailRepository.getPickedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        restaurantDetailRepository.getPickedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful() && idRestaurant != null){
@@ -148,17 +152,17 @@ public class DetailsRestaurantViewModel extends ViewModel {
 
     // create restaurant
     public void createRestaurant(String idRestaurant) {
-        mRestaurantDetailRepository.createRestaurantDetailsLiked(idRestaurant);
+        restaurantDetailRepository.createRestaurantDetailsLiked(idRestaurant);
     }
 
     // Delete restaurant
     public void deleteRestaurant(String idRestaurant) {
-        mRestaurantDetailRepository.deleteRestaurantDetailsDislikedFromFirestore(idRestaurant);
+        restaurantDetailRepository.deleteRestaurantDetailsDislikedFromFirestore(idRestaurant);
     }
 
     // For the List of UserPicked this Restaurant
     public void getUserListPicked(String idRestaurant) {
-        mRestaurantDetailRepository.getAllUserPickedFromFirebase(idRestaurant)
+        restaurantDetailRepository.getAllUserPickedFromFirebase(idRestaurant)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.repositories.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepositoryImpl;
 
 import org.jetbrains.annotations.NotNull;
 

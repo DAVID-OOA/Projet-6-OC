@@ -16,6 +16,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.repositories.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepositoryImpl;
 import com.oconte.david.go4lunch.util.SuccessOrigin;
 
 import java.util.Objects;

@@ -221,7 +221,7 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             idRestaurant = Objects.requireNonNull(result).getPlaceId();
             nameRestaurantPicked = result.getName();
             adressRestaurantPicked = result.getVicinity();
-            photoUrlRestaurantpicked = String.valueOf(result.getPhotos());
+            photoUrlRestaurantpicked = getUrlPhoto(result);
 
             this.displayRating(result);
             this.configureOnClickLikeButton();

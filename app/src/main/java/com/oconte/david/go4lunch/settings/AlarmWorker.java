@@ -19,7 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.models.User;
-import com.oconte.david.go4lunch.repositories.UserRepository;
+import com.oconte.david.go4lunch.repositories.UserRepositoryImpl;
 import com.oconte.david.go4lunch.util.TextUtil;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class AlarmWorker extends Worker {
 
     private Context context;
 
-    public UserRepository userRepository;
+    public UserRepositoryImpl userRepositoryImpl;
     public User currentUser;
     public List<User> users;
 
@@ -55,7 +55,7 @@ public class AlarmWorker extends Worker {
     @Override
     public Worker.Result doWork() {
 
-        userRepository = Injection.getUserRepository(Injection.provideFireBaseAuth(), Injection.provideFireStore());
+        userRepositoryImpl = Injection.getUserRepository(Injection.provideFireBaseAuth(), Injection.provideFireStore());
 
         executeFirebaseRequest();
 
@@ -97,7 +97,7 @@ public class AlarmWorker extends Worker {
     private void executeFirebaseRequest() {
         users = new ArrayList<>();
 
-        userRepository.getAllUserFromFirebase().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        userRepositoryImpl.getAllUserFromFirebase().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
