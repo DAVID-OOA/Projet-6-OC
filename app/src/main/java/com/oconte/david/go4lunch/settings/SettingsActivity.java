@@ -77,6 +77,8 @@ public class SettingsActivity extends AppCompatActivity {
                         startAlarmForWorkManager();
                         toast();
                         startMainActivity();
+                } else {
+
                 }
             }
         });
@@ -272,7 +274,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK){
                 Uri uriImage = data.getData();
                 if(uriImage != null) {
-                    viewModel.updateUserPhoto(uriImage.toString());
+                   // viewModel.updatePhotoUser();
                 }
             }
         }

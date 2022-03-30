@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.lunch;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;

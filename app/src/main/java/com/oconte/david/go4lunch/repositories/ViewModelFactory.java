@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.oconte.david.go4lunch.LunchViewModel;
+import com.oconte.david.go4lunch.lunch.LunchViewModel;
 import com.oconte.david.go4lunch.auth.AuthViewModel;
 import com.oconte.david.go4lunch.listView.ListRestaurantViewModel;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantViewModel;

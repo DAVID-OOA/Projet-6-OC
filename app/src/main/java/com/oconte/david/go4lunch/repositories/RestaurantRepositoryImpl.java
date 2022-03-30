@@ -1,6 +1,5 @@
 package com.oconte.david.go4lunch.repositories;
 
-import androidx.annotation.Nullable;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
 import com.oconte.david.go4lunch.api.GooglePlaceService;
@@ -12,28 +11,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RestaurantRepositoryImpl {
+public class RestaurantRepositoryImpl implements RestaurantRepository{
 
     private final GooglePlaceService service;
     private final CountingIdlingResource resource;
-
-    /**
-     * It's the Call to API GooglePlace.
-     */
-
-    // Creating a callback
-    public interface Callbacks {
-        void onResponse(@Nullable ApiNearByResponse apiNearByResponse);
-        void onFailure();
-    }
 
     public RestaurantRepositoryImpl(GooglePlaceService service, CountingIdlingResource resource) {
         this.service = service;
         this.resource = resource;
     }
 
-    // Public methode to start fetching
-    public void getRestaurantNearBy(RestaurantRepositoryImpl.Callbacks callbacks, String location) {
+    @Override
+    public void getRestaurantNearBy(GetRestaurantsCallback getRestaurantsCallback, String location) {
         resource.increment();
         // weak reference to callback (avoid memory leaks)
 
@@ -45,16 +34,17 @@ public class RestaurantRepositoryImpl {
             @Override
             public void onResponse(@NotNull Call<ApiNearByResponse> call, @NotNull Response<ApiNearByResponse> apiNearByResponseResponse) {
                 // Call the proper callback used in controller mainfragment
-                callbacks.onResponse(apiNearByResponseResponse.body());
+                getRestaurantsCallback.onResponse(apiNearByResponseResponse.body());
                 resource.decrement();
             }
 
             @Override
             public void onFailure(@NotNull Call<ApiNearByResponse> call, @NotNull Throwable t) {
                 // Call the proper callback used in controller mainfragment
-                callbacks.onFailure();
+                getRestaurantsCallback.onFailure();
                 resource.decrement();
             }
         });
+
     }
 }

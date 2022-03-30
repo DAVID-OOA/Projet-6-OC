@@ -22,10 +22,9 @@ import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
 import com.oconte.david.go4lunch.repositories.RestaurantDetailRepository;
-import com.oconte.david.go4lunch.repositories.RestaurantRepositoryImpl;
+import com.oconte.david.go4lunch.repositories.RestaurantRepository;
 import com.oconte.david.go4lunch.repositories.UserRepository;
 import com.oconte.david.go4lunch.util.ForPosition;
-import com.oconte.david.go4lunch.repositories.UserRepositoryImpl;
 
 
 import java.util.List;
@@ -38,7 +37,7 @@ public class ListRestaurantViewModel extends ViewModel {
     //Boolean isPicked;
 
     private final RestaurantDetailRepository restaurantDetailRepository;
-    private final RestaurantRepositoryImpl mRestaurantRepositoryImpl;
+    private final RestaurantRepository mRestaurantRepositoryImpl;
     private final UserRepository userRepository;
     private final MutableLiveData<List<Result>> apiNearByResponseMutableLiveData = new MutableLiveData<>();
 
@@ -64,7 +63,7 @@ public class ListRestaurantViewModel extends ViewModel {
 
     // contient l'info de la list des restaurants
     public void getRestaurants() {
-        mRestaurantRepositoryImpl.getRestaurantNearBy(new RestaurantRepositoryImpl.Callbacks() {
+        mRestaurantRepositoryImpl.getRestaurantNearBy(new RestaurantRepository.GetRestaurantsCallback() {
             @Override
             public void onResponse(@Nullable ApiNearByResponse apiNearByResponse) {
                 ExecutorService executorService = Executors.newCachedThreadPool();

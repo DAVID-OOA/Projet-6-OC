@@ -1,4 +1,4 @@
-package com.oconte.david.go4lunch;
+package com.oconte.david.go4lunch.lunch;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityBrunchBinding;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.models.Restaurant;
