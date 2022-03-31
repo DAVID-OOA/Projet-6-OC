@@ -70,16 +70,26 @@ public class SettingsActivity extends AppCompatActivity {
 
         this.configureToolbar();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("state_of_switch", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        binding.notificationSwitch.setChecked(sharedPreferences.getBoolean("switch", false));
+
         binding.notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
+                        editor.putBoolean("switch", true);
+                        editor.apply();
                         startAlarmForWorkManager();
                         toast();
                         startMainActivity();
-                } else {
+                } if (!isChecked){
+                    editor.putBoolean("switch", false);
+                    editor.apply();;
 
                 }
+                editor.apply();
             }
         });
 
