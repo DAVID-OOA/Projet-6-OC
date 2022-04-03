@@ -26,7 +26,7 @@ public class RestaurantUnitTest {
         idRestaurant = "Ch_123456789";
         urlPicture = "http://photo";
 
-        restaurant = new Restaurant(idRestaurant,username,uid,urlPicture);
+        //restaurant = new Restaurant(idRestaurant,username,uid,urlPicture);
     }
 
     @Test

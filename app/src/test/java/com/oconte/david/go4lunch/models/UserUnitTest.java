@@ -24,7 +24,7 @@ public class UserUnitTest {
         urlPicture = "http://photo";
         idRestaurantPicked = "123456987";
 
-        user = new User(uid,username,email,urlPicture,idRestaurantPicked);
+        //user = new User(uid,username,email,urlPicture,idRestaurantPicked);
     }
 
     @Test

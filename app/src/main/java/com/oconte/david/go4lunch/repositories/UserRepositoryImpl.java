@@ -85,7 +85,7 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public Task<Void> updateUrlPicture(String urlPicture, String uid) {
-        user.setUrlPicture(urlPicture);
+        //user.setUrlPicture(urlPicture);
         return getUserCollection().document(uid).update("urlPicture", urlPicture);
     }
 
@@ -113,6 +113,16 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public Task<DocumentSnapshot> getUserRestaurantPicked(String uid) {
         return getUserCollection().document(uid).get();
+    }
+
+    @Override
+    public Task<Void> updateEmail(String email) {
+        String uid = Objects.requireNonNull(this.getCurrentUser()).getUid();
+        if(uid != null){
+            return this.getUserCollection().document(uid).update("email", email);
+        }else{
+            return null;
+        }
     }
 
 }

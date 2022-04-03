@@ -35,7 +35,7 @@ public class SettingsViewModel extends ViewModel {
 
     private FirebaseUser user;
 
-    private String newPhotoUrl;
+    public String newPhotoUrl;
 
 
     public SettingsViewModel(UserRepository userRepository) {
@@ -45,6 +45,19 @@ public class SettingsViewModel extends ViewModel {
 
     public void updateUserName(String username) {
         userRepository.updateUsername(username);
+    }
+
+    public void updateEmail(String email) {
+        userRepository.updateEmail(email);
+    }
+
+    public void updatePhotoUser(String newPhotoUrl) {
+        userRepository.updateUrlPicture(newPhotoUrl, user.getUid());
+    }
+
+    // Delete User
+    public void deleteUser(String uid) {
+        userRepository.deleteUserFromFirestore(uid);
     }
 
     // --------------------
@@ -64,35 +77,4 @@ public class SettingsViewModel extends ViewModel {
         }
         return true;
     }
-
-    private OnSuccessListener<Void> onSuccessListener(final SuccessOrigin origin){
-        return aVoid -> {
-            switch (origin){
-                case UPDATE_USER:
-                    //isLoading.setValue(false);
-                    //user.setEmail(newEmail);
-                    //user.setUsername(newUsername);
-                    break;
-                case DELETE_USER:
-                    //deleteUser.setValue(new Event<>(new Object()));
-                    //isLoading.setValue(false);
-                    break;
-                case UPDATE_PHOTO:
-                    updatePhotoUser();
-                    break;
-            }
-
-        };
-
-    }
-
-    public void updatePhotoUser() {
-        userRepository.updateUrlPicture(newPhotoUrl, user.getUid());
-    }
-
-    // Delete User
-    public void deleteUser(String uid) {
-        userRepository.deleteUserFromFirestore(uid);
-    }
-
 }

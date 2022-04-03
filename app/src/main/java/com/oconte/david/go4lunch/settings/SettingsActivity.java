@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,9 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        String username = String.valueOf(binding.usernameField.getText());
-
-        this.updateInfoOfUser(username);
+        this.updateInfoOfUser();
 
         this.addPhotoUser();
 
@@ -169,11 +169,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     // FOR UPDATE INFO USER
-    public void updateInfoOfUser(String username) {
+    public void updateInfoOfUser() {
         binding.updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText editText = binding.usernameField;
+                String username = editText.getText().toString();
                 viewModel.updateUserName(username);
+
+                EditText editText1 = binding.emailField;
+                String email = editText1.getText().toString();
+                viewModel.updateEmail(email);
             }
         });
     }
@@ -266,6 +272,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+    //content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F24/ORIGINAL/NONE/1917500091
 
     @AfterPermissionGranted(RC_IMAGE_PERMS)
     private void chooseImageFromPhone() {
@@ -282,10 +289,16 @@ public class SettingsActivity extends AppCompatActivity {
     private void handleResponse(int requestCode, int resultCode, Intent data){
         if(requestCode == RC_CHOOSE_PHOTO){
             if (resultCode == RESULT_OK){
+
+               /* Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                binding.photoUser.setImageBitmap(imageBitmap);
+
+
                 Uri uriImage = data.getData();
                 if(uriImage != null) {
-                   // viewModel.updatePhotoUser();
-                }
+                   viewModel.updatePhotoUser(String.valueOf(uriImage));
+                }*/
             }
         }
     }

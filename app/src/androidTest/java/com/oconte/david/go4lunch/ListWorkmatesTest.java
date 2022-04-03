@@ -70,7 +70,7 @@ public class ListWorkmatesTest {
         onView(withId(R.id.action_workmates)).check(matches(isDisplayed())).perform(click());
 
         onView(withId(R.id.fragment_main_recycler_view)).perform();
-        //Thread.sleep(10000);
+
         // Check one item of the recyclerview for see it here.
         onView(withId(R.id.fragment_main_recycler_view_workMates)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
     }

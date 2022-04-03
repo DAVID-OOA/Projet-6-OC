@@ -10,7 +10,7 @@ import com.oconte.david.go4lunch.models.User;
 
 public interface UserRepository {
 
-    public User getUser();
+    User getUser();
     @Nullable
     FirebaseUser getCurrentUser();
     Boolean isCurrentUserLogged();
@@ -22,4 +22,5 @@ public interface UserRepository {
     void addRestaurantPicked(String idRestaurant, String nameRestaurantPicked, String adressRestaurantPicked, String photoUrlRestaurantpicked);
     void deleteRestaurantPicked();
     Task<DocumentSnapshot> getUserRestaurantPicked(String uid);
+    Task<Void> updateEmail(String email);
 }
