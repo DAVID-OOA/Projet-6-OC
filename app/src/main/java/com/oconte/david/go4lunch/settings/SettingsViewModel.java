@@ -59,21 +59,4 @@ public class SettingsViewModel extends ViewModel {
         userRepository.deleteUserFromFirestore(uid);
     }
 
-    // --------------------
-    // UTILS
-    // --------------------
-
-    private boolean isNewUserInfosCorrect(String email, String username){
-        if(!isEmailCorrect(email)){
-            isEmailError.setValue(true);
-            errorMessageEmail.setValue(R.string.incorrect_email);
-            return false;
-        }
-        if(!isTextLongEnough(username, 3)){
-            isUsernameError.setValue(true);
-            errorMessageUsername.setValue(R.string.incorrect_username);
-            return false;
-        }
-        return true;
-    }
 }
