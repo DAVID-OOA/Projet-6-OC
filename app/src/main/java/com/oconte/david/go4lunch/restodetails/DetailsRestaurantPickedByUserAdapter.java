@@ -1,5 +1,6 @@
 package com.oconte.david.go4lunch.restodetails;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,7 +16,6 @@ import java.util.List;
 public class DetailsRestaurantPickedByUserAdapter extends RecyclerView.Adapter<DetailsRestaurantPickedByUserViewHolder> {
 
     private List<User> usersPicked = new ArrayList<>();
-
 
     @NonNull
     @Override
@@ -34,6 +34,7 @@ public class DetailsRestaurantPickedByUserAdapter extends RecyclerView.Adapter<D
         return this.usersPicked.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateCallUserListPicked(List<User> userListPicked) {
         this.usersPicked = userListPicked;
         this.notifyDataSetChanged();

@@ -23,7 +23,7 @@ public class LunchActivity extends AppCompatActivity {
 
     public LunchViewModel viewModel;
 
-    String uid;
+    public String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

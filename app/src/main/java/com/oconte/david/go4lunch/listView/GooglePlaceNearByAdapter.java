@@ -1,5 +1,6 @@
 package com.oconte.david.go4lunch.listView;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -32,6 +33,7 @@ public class GooglePlaceNearByAdapter extends RecyclerView.Adapter<GooglePlaceNe
         return this.apiNearByResponse.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateCallRetrofitGoogleNearBy(List<Result> resultList) {
         this.apiNearByResponse = resultList;
         this.notifyDataSetChanged();

@@ -37,7 +37,6 @@ public class SettingsViewModel extends ViewModel {
 
     public String newPhotoUrl;
 
-
     public SettingsViewModel(UserRepository userRepository) {
         this.userRepository = userRepository;
         user = userRepository.getCurrentUser();

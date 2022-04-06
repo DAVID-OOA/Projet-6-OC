@@ -27,10 +27,6 @@ import java.util.Arrays;
 
 public class AuthActivity extends AppCompatActivity {
 
-    //FOR DATA
-    // Identifier for Sign-In Activity
-    //private static final int RC_SIGN_IN = 123;
-
     //FOR DESIGN;
     private ActivityAuthBinding binding;
 
@@ -63,7 +59,6 @@ public class AuthActivity extends AppCompatActivity {
         finish();
     }
 
-
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -83,7 +78,7 @@ public class AuthActivity extends AppCompatActivity {
                     });
                     alertDialog.show();
                 }
-            });
+    });
 
     private void startSignInActivity() {
         Intent signInIntent = AuthUI.getInstance()
@@ -101,14 +96,7 @@ public class AuthActivity extends AppCompatActivity {
         signInLauncher.launch(signInIntent);
     }
 
-    //////////////////////////////////////////////////////
-    // UI
-    ///////////////////////////////////////////////////////
-
-
-    /////////////////////////////////////////////////////
     //For Info about connected user
-
     public void createUser(){
         viewModel.createUser();
     }

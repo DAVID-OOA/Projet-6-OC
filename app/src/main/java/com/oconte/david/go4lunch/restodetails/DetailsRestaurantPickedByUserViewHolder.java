@@ -37,7 +37,6 @@ public class DetailsRestaurantPickedByUserViewHolder extends RecyclerView.ViewHo
                     .placeholder(R.drawable.go4lunch_icon)
                     .into(this.binding.recyclerViewImageUser);
         }
-
     }
 
 }

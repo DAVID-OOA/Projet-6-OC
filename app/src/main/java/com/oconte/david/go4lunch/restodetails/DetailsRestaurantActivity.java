@@ -150,7 +150,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                     final ApiException apiException = (ApiException) exception;
                     Log.e("TAG", "Place not found: " + exception.getMessage());
                     final int statusCode = apiException.getStatusCode();
-                    // TODO: Handle error with given status code.
                 }
             });
         });
@@ -166,8 +165,6 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this,"ca ne marche pas", Toast.LENGTH_LONG).show();
                 }
-
-
             } else {
                 AlertDialog alertDialog = new AlertDialog.Builder(DetailsRestaurantActivity.this).create();
                 alertDialog.setTitle("Error");
