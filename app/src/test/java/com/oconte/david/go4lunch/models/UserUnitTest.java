@@ -15,6 +15,9 @@ public class UserUnitTest {
     private String email;
     private String urlPicture;
     private String idRestaurantPicked;
+    private String nameRestaurantPicked;
+    private String adressRestaurantPicked;
+    private String photoRestaurantPicked;
 
     @Before
     public void setup() {
@@ -23,8 +26,11 @@ public class UserUnitTest {
         email = "androidstudio@email.com";
         urlPicture = "http://photo";
         idRestaurantPicked = "123456987";
+        nameRestaurantPicked = "Big Miam";
+        adressRestaurantPicked = "38 rte du Miam";
+        photoRestaurantPicked = "http://photoRestaurant";
 
-        //user = new User(uid,username,email,urlPicture,idRestaurantPicked);
+        user = new User(uid,username,email,urlPicture,idRestaurantPicked, nameRestaurantPicked, adressRestaurantPicked, photoRestaurantPicked);
     }
 
     @Test

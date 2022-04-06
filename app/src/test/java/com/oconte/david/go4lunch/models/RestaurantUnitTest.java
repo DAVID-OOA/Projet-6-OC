@@ -18,6 +18,7 @@ public class RestaurantUnitTest {
     public String username;
     public String uid;
     public String idRestaurant;
+    public String addressRestaurant;
 
     @Before
     public void setup() {
@@ -25,8 +26,9 @@ public class RestaurantUnitTest {
         uid = "123456789";
         idRestaurant = "Ch_123456789";
         urlPicture = "http://photo";
+        addressRestaurant = "38 rte du repas";
 
-        //restaurant = new Restaurant(idRestaurant,username,uid,urlPicture);
+        restaurant = new Restaurant(idRestaurant,username,uid,urlPicture, addressRestaurant);
     }
 
     @Test
