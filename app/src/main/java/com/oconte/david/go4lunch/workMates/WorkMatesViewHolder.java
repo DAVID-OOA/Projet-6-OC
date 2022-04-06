@@ -29,12 +29,10 @@ public class WorkMatesViewHolder extends RecyclerView.ViewHolder {
     public void updateWithUser(User user) {
         binding.recyclerViewText.setText(user.getUsername());
 
-        if (user.getUrlPicture() != null) {
-            Picasso.get()
-                    .load(user.getUrlPicture())
-                    .transform(new CropCircleTransformation())
-                    .placeholder(R.drawable.go4lunch_icon)
-                    .into(this.binding.recyclerViewImageUser);
-        }
+        Picasso.get()
+                .load(user.getUrlPicture())
+                .transform(new CropCircleTransformation())
+                .placeholder(R.drawable.go4lunch_icon)
+                .into(this.binding.recyclerViewImageUser);
     }
 }

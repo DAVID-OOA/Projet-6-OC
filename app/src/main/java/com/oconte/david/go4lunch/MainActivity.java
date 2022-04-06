@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configurationViewModelDetails();
 
-        this.updateUIWithUserData();
+        //this.updateUIWithUserData();
 
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), myApiKey);
@@ -156,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 } else if (result.getResultCode() == AutocompleteActivity.RESULT_ERROR) {
-                    // TODO: Handle the error.
                     Status status = Autocomplete.getStatusFromIntent(Objects.requireNonNull(result.getData()));
                     Toast.makeText(getApplicationContext(), "Error: " + status.getStatusMessage(), Toast.LENGTH_LONG).show();
 
@@ -286,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.updateUIWithUserData();
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_menu, menu);
         return true;

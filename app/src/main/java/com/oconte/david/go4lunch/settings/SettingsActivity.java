@@ -10,9 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -72,28 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         this.configureToolbar();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("state_of_switch", MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        binding.notificationSwitch.setChecked(sharedPreferences.getBoolean("switch", false));
-
-        binding.notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                        editor.putBoolean("switch", true);
-                        editor.apply();
-                        startAlarmForWorkManager();
-                        toast();
-                        startMainActivity();
-                } if (!isChecked){
-                    editor.putBoolean("switch", false);
-                    editor.apply();;
-
-                }
-                editor.apply();
-            }
-        });
+        this.switchButton();
 
         this.updateInfoOfUser();
 
@@ -104,6 +81,31 @@ public class SettingsActivity extends AppCompatActivity {
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private void switchButton() {
+        SharedPreferences sharedPreferences = getSharedPreferences("state_of_switch", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        binding.notificationSwitch.setChecked(sharedPreferences.getBoolean("switch", false));
+
+        binding.notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    editor.putBoolean("switch", true);
+                    editor.apply();
+                    startAlarmForWorkManager();
+                    toast();
+                    startMainActivity();
+                } if (!isChecked){
+                    editor.putBoolean("switch", false);
+                    editor.apply();;
+
+                }
+                editor.apply();
+            }
+        });
     }
 
     /**
@@ -183,10 +185,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
-
-    // --------------------
-    // FOR DELETED ACCOUNT
-    // --------------------
 
     // FOR DELETE ACCOUNT
     @SuppressLint("NonConstantResourceId")
@@ -272,7 +270,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
-    //content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F24/ORIGINAL/NONE/1917500091
 
     @AfterPermissionGranted(RC_IMAGE_PERMS)
     private void chooseImageFromPhone() {

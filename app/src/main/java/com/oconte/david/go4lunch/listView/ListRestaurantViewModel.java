@@ -107,31 +107,7 @@ public class ListRestaurantViewModel extends ViewModel {
         return i;
     }
 
-    /*
-    public void getDataRestaurantMarkerPicked(String idRestaurant) {
-        restaurantDetailRepository.getPickedUsersFromRestaurant(idRestaurant).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful() && idRestaurant != null){
-                    FirebaseUser user = userRepository.getCurrentUser();
-                    collectionReference.document(idRestaurant).collection("picked").document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
-                            //si document n'est pas vide le boutton prend la couleur jaune.
-                            if (Objects.requireNonNull(snapshot).exists()) {
-                                isPicked = true;
-                            } else {
-                                isPicked = false;
-                            }
-                            restaurantMarkerPickedMutableLiveData.postValue(isPicked);
-                        }
-                    });
-                }
-            }
-        });
-    }*/
-
-    // contient l'information du restaurant selectionné
+    // contains the information of the selected restaurant
     private final MutableLiveData<Result> selectedRestaurant = new MutableLiveData<>();
     public void selectRestaurant(Result result) {
         selectedRestaurant.postValue(result);
@@ -141,7 +117,7 @@ public class ListRestaurantViewModel extends ViewModel {
         return selectedRestaurant;
     }
 
-    // contient l'information de la position
+    // contains position information
     private LatLng myLocation = null;
     public void setMyLocation(LatLng myLocation) {
         this.myLocation = myLocation;
@@ -187,13 +163,6 @@ public class ListRestaurantViewModel extends ViewModel {
 
     public void updateUserName(String username) {
         userRepository.updateUsername(username);
-    }
-
-    public void showRestaurantSelected() {
-        String uidRestaurantPicked = userRepository.getUser().getIdRestaurantPicked();
-        if (uidRestaurantPicked != null) {
-            restaurantDetailRepository.getPickedUsersFromRestaurant(uidRestaurantPicked);
-        }
     }
 
 }
