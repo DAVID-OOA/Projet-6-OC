@@ -1,5 +1,6 @@
 package com.oconte.david.go4lunch.settings;
 
+import static com.oconte.david.go4lunch.util.RetryAction.UPDATE_PHOTO_DB;
 import static com.oconte.david.go4lunch.util.SuccessOrigin.UPDATE_PHOTO;
 import static com.oconte.david.go4lunch.util.TextUtil.isEmailCorrect;
 import static com.oconte.david.go4lunch.util.TextUtil.isTextLongEnough;
@@ -51,8 +52,26 @@ public class SettingsViewModel extends ViewModel {
     }
 
     public void updatePhotoUser(String newPhotoUrl) {
-        userRepository.updateUrlPicture(newPhotoUrl, user.getUid());
+        uploadPhotoInFirebase(newPhotoUrl);
     }
+
+    private void uploadPhotoInFirebase(final String urlPhoto) {
+        String uuid = UUID.randomUUID().toString();
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference(uuid);
+        imageRef.putFile(Uri.parse(urlPhoto))
+                .addOnSuccessListener(this::getUrlPhotoFromFirebase);
+
+    }
+
+    private void getUrlPhotoFromFirebase(UploadTask.TaskSnapshot taskSnapshot){
+        Objects.requireNonNull(taskSnapshot.getMetadata()).getReference().getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    newPhotoUrl = uri.toString();
+                    userRepository.updateUrlPicture(newPhotoUrl, user.getUid());
+                });
+
+    }
+
 
     // Delete User
     public void deleteUser(String uid) {

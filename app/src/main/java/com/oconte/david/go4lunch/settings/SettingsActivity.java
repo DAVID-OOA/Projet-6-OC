@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -289,13 +290,12 @@ public class SettingsActivity extends AppCompatActivity {
 
                /* Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
-                binding.photoUser.setImageBitmap(imageBitmap);
-
+                binding.photoUser.setImageBitmap(imageBitmap);*/
 
                 Uri uriImage = data.getData();
                 if(uriImage != null) {
                    viewModel.updatePhotoUser(String.valueOf(uriImage));
-                }*/
+                }
             }
         }
     }
