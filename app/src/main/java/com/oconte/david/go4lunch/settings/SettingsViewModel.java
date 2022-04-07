@@ -55,7 +55,6 @@ public class SettingsViewModel extends ViewModel {
                     newPhotoUrl = uri.toString();
                     userRepository.updateUrlPicture(newPhotoUrl, user.getUid());
                 });
-
     }
 
     // Delete User
