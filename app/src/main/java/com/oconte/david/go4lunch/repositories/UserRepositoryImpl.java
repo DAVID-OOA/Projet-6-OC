@@ -85,7 +85,6 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public Task<Void> updateUrlPicture(String urlPicture, String uid) {
-        //user.setUrlPicture(urlPicture);
         return getUserCollection().document(uid).update("urlPicture", urlPicture);
     }
 

@@ -40,7 +40,6 @@ public class WorkMatesViewModel extends ViewModel {
     }
 
     public void getUserList() {
-        // TODO Check de connection internet
         mUserRepository.getAllUserFromFirebase()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
