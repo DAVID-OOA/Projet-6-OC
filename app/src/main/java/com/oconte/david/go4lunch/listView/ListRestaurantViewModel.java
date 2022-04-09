@@ -11,16 +11,19 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.models.ApiNearByResponse;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.repositories.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.repositories.RestaurantRepository;
 import com.oconte.david.go4lunch.repositories.UserRepository;
@@ -45,6 +48,12 @@ public class ListRestaurantViewModel extends ViewModel {
     private final MutableLiveData<Boolean> restaurantMarkerPickedMutableLiveData = new MutableLiveData<Boolean>();
     public LiveData<Boolean> getRestaurantsMarkerPickedLiveData() {
         return restaurantMarkerPickedMutableLiveData;
+    }
+
+    // For info Of User connected by firebase
+    private final MutableLiveData<User> userInfoConnected = new MutableLiveData<>();
+    public LiveData<User> getUserInfoConnecteds() {
+        return userInfoConnected;
     }
 
     // For Firestore
@@ -163,6 +172,18 @@ public class ListRestaurantViewModel extends ViewModel {
 
     public void updateUserName(String username) {
         userRepository.updateUsername(username);
+    }
+
+    public void getUserInfoConnected() {
+        userRepository.getUserInfoConnected().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+
+                userInfoConnected.postValue(user);
+
+            }
+        });
     }
 
 }

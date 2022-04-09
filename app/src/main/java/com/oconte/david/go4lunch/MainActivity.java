@@ -55,6 +55,7 @@ import com.oconte.david.go4lunch.lunch.LunchActivity;
 import com.oconte.david.go4lunch.mapView.FragmentMapView;
 import com.oconte.david.go4lunch.models.PlaceTestForAutocompleteToDetails;
 import com.oconte.david.go4lunch.models.Result;
+import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.restodetails.DetailsRestaurantActivity;
 import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 import com.oconte.david.go4lunch.settings.SettingsActivity;
@@ -285,7 +286,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.updateUIWithUserData();
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_menu, menu);
         return true;
@@ -439,7 +439,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             FirebaseUser currentUser = viewModel.isForGetCurrentUser();
 
-            NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
+            viewModel.getUserInfoConnecteds().observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    if(currentUser.getUid().equals(user.getUid())) {
+                        NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
+                        @SuppressLint("ResourceType")
+                        View headerView = navigationView.getHeaderView(0);
+                        TextView username = headerView.findViewById(R.id.nav_header_username);
+                        username.setText(TextUtils.isEmpty(Objects.requireNonNull(user).getUsername()) ? getString(R.string.info_no_username_found) : user.getUsername());
+
+                        if (user.getUrlPicture() != null) {
+                            ImageView imageUser = headerView.findViewById(R.id.imageview_header_navigationview);
+                            Picasso.get().
+                                    load(user.getUrlPicture())
+                                    .transform(new CropCircleTransformation())
+                                    .placeholder(R.drawable.baseline_account_circle_24)
+                                    .into(imageUser);
+                        }
+
+                        TextView useremail = headerView.findViewById(R.id.nav_header_email);
+                        useremail.setText(TextUtils.isEmpty(user.getEmail()) ? getString(R.string.info_no_email_found) : user.getEmail());
+                    }
+                }
+            });
+            viewModel.getUserInfoConnected();
+
+            /*NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
             @SuppressLint("ResourceType")
             View headerView = navigationView.getHeaderView(0);
             TextView username = headerView.findViewById(R.id.nav_header_username);
@@ -455,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             TextView useremail = headerView.findViewById(R.id.nav_header_email);
-            useremail.setText(TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_email_found) : currentUser.getEmail());
+            useremail.setText(TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_email_found) : currentUser.getEmail());*/
         }
     }
 

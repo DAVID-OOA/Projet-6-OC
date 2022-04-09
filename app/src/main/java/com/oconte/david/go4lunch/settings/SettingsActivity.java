@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -39,6 +40,7 @@ import com.oconte.david.go4lunch.auth.AuthActivity;
 import com.oconte.david.go4lunch.databinding.ActivitySettingsBinding;
 import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.repositories.ViewModelFactory;
+import com.oconte.david.go4lunch.util.TextUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -177,12 +179,16 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText editText = binding.usernameField;
-                String username = editText.getText().toString();
-                viewModel.updateUserName(username);
+                if (!TextUtils.isEmpty(editText.getText().toString())){
+                    String username = editText.getText().toString();
+                    viewModel.updateUserName(username);
+                }
 
                 EditText editText1 = binding.emailField;
-                String email = editText1.getText().toString();
-                viewModel.updateEmail(email);
+                if (!TextUtils.isEmpty(editText1.getText().toString())) {
+                    String email = editText1.getText().toString();
+                    viewModel.updateEmail(email);
+                }
             }
         });
     }
@@ -287,10 +293,6 @@ public class SettingsActivity extends AppCompatActivity {
     private void handleResponse(int requestCode, int resultCode, Intent data){
         if(requestCode == RC_CHOOSE_PHOTO){
             if (resultCode == RESULT_OK){
-
-               /* Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                binding.photoUser.setImageBitmap(imageBitmap);*/
 
                 Uri uriImage = data.getData();
                 if(uriImage != null) {

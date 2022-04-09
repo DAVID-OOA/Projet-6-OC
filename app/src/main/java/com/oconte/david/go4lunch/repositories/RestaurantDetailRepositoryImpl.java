@@ -79,7 +79,6 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
 
     @Override
     public void deleteRestaurantDetailsUnPickedFromFirestore(String idRestaurant) {
-
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (idRestaurant != null && currentUser != null) {
             String uid = currentUser.getUid();
