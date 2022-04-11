@@ -35,7 +35,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
 
     // Repository
     private final UserRepository userRepository;
-    //private final RestaurantDetailRepository mRestaurantDetailRepository;
 
     // For Licked Restaurant
     private final MutableLiveData<Boolean> restaurantLikedMutableLiveData = new MutableLiveData<Boolean>();
@@ -60,7 +59,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
 
 
     public DetailsRestaurantViewModel(RestaurantDetailRepository restaurantDetailRepository, UserRepository userRepository) {
-        //this.mRestaurantDetailRepository = restaurantDetailRepository;
         this.userRepository = userRepository;
         this.restaurantDetailRepository = restaurantDetailRepository;
     }
@@ -85,7 +83,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
                     collectionReference.document(idRestaurant).collection("liked").document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
-                            //si document n'est pas vide le boutton prend la couleur jaune.
                             if (Objects.requireNonNull(snapshot).exists()) {
                                 isLiked = true;
                             } else {
@@ -101,7 +98,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
 
     // When click on picked button restaurant
     public void onPickedOnButtonClick(String idRestaurant, String uid, String nameRestaurantPicked, String adressRestaurantPicked, String photoUrlRestaurantpicked) {
-        //if (!isPicked) {
             if (userRepository.isCurrentUserLogged()) {
                 userRepository.getUserRestaurantPicked(uid).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
