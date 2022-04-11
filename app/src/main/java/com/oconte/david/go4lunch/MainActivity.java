@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configurationViewModelDetails();
 
-        //this.updateUIWithUserData();
+        this.updateUIWithUserData();
 
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), myApiKey);

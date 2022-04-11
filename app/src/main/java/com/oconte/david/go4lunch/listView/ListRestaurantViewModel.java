@@ -17,7 +17,9 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.android.SphericalUtil;
 import com.oconte.david.go4lunch.injection.Injection;
@@ -31,6 +33,7 @@ import com.oconte.david.go4lunch.util.ForPosition;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -59,6 +62,7 @@ public class ListRestaurantViewModel extends ViewModel {
     // For Firestore
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference collectionReference = db.collection("restaurants");
+    private final CollectionReference collectionReferenceUser = db.collection("users");
 
     public ListRestaurantViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
         mRestaurantRepositoryImpl =  Injection.getRestaurantNearBy(Injection.getService(), Injection.resource);
@@ -175,13 +179,22 @@ public class ListRestaurantViewModel extends ViewModel {
     }
 
     public void getUserInfoConnected() {
-        userRepository.getUserInfoConnected().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        userRepository.getUserInfoConnected().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful() ) {
+                    FirebaseUser user = userRepository.getCurrentUser();
+                    collectionReferenceUser.document(Objects.requireNonNull(user).getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                            if (Objects.requireNonNull(snapshot).exists()) {
+                                User users = snapshot.toObject(User.class);
 
-                userInfoConnected.postValue(user);
-
+                                userInfoConnected.postValue(users);
+                            }
+                        }
+                    });
+                }
             }
         });
     }

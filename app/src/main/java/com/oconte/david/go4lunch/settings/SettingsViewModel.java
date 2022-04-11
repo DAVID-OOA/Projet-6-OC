@@ -46,7 +46,6 @@ public class SettingsViewModel extends ViewModel {
         StorageReference imageRef = FirebaseStorage.getInstance().getReference(uuid);
         imageRef.putFile(Uri.parse(urlPhoto))
                 .addOnSuccessListener(this::getUrlPhotoFromFirebase);
-
     }
 
     private void getUrlPhotoFromFirebase(UploadTask.TaskSnapshot taskSnapshot){
