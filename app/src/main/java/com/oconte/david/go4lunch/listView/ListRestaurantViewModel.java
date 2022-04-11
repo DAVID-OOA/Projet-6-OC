@@ -74,7 +74,7 @@ public class ListRestaurantViewModel extends ViewModel {
             return apiNearByResponseMutableLiveData;
     }
 
-    // contient l'info de la list des restaurants
+    // Contains restaurant listing info
     public void getRestaurants() {
         mRestaurantRepositoryImpl.getRestaurantNearBy(new RestaurantRepository.GetRestaurantsCallback() {
             @Override
