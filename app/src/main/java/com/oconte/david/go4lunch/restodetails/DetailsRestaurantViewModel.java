@@ -125,7 +125,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
                     }
                 });
             }
-       // }
     }
 
     public void getDataRestaurantPickedClick(String idRestaurant) {
