@@ -464,24 +464,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
             viewModel.getUserInfoConnected();
-
-            /*NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
-            @SuppressLint("ResourceType")
-            View headerView = navigationView.getHeaderView(0);
-            TextView username = headerView.findViewById(R.id.nav_header_username);
-            username.setText(TextUtils.isEmpty(Objects.requireNonNull(currentUser).getDisplayName()) ? getString(R.string.info_no_username_found) : currentUser.getDisplayName());
-
-            if (currentUser.getPhotoUrl() != null) {
-                ImageView imageUser = headerView.findViewById(R.id.imageview_header_navigationview);
-                Picasso.get().
-                        load(currentUser.getPhotoUrl())
-                        .transform(new CropCircleTransformation())
-                        .placeholder(R.drawable.baseline_account_circle_24)
-                        .into(imageUser);
-            }
-
-            TextView useremail = headerView.findViewById(R.id.nav_header_email);
-            useremail.setText(TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_email_found) : currentUser.getEmail());*/
         }
     }
 
