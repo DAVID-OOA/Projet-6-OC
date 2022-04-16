@@ -23,5 +23,5 @@ public interface UserRepository {
     void deleteRestaurantPicked();
     Task<DocumentSnapshot> getUserRestaurantPicked(String uid);
     Task<Void> updateEmail(String email);
-    Task<DocumentSnapshot> getUserInfoConnected();
+    Task<DocumentSnapshot> getInfoUserConnected();
 }

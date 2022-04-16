@@ -125,7 +125,7 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Task<DocumentSnapshot> getUserInfoConnected() {
+    public Task<DocumentSnapshot> getInfoUserConnected() {
         return getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).get();
     }
 

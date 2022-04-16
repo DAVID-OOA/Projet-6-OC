@@ -14,12 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.oconte.david.go4lunch.MainActivity;
-import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.R;
 import com.oconte.david.go4lunch.databinding.ActivityAuthBinding;
+import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 
 import java.util.Arrays;

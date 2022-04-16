@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.oconte.david.go4lunch.repositories.RestaurantDetailRepository;
 import com.oconte.david.go4lunch.repositories.UserRepository;
 
 import java.util.Objects;
@@ -16,19 +17,24 @@ import java.util.UUID;
 public class SettingsViewModel extends ViewModel {
 
     private final UserRepository userRepository;
+    private RestaurantDetailRepository restaurantDetailRepository;
 
     private FirebaseUser user;
 
     public String newPhotoUrl;
 
-    public SettingsViewModel(UserRepository userRepository) {
+    public SettingsViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
         this.userRepository = userRepository;
         user = userRepository.getCurrentUser();
+        this.restaurantDetailRepository = restaurantDetailRepository;
     }
+
 
     // For update User Name
     public void updateUserName(String username) {
         userRepository.updateUsername(username);
+        restaurantDetailRepository.updateUsername(username);
+
     }
 
     // For update Email
@@ -49,7 +55,7 @@ public class SettingsViewModel extends ViewModel {
     }
 
     private void getUrlPhotoFromFirebase(UploadTask.TaskSnapshot taskSnapshot){
-        Objects.requireNonNull(taskSnapshot.getMetadata()).getReference().getDownloadUrl()
+        Objects.requireNonNull(Objects.requireNonNull(taskSnapshot.getMetadata()).getReference()).getDownloadUrl()
                 .addOnSuccessListener(uri -> {
                     newPhotoUrl = uri.toString();
                     userRepository.updateUrlPicture(newPhotoUrl, user.getUid());

@@ -115,6 +115,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         }
     }
 
+    //////////////////////////////////
+    // For Photo
     private void getPlacePhoto() {
         final String placeid = idRestaurant;
 
@@ -155,6 +157,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
+    //////////////////////////////////
+    // Phone Button
     private void configureOnClickPhoneButtonForPlace(PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails) {
         binding.phoneButton.setOnClickListener(v -> {
             if (placeTestForAutocompleteToDetails.getPhoneNumber() != null) {
@@ -175,6 +179,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
+    //////////////////////////////////
+    // Website Button
     private void configureOnClickWebSiteForPlace(PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails) {
         binding.websiteButton.setOnClickListener(v -> {
             if (placeTestForAutocompleteToDetails.getWebSite() != null) {
@@ -250,6 +256,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         }
     }
 
+    //////////////////////////////////
+    // Picked Button
     private void configureOnPickedButton() {
         binding.pickRestaurantButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,6 +282,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
+    //////////////////////////////////
+    // Liked Button
     private void configureOnClickLikeButton(){
         binding.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,6 +307,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
+    //////////////////////////////////
+    // Phone Button
     private void configureOnClickPhoneButton(Result result) {
         binding.phoneButton.setOnClickListener(v -> {
             if (result.getPhoneNumber() != null) {
@@ -313,6 +325,8 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
         });
     }
 
+    //////////////////////////////////
+    // WebSite Button
     private void configureOnClickWebSite(Result result) {
         binding.websiteButton.setOnClickListener(v -> {
             if (result.getWebsite() != null) {
@@ -328,6 +342,10 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
             }
         });
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // For recyclerview
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // For the recyclerView and ViewModel for the list of user picked a restaurant
     public void configureViewModelForRecyclerViewUserPickedRestaurant() {

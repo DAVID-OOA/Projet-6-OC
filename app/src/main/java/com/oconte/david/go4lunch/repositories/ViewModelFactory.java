@@ -40,7 +40,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new AuthViewModel(userRepository);
         }
         if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
-            return (T) new SettingsViewModel(userRepository);
+            return (T) new SettingsViewModel(userRepository, restaurantDetailRepository);
         }
         if (modelClass.isAssignableFrom(LunchViewModel.class)) {
             return (T) new LunchViewModel(userRepository);

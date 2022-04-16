@@ -96,4 +96,14 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
         return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").orderBy("username").get();
     }
 
+    @Override
+    public Task<Void> updateUsername(String username) {
+        String uid = Objects.requireNonNull(this.firebaseAuth.getCurrentUser()).getUid();
+        if(uid != null){
+            return this.getRestaurantDetailsCollection().document("ChIJG8_XeewPqxIRrMnylkoBg8s").collection("picked").document(uid).update("username", username);
+        }else{
+            return null;
+        }
+    }
+
 }

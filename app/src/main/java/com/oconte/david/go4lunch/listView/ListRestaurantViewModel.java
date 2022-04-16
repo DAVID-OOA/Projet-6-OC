@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,7 +60,7 @@ public class ListRestaurantViewModel extends ViewModel {
 
     // For Firestore
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final CollectionReference collectionReference = db.collection("restaurants");
+    //private final CollectionReference collectionReference = db.collection("restaurants");
     private final CollectionReference collectionReferenceUser = db.collection("users");
 
     public ListRestaurantViewModel(UserRepository userRepository, RestaurantDetailRepository restaurantDetailRepository) {
@@ -174,12 +173,8 @@ public class ListRestaurantViewModel extends ViewModel {
         return userRepository.getCurrentUser();
     }
 
-    public void updateUserName(String username) {
-        userRepository.updateUsername(username);
-    }
-
     public void getUserInfoConnected() {
-        userRepository.getUserInfoConnected().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        userRepository.getInfoUserConnected().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful() ) {

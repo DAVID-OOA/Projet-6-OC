@@ -12,4 +12,5 @@ public interface RestaurantDetailRepository {
         void deleteRestaurantDetailsUnPickedFromFirestore(String idRestaurant);
         Task<DocumentSnapshot> getPickedUsersFromRestaurant(String idRestaurant);
         Task<QuerySnapshot> getAllUserPickedFromFirebase(String idRestaurant);
+        Task<Void> updateUsername(String username);
     }
