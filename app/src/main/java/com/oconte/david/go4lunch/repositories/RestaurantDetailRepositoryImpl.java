@@ -35,18 +35,25 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
     @Override
     public void createRestaurantDetailsLiked(String idRestaurant) {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser != null) {
 
-            String uid = currentUser.getUid();
-            String userName = currentUser.getDisplayName();
-            String urlPhoto = Objects.requireNonNull(currentUser.getPhotoUrl()).toString();
-            String addressRestaurant = "";
+        firebaseFirestore.collection(UserRepository.COLLECTION_NAME).document(Objects.requireNonNull(currentUser).getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                User user = task.getResult().toObject(User.class);
 
-            Restaurant restaurant = new Restaurant(idRestaurant, userName, uid, urlPhoto, addressRestaurant);
+                if (currentUser.getUid().equals(Objects.requireNonNull(user).getUid())) {
 
-            getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(uid).set(restaurant, SetOptions.merge());
-        }
+                    String uid = user.getUid();
+                    String username = user.getUsername();
+                    String urlPhoto = Objects.requireNonNull(user.getUrlPicture());
+                    String addressRestaurant = "";
 
+                    Restaurant restaurant = new Restaurant(idRestaurant, username, uid, urlPhoto, addressRestaurant);
+
+                    getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(uid).set(restaurant, SetOptions.merge());
+                }
+            }
+        });
     }
 
     @Override
@@ -87,8 +94,6 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
                 }
             }
         });
-
-
     }
 
     @Override
