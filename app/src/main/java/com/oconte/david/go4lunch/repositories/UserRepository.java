@@ -10,6 +10,8 @@ import com.oconte.david.go4lunch.models.User;
 
 public interface UserRepository {
 
+    public static final String COLLECTION_NAME = "users";
+
     User getUser();
     @Nullable
     FirebaseUser getCurrentUser();

@@ -15,8 +15,6 @@ import java.util.Objects;
 
 public class UserRepositoryImpl implements UserRepository{
 
-    private static final String COLLECTION_NAME = "users";
-
     private final FirebaseAuth firebaseAuth;
     private final FirebaseFirestore firebaseFirestore;
 

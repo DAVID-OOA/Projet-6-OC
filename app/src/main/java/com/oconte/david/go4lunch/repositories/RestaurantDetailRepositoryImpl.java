@@ -1,5 +1,8 @@
 package com.oconte.david.go4lunch.repositories;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -9,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.oconte.david.go4lunch.models.Restaurant;
+import com.oconte.david.go4lunch.models.User;
 
 import java.util.Objects;
 
@@ -97,13 +101,42 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
     }
 
     @Override
-    public Task<Void> updateUsername(String username) {
+    public void updateUsername(String username) {
         String uid = Objects.requireNonNull(this.firebaseAuth.getCurrentUser()).getUid();
-        if(uid != null){
-            return this.getRestaurantDetailsCollection().document("ChIJG8_XeewPqxIRrMnylkoBg8s").collection("picked").document(uid).update("username", username);
-        }else{
-            return null;
-        }
+
+        firebaseFirestore.collection(UserRepository.COLLECTION_NAME).document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                User user = task.getResult().toObject(User.class);
+
+                String idRestaurantPicked = null;
+
+                if (user != null) {
+                    idRestaurantPicked = user.getIdRestaurantPicked();
+
+                    getRestaurantDetailsCollection().document(idRestaurantPicked).collection("picked").document(uid).update("username", username);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void updateUrlPicture(String urlPicture, String uid) {
+
+        firebaseFirestore.collection(UserRepository.COLLECTION_NAME).document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                User user = task.getResult().toObject(User.class);
+
+                String idRestaurant = null;
+
+                if (user != null) {
+                    idRestaurant = user.getIdRestaurantPicked();
+
+                    getRestaurantDetailsCollection().document(idRestaurant).collection("picked").document(uid).update("urlPicture", urlPicture);
+                }
+            }
+        });
     }
 
 }
