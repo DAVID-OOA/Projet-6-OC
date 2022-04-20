@@ -12,9 +12,6 @@ public interface GooglePlaceService {
 
     String myApiKey = BuildConfig.MAPS_API_KEY;
 
-    /*@GET("place/details/json?fields=vicinity,place_id,id,geometry,opening_hours,name,rating,photo&key=" + myApiKey)
-    Call<ApiRestaurantDetails> getRestaurantDetail(@Query("placeid") String placeId);*/
-
     @GET("place/nearbysearch/json?radius=3000&type=restaurant&key=" + myApiKey)
     Call<ApiNearByResponse> getRestaurantNearBy(@Query("location") String location);
 

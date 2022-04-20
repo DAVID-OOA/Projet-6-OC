@@ -73,7 +73,6 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
 
     @Override
     public void createRestaurantDetailsPicked(String idRestaurant) {
-
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         firebaseFirestore.collection(UserRepository.COLLECTION_NAME).document(Objects.requireNonNull(currentUser).getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -137,7 +136,6 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
 
     @Override
     public void updateUrlPicture(String urlPicture, String uid) {
-
         firebaseFirestore.collection(UserRepository.COLLECTION_NAME).document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
