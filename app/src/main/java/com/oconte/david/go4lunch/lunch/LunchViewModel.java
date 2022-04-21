@@ -11,7 +11,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.oconte.david.go4lunch.models.Restaurant;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.repositories.UserRepository;
-import com.oconte.david.go4lunch.repositories.UserRepositoryImpl;
 
 import java.util.Objects;
 
@@ -22,12 +21,11 @@ public class LunchViewModel extends ViewModel {
         return  lunchRestaurantPicked;
     }
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public LunchViewModel(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     public void getUserRestaurantPicked(String uid) {
         if (userRepository.isCurrentUserLogged()) {
@@ -52,6 +50,4 @@ public class LunchViewModel extends ViewModel {
             });
         }
     }
-
-
 }

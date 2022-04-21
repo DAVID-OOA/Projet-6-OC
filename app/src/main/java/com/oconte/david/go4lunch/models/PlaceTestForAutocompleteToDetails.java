@@ -7,12 +7,12 @@ import java.util.List;
 
 public class PlaceTestForAutocompleteToDetails implements Serializable {
 
-    String idRestaurant;
-    String name;
-    String adress;
-    Double rating;
-    String webSite;
-    String phoneNumber;
+    public String idRestaurant;
+    public String name;
+    public String adress;
+    public Double rating;
+    public String webSite;
+    public String phoneNumber;
     transient List<PhotoMetadata> metadata;
 
     public PlaceTestForAutocompleteToDetails(String name, String adress, Double rating, String webSite, String idRestaurant, String phoneNumber, List<PhotoMetadata> metadata) {

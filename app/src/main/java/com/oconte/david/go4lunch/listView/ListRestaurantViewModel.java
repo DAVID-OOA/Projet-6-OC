@@ -39,8 +39,6 @@ import java.util.concurrent.Executors;
 
 public class ListRestaurantViewModel extends ViewModel {
 
-    //Boolean isPicked;
-
     private final RestaurantDetailRepository restaurantDetailRepository;
     private final RestaurantRepository mRestaurantRepositoryImpl;
     private final UserRepository userRepository;

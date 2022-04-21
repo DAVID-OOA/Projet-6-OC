@@ -8,7 +8,6 @@ public class Restaurant {
     public String idRestaurant;
     public String addressRestaurant;
 
-
     public Restaurant(String idRestaurant, String username, String uid, String urlPicture, String addressRestaurant) {
         this.idRestaurant = idRestaurant;
         this.username = username;

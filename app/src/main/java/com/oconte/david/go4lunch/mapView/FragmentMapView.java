@@ -184,7 +184,7 @@ public class FragmentMapView extends Fragment implements OnMapReadyCallback, Act
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
 
-                // recupere la position
+                // recover the position
                 LatLng myLocation = new LatLng(latitude, longitude);
                 viewModel.setMyLocation(myLocation);
 
