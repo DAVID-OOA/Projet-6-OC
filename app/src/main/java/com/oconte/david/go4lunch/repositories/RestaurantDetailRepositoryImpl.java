@@ -32,6 +32,7 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
         return firebaseFirestore.collection(COLLECTION_NAME);
     }
 
+    // For Liked
     @Override
     public void createRestaurantDetailsLiked(String idRestaurant) {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -71,6 +72,7 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
         return getRestaurantDetailsCollection().document(idRestaurant).collection("liked").document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).get();
     }
 
+    // For picked
     @Override
     public void createRestaurantDetailsPicked(String idRestaurant) {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -114,6 +116,7 @@ public class RestaurantDetailRepositoryImpl implements RestaurantDetailRepositor
         return getRestaurantDetailsCollection().document(idRestaurant).collection("picked").orderBy("username").get();
     }
 
+    // For Update info
     @Override
     public void updateUsername(String username) {
         String uid = Objects.requireNonNull(this.firebaseAuth.getCurrentUser()).getUid();
