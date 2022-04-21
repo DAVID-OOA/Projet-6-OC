@@ -17,9 +17,9 @@ import java.util.UUID;
 public class SettingsViewModel extends ViewModel {
 
     private final UserRepository userRepository;
-    private RestaurantDetailRepository restaurantDetailRepository;
+    private final RestaurantDetailRepository restaurantDetailRepository;
 
-    private FirebaseUser user;
+    private final FirebaseUser user;
 
     public String newPhotoUrl;
 
@@ -34,7 +34,6 @@ public class SettingsViewModel extends ViewModel {
     public void updateUserName(String username) {
         userRepository.updateUsername(username);
         restaurantDetailRepository.updateUsername(username);
-
     }
 
     // For update Email

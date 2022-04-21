@@ -72,21 +72,6 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Task<Void> updateUsername(String username) {
-        String uid = Objects.requireNonNull(this.getCurrentUser()).getUid();
-        if(uid != null){
-            return this.getUserCollection().document(uid).update("username", username);
-        }else{
-            return null;
-        }
-    }
-
-    @Override
-    public Task<Void> updateUrlPicture(String urlPicture, String uid) {
-        return getUserCollection().document(uid).update("urlPicture", urlPicture);
-    }
-
-    @Override
     public Task<QuerySnapshot> getAllUserFromFirebase() {
         return getUserCollection().orderBy("username").get();
     }
@@ -113,6 +98,17 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
+    public Task<DocumentSnapshot> getInfoUserConnected() {
+        return getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).get();
+    }
+
+    // For Update Info
+    @Override
+    public Task<Void> updateUrlPicture(String urlPicture, String uid) {
+        return getUserCollection().document(uid).update("urlPicture", urlPicture);
+    }
+
+    @Override
     public Task<Void> updateEmail(String email) {
         String uid = Objects.requireNonNull(this.getCurrentUser()).getUid();
         if(uid != null){
@@ -123,8 +119,13 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Task<DocumentSnapshot> getInfoUserConnected() {
-        return getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).get();
+    public Task<Void> updateUsername(String username) {
+        String uid = Objects.requireNonNull(this.getCurrentUser()).getUid();
+        if(uid != null){
+            return this.getUserCollection().document(uid).update("username", username);
+        }else{
+            return null;
+        }
     }
 
 }
