@@ -46,14 +46,14 @@ public class DetailsRestaurantActivity extends AppCompatActivity {
 
     private DetailsRestaurantPickedByUserAdapter detailsRestaurantPickedByUserAdapter;
 
-    Result result;
-    String idRestaurant;
-    String uid;
-    String nameRestaurantPicked;
-    String adressRestaurantPicked;
-    String photoUrlRestaurantpicked;
+    public Result result;
+    public String idRestaurant;
+    public String uid;
+    public String nameRestaurantPicked;
+    public String adressRestaurantPicked;
+    public String photoUrlRestaurantpicked;
 
-    PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails;
+    private PlaceTestForAutocompleteToDetails placeTestForAutocompleteToDetails;
 
     private PlacesClient placesClient;
 

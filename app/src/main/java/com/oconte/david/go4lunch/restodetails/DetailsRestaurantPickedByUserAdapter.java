@@ -26,7 +26,6 @@ public class DetailsRestaurantPickedByUserAdapter extends RecyclerView.Adapter<D
     @Override
     public void onBindViewHolder(@NonNull DetailsRestaurantPickedByUserViewHolder viewHolder, int position) {
         viewHolder.updateWithUserPicked(usersPicked.get(position));
-
     }
 
     @Override

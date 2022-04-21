@@ -1,9 +1,13 @@
 package com.oconte.david.go4lunch.restodetails;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -118,11 +122,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
                             }
                         }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("TAG", "C'est pas bon");
-                    }
                 });
             }
     }
@@ -172,12 +171,6 @@ public class DetailsRestaurantViewModel extends ViewModel {
                             }
                             usersPicked.postValue(userAdd);
                         }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error load document", e);
                     }
                 });
     }

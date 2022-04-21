@@ -38,5 +38,4 @@ public class DetailsRestaurantPickedByUserViewHolder extends RecyclerView.ViewHo
                     .into(this.binding.recyclerViewImageUser);
         }
     }
-
 }
