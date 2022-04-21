@@ -77,6 +77,12 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
+    public Task<DocumentSnapshot> getInfoUserConnected() {
+        return getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).get();
+    }
+
+    // For picked
+    @Override
     public void addRestaurantPicked(String idRestaurant, String nameRestaurantPicked, String adressRestaurantPicked, String photoUrlRestaurantpicked) {
         this.getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("idRestaurantPicked", idRestaurant,
                 "nameRestaurantPicked", nameRestaurantPicked,
@@ -95,11 +101,6 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public Task<DocumentSnapshot> getUserRestaurantPicked(String uid) {
         return getUserCollection().document(uid).get();
-    }
-
-    @Override
-    public Task<DocumentSnapshot> getInfoUserConnected() {
-        return getUserCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).get();
     }
 
     // For Update Info
@@ -127,5 +128,4 @@ public class UserRepositoryImpl implements UserRepository{
             return null;
         }
     }
-
 }
