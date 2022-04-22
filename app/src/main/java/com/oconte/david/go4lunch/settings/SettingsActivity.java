@@ -193,6 +193,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FOR DELETE ACCOUNT
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.delete_button)
@@ -265,10 +266,8 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-    // --------------------
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FOR ADD PHOTO
-    // --------------------
-
     public void addPhotoUser() {
         binding.photoUser.setOnClickListener(new View.OnClickListener() {
             @Override

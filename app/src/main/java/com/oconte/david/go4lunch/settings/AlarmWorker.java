@@ -31,9 +31,6 @@ public class AlarmWorker extends Worker {
     public String adressRestaurant;
     public String listOfWorkmates;
 
-    public FirebaseAuth firebaseAuth;
-    public FirebaseFirestore firebaseFirestore;
-
     private Context context;
 
     public UserRepositoryImpl userRepositoryImpl;
