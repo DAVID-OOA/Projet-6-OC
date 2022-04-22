@@ -29,7 +29,6 @@ public class WorkMatesViewModel extends ViewModel {
     // PRIVATE LIVE DATTA
     private final MutableLiveData<List<User>> users = new MutableLiveData<>();
 
-
     public WorkMatesViewModel(UserRepository userRepository) {
         mUserRepository = userRepository;
     }

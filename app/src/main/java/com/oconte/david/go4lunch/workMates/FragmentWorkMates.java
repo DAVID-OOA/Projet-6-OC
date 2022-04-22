@@ -11,10 +11,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.databinding.FragmentWorkmatesBinding;
+import com.oconte.david.go4lunch.injection.Injection;
 import com.oconte.david.go4lunch.models.User;
 import com.oconte.david.go4lunch.repositories.ViewModelFactory;
 
@@ -29,8 +27,6 @@ public class FragmentWorkMates extends Fragment {
 
     public WorkMatesViewModel viewModel;
     private WorkMatesAdapter workMatesAdapter;
-
-    //UserRepository userRepository;
 
     public static FragmentWorkMates newInstance() {
         return (new FragmentWorkMates());

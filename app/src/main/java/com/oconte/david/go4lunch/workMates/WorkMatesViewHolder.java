@@ -17,7 +17,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class WorkMatesViewHolder extends RecyclerView.ViewHolder {
 
     private final WorkmatesItemRecyclerViewBinding binding;
-    private final Resources res;
+    public final Resources res;
 
     public WorkMatesViewHolder(@NonNull @NotNull WorkmatesItemRecyclerViewBinding binding) {
         super(binding.getRoot());

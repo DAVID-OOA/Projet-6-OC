@@ -1,5 +1,6 @@
 package com.oconte.david.go4lunch.workMates;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -35,12 +36,9 @@ public class WorkMatesAdapter extends RecyclerView.Adapter<WorkMatesViewHolder> 
         return this.users.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateCallUserList(List<User> userList) {
         this.users = userList;
         this.notifyDataSetChanged();
-    }
-
-    User getUser(int position) {
-        return users.get(position);
     }
 }

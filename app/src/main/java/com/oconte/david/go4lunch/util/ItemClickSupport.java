@@ -11,8 +11,8 @@ public class ItemClickSupport {
      */
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;
-    private int mItemID;
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+    private final int mItemID;
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (mOnItemClickListener != null) {
