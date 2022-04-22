@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewModel = viewModelProvider.get(ListRestaurantViewModel.class);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // For search
     ActivityResultLauncher<Intent> searchResultLuncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
         @Override
@@ -189,7 +191,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         searchResultLuncher.launch(intent);
     }
 
-    ///////////////////////////////////////////////////////////
+
+
+    //////////////////////////////////////////////////////////
+    // For see if log or not
+    private void checkLogOrNotLog() {
+        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
+        boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED, false);
+        if (!resultLogging) {
+            this.startAuthActivity();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // For starts activities
+    private void startAuthActivity() {
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void configurationViewModelDetails() {
         viewModel.getSelectedRestaurant().observe(this, new Observer<Result>() {
             @Override
@@ -202,22 +223,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    //////////////////////////////////////////////////////////
-    private void checkLogOrNotLog() {
-        SharedPreferences preferences = getSharedPreferences("EXTRA_LOG", MODE_PRIVATE);
-        boolean resultLogging = preferences.getBoolean(EXTRA_IS_CONNECTED, false);
-        if (!resultLogging) {
-            this.startAuthActivity();
-        }
-    }
-
-    private void startAuthActivity() {
-        Intent intent = new Intent(this, AuthActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //FOR SIGN OUT
+
     // It's for sign out and restart AuthActivity
     private void resultSignOut() {
         this.signOutUserFromFirebase();
@@ -269,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    // For setting activity
     private void startSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
@@ -360,8 +369,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ////////////////////////////////////////////////////
     // BOTTOM MENU
-    ////////////////////////////////////////////////////
-
     /**
      * Configure BottomView
      */
@@ -388,9 +395,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    // ---------------------
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FRAGMENTS
-    // ---------------------
 
     // Show first fragment when activity is created
     private void showFirstFragment() {
@@ -433,7 +439,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onPointerCaptureChanged(boolean hasCapture) {
     }
 
-    //For Data UserConnected
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //For Data UserConnected --> menu drawer
     private void updateUIWithUserData() {
         if (viewModel.isCurrentUserLogged()) {
 
