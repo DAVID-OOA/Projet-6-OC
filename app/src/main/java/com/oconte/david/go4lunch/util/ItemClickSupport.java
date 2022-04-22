@@ -22,15 +22,13 @@ public class ItemClickSupport {
         }
     };
 
-    private RecyclerView.OnChildAttachStateChangeListener mAttachListener
-            = new RecyclerView.OnChildAttachStateChangeListener() {
+    private RecyclerView.OnChildAttachStateChangeListener mAttachListener = new RecyclerView.OnChildAttachStateChangeListener() {
         @Override
         public void onChildViewAttachedToWindow(View view) {
             if (mOnItemClickListener != null) {
                 view.setOnClickListener(mOnClickListener);
             }
         }
-
         @Override
         public void onChildViewDetachedFromWindow(View view) {
 
@@ -58,7 +56,6 @@ public class ItemClickSupport {
     }
 
     public interface OnItemClickListener {
-
         void onItemClicked(RecyclerView recyclerView, int position, View v);
     }
 }
