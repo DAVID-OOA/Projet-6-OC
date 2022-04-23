@@ -38,7 +38,7 @@ before_script:
   - tar zxf google-cloud-sdk-382.0.0-linux-x86_64.tar.gz
   - echo n | ./google-cloud-sdk/install.sh
   - echo y | ./google-cloud-sdk/bin/gcloud components update
-  - echo y | ./google-cloud-sdk/bin/gcloud components install
+  - echo y | ./google-cloud-sdk/bin/gcloud components install béta
 
 script:
   - chmod +x gradlew
