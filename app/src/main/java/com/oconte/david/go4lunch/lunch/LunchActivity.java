@@ -56,14 +56,17 @@ public class LunchActivity extends AppCompatActivity {
         viewModel.getLunchRestaurantPickedData().observe(this, new Observer<Restaurant>() {
             @Override
             public void onChanged(Restaurant restaurant) {
-                binding.nameRestaurant.setText(restaurant.getUsername());
+                if (restaurant != null) {
+                    binding.nameRestaurant.setText(restaurant.getUsername());
 
-                binding.addressRestaurant.setText(restaurant.getAddressRestaurant());
+                    binding.addressRestaurant.setText(restaurant.getAddressRestaurant());
 
-                Picasso.get()
-                        .load(restaurant.getUrlPicture())
-                        .placeholder(R.drawable.go4lunch_icon)
-                        .into(binding.imageRestaurant);
+                    Picasso.get()
+                            .load(restaurant.getUrlPicture())
+                            .placeholder(R.drawable.go4lunch_icon)
+                            .into(binding.imageRestaurant);
+                }
+
             }
         });
     }
