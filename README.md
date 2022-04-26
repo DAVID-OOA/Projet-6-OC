@@ -3,7 +3,7 @@ It's a collaborative Android Application. It allows you to search for a restaura
 
 You need log for use it:
 
-<img src="./app/src/main/res/drawable/logOnGo4Lunch.png?Raw=true" width="30%" height="30%">
+<img src="./app/src/main/res/drawable/log.png?Raw=true" width="30%" height="30%">
 
 In the menu you can access to lunch picked, settings and unlock you account :
 
